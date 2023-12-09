@@ -132,3 +132,7 @@ dist
 
 
 package-lock.json
+
+/.netlify
+
+server/node_modules/
