@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function Header ({ showMenu, setShowMenu}) {
  
-  // const handleMenu = () => setShowMenu(!showMenu);
+  const handleMenu = () => setShowMenu(!showMenu);
 
   return (
     <Nav className='bg-dark d-flex justify-content-between fixed-top'>
@@ -17,24 +17,16 @@ export default function Header ({ showMenu, setShowMenu}) {
         <NavDropdown.Item >Feed 3</NavDropdown.Item>
       </NavDropdown>
       <div className='d-flex'>
-      <Nav.Item className='p-1'>
-            <FontAwesomeIcon icon={faCheck} style={{color: "#ffffff",}} className='message-icon pe-2'/>
-        </Nav.Item>
-      <Nav.Item className='p-1'>
-          <Link to={'/myPrograms'}>
-            <FontAwesomeIcon icon={faDumbbell} style={{color: "#ffffff",}} className='message-icon pe-2'/>
-          </Link>
-        </Nav.Item>
         <Nav.Item className='p-1'>
-          <Link to={'/messages'}>
+          <Link to={'/conversations'}>
             <FontAwesomeIcon icon={faMessage} style={{color: "#ffffff",}} className='message-icon'/>
           </Link>
         </Nav.Item>
         <Nav.Item className='p-1'>
           <Nav.Link >
-            <FontAwesomeIcon icon={faBars} style={{color: "#ffffff",}} className='menu-icon' />
+            <FontAwesomeIcon icon={faBars} style={{color: "#ffffff",}} className='menu-icon' onClick={handleMenu}/>
           </Nav.Link>
-        </Nav.Item>
+        </Nav.Item>             
       </div>
     </Nav>
   );

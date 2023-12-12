@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from './pages/HomePage.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
+import ConversationsPage from './pages/ConversationsPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -14,10 +15,8 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <HomePage />
-      },      
+      { index: true, element: <HomePage /> }, 
+      { path: '/conversations', element: <ConversationsPage /> },       
     ]
   },
 ]);
