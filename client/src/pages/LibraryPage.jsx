@@ -14,11 +14,12 @@ export default function LibraryPage() {
         <HomeMenu />
         ) : (
           <>
-          {/* query for existing conversations and list them here with option to create a new conversation */}
-          {/* loop through the query result of conversations */}
-          <Link to={`/Program/${ProgramId}`}>Program 1</Link>
-          <Link to={`/Workout/${WorkoutId}`}>Workout 1</Link>
-          <Link to={`/Program/${ProgramId}`}>Program 1</Link>
+          {/* query for existing workouts and list them here with option to create a new workout */}
+          {/* loop through the query result of workouts */}
+          <Link to={`/program/${ProgramId}`}>Program 1</Link>
+          <Link to={`/workout/${WorkoutId}`}>Workout 1</Link>
+          <Link to={`/program/${ProgramId}`}>Program 1</Link>
+          <Link to={`/justWorkout`}>Just Workout</Link>
         </>
       )}
     </>

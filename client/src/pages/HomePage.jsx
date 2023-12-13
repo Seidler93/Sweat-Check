@@ -13,10 +13,12 @@ export default function HomePage() {
         <HomeMenu />
       ) : (
         <>
+          {/* when you click the workout button, it will as you if you want to continue to your current program */}
           <button>Workout</button>
           {/* query to db to find everything that is for sale here */}
-          <button>buy program</button>
-          <button>buy workout</button>
+          <Link to={'/store/programId'}>buy program</Link>
+          <Link to={'/store/workoutId'}>buy workout</Link>
+          <Link to={'/store'}>view more in the store...</Link>
         </>
       )}
     </>

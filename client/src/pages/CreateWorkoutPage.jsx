@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header/index'
 import HomeMenu from '../components/HomeMenu';
 
-export default function SettingsPage() {
+export default function CreateWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -13,15 +13,8 @@ export default function SettingsPage() {
         <HomeMenu />
         ) : (
           <>
-          <h2>Settings</h2>
-          <button>Workout Settings</button>
-          <button>Edit Information</button>
-          <button>Subscriptions</button>
-          <button>Payment Methods</button>
-          <button>Notifications</button>
-          <button>Contact Us</button>
-          <button>FAQ</button>
-          <button>logout</button>
+          {/* this will allow the user to create a workout to complete later */}
+          <h2>create workout</h2>
         </>
       )}
     </>

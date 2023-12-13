@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header/index'
 import HomeMenu from '../components/HomeMenu';
 
-export default function SettingsPage() {
+export default function MyStatsPage() {
   const [showMenu, setShowMenu] = useState(false);
-
+  const productId = 1
   return (
     <>
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
@@ -13,15 +13,11 @@ export default function SettingsPage() {
         <HomeMenu />
         ) : (
           <>
-          <h2>Settings</h2>
-          <button>Workout Settings</button>
-          <button>Edit Information</button>
-          <button>Subscriptions</button>
-          <button>Payment Methods</button>
-          <button>Notifications</button>
-          <button>Contact Us</button>
-          <button>FAQ</button>
-          <button>logout</button>
+          {/* query for all programs and workouts that are available to user and display here */}
+          <p>stat 1</p>
+          <p>stat 2</p>
+          <p>stat 3</p>
+          <p>stat 4</p>
         </>
       )}
     </>

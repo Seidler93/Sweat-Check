@@ -7,13 +7,11 @@ export default function Homemenu () {
         <Link to={'/library'} className="menu-option bg-dark">Program Library</Link>
         <Link to={'/profile/me'} className="menu-option bg-dark">My Profile</Link>
         <Link to={'/calendar'} className="menu-option bg-dark">Calendar</Link>
-        <button className="menu-option bg-dark">Workout NEEDS PAGE</button>
-        <Link to={'/settingsPage'}className="menu-option bg-dark">Settings</Link>
-        <button className="menu-option bg-dark">Leaderboard NEEDS PAGE</button>
-        <button className="menu-option bg-dark">Stats NEEDS PAGE</button>
-        <button className="menu-option bg-dark">Progress NEEDS PAGE</button>
-        <Link to={'/Friends'} className="menu-option bg-dark">Friends</Link>
-        <Link to={'/exercisePage'} className="menu-option bg-dark">Exercises</Link>
+        <Link to={'/settings'}className="menu-option bg-dark">Settings</Link>
+        <Link to={'/myStats'} className="menu-option bg-dark">Stats</Link>
+        <Link to={'/friends'} className="menu-option bg-dark">Friends</Link>
+        <Link to={'/exercise'} className="menu-option bg-dark">Exercises</Link>
+        <Link to={'/exercise'} className="menu-option bg-dark">Communities/clubs</Link>
     </div>
   );
 };
