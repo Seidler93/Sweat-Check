@@ -18,7 +18,7 @@ import ProductPage from './pages/ProductPage.jsx';
 import CreateWorkoutPage from './pages/CreateWorkoutPage.jsx';
 import JustWorkoutPage from './pages/JustWorkoutPage.jsx';
 import ProgramPage from './pages/ProgramPage.jsx';
-import WorkoutPage from './pages/workoutPage.jsx';
+import WorkoutPage from './pages/WorkoutPage.jsx'
 
 const router = createBrowserRouter([
   {
