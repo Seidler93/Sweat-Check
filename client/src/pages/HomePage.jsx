@@ -10,7 +10,7 @@ export default function HomePage() {
     <>
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
       {showMenu ? (
-        <HomeMenu />
+        <HomeMenu showMenu={showMenu} setShowMenu={setShowMenu}/>
       ) : (
         <>
           {/* when you click the workout button, it will as you if you want to continue to your current program */}

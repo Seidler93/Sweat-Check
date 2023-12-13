@@ -15,6 +15,10 @@ import StorePage from './pages/StorePage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 import MyStatsPage from './pages/MyStatsPage.jsx';
 import ProductPage from './pages/ProductPage.jsx';
+import CreateWorkoutPage from './pages/CreateWorkoutPage.jsx';
+import JustWorkoutPage from './pages/JustWorkoutPage.jsx';
+import ProgramPage from './pages/ProgramPage.jsx';
+import WorkoutPage from './pages/workoutPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -28,10 +32,10 @@ const router = createBrowserRouter([
       { path: '/profile/me', element: <MyProfilePage /> },       
       { path: '/library', element: <LibraryPage /> },       
       { path: '/store', element: <StorePage /> },
-      { path: '/createWorkout', element: <StorePage /> },
-      { path: '/justWorkout', element: <StorePage /> },
-      { path: '/programId/workoutId', element: <StorePage /> },
-      { path: '/workoutId', element: <StorePage /> },
+      { path: '/createWorkout', element: <CreateWorkoutPage /> },
+      { path: '/justWorkout', element: <JustWorkoutPage /> },
+      { path: '/programId/workoutId', element: <ProgramPage /> },
+      { path: '/workoutId', element: <WorkoutPage /> },
       { path: '/store/productId', element: <ProductPage /> },
       { path: '/myStats', element: <MyStatsPage /> },
       { path: '/settings', element: <SettingsPage /> },
