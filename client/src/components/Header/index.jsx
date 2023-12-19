@@ -2,12 +2,17 @@ import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMessage, faBars, faDumbbell, faCheck } from "@fortawesome/free-solid-svg-icons"
+import { faMessage, faBars, faDumbbell, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { useState } from 'react';
 
 export default function Header ({ showMenu, setShowMenu}) {
  
-  const handleMenu = () => setShowMenu(!showMenu);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  const handleMenu = () => {
+    setFadeOut(!fadeOut);
+    setShowMenu(!showMenu);
+  };
 
   return (
     <Nav className='bg-dark d-flex justify-content-between fixed-top'>
@@ -23,8 +28,14 @@ export default function Header ({ showMenu, setShowMenu}) {
           </Link>
         </Nav.Item>
         <Nav.Item className='p-1'>
-          <Nav.Link >
-            <FontAwesomeIcon icon={faBars} style={{color: "#ffffff",}} className='menu-icon' onClick={handleMenu}/>
+          <Nav.Link >            
+            <FontAwesomeIcon
+              icon={showMenu ? faXmark : faBars}
+              style={{ color: "#ffffff" }}
+              className={`menu-icon logospin ${fadeOut ? 'fade-out' : 'fade-in'}`}
+              onClick={handleMenu}
+              onAnimationEnd={() => setFadeOut(false)}
+            />
           </Nav.Link>
         </Nav.Item>             
       </div>
