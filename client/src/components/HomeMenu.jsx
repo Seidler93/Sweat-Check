@@ -2,16 +2,16 @@ import { Link } from 'react-router-dom';
 
 export default function Homemenu ({ setShowMenu }) {
   return (
-    <div className="d-flex flex-column pt-5 mt-4">
-        <Link to={'/'} className="menu-option bg-dark" onClick={() => setShowMenu(false)}>Home</Link>
-        <Link to={'/library'} className="menu-option bg-dark">Program Library</Link>
-        <Link to={'/profile/me'} className="menu-option bg-dark">My Profile</Link>
-        <Link to={'/calendar'} className="menu-option bg-dark">Calendar</Link>
-        <Link to={'/settings'}className="menu-option bg-dark">Settings</Link>
-        <Link to={'/myStats'} className="menu-option bg-dark">Stats</Link>
-        <Link to={'/friends'} className="menu-option bg-dark">Friends</Link>
-        <Link to={'/exercise'} className="menu-option bg-dark">Exercises</Link>
-        <Link to={'/exercise'} className="menu-option bg-dark">Communities/clubs</Link>
+    <div className="d-flex flex-column home-menu hp">
+        <Link to={'/'} className="menu-option" onClick={() => setShowMenu(false)}>Home</Link>
+        <Link to={'/library'} className="menu-option">Program Library</Link>
+        <Link to={'/profile/me'} className="menu-option">My Profile</Link>
+        <Link to={'/calendar'} className="menu-option">Calendar</Link>
+        <Link to={'/settings'}className="menu-option">Settings</Link>
+        <Link to={'/myStats'} className="menu-option">Stats</Link>
+        <Link to={'/friends'} className="menu-option">Friends</Link>
+        <Link to={'/exercise'} className="menu-option">Exercises</Link>
+        <Link to={'/exercise'} className="menu-option">Communities/clubs</Link>
     </div>
   );
 };
