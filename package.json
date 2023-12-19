@@ -8,12 +8,18 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build"
+    "build": "cd client && npm run build",
+    "generate-pwa-assets": "pwa-asset-generator ./client/public/placeholderPortrait.jpg -b ./client/public --opaque"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "vite-plugin-pwa": "^0.17.4",
+    "workbox-window": "^7.0.0"
+  },
+  "dependencies": {
+    "pwa-asset-generator": "^6.3.1"
   }
 }
