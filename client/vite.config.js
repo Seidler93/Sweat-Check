@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 const manifestForPlugin = {
   registerType: 'prompt',
-  includeAssets: ['client/public/icons/placeholderPortrait.jpg'],
+  includeAssets: ['vite.svg'],
   manifest: {
     name: 'Sweat Check',
     short_name: 'SC',

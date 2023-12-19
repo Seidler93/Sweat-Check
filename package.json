@@ -9,7 +9,7 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build",
-    "generate-pwa-assets": "pwa-asset-generator ./client/public/placeholderPortrait.jpg -b ./client/public --opaque -d ./client/public/icons"
+    "generate-pwa-assets": "pwa-asset-generator ./client/public/vite.svg -b ./client/public --opaque -d ./client/public/icons"
   },
   "keywords": [],
   "author": "",
