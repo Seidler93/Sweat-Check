@@ -29,7 +29,7 @@ export default function HomePage() {
               <h2 className='ms-3 text-dark'>Current Program</h2>
               <button className='current-program-btn'><Link to={'/store/programId'}>Program 1</Link></button>
               <div className='d-flex flex-column'>
-                <button className='modal-btn'><Link to={'/store'}><FontAwesomeIcon className='pe-3' icon={faPlus} />New Workout</Link></button>
+                <button className='modal-btn'><Link to={'/newWorkoutPage'}><FontAwesomeIcon className='pe-3' icon={faPlus} />New Workout</Link></button>
                 <div className='d-flex'>
                   <button className='modal-btn me-1'><Link to={'/store'}>Find Workout</Link></button>
                   <button className='modal-btn ms-1'><Link to={'/store'}>Find Program</Link></button>
@@ -78,9 +78,6 @@ export default function HomePage() {
               <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
               <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
             </div> 
-          <Link to={'/store/programId'}>buy program</Link>
-          {/* <Link to={'/store/workoutId'}>buy workout</Link> */}
-          {/* <Link to={'/store'}>view more in the store...</Link> */}
         </div>
       )}
     </>
