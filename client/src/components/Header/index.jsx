@@ -21,8 +21,8 @@ export default function Header ({ showMenu, setShowMenu}) {
         <NavDropdown.Item >Feed 2</NavDropdown.Item>
         <NavDropdown.Item >Feed 3</NavDropdown.Item>
       </NavDropdown>
-      <div className='d-flex pe-3'>
-        <Nav.Item className='p-2 px-3'>
+      <div className='d-flex pe-1'>
+        <Nav.Item className='py-2 px-1 clear'>
           <Link to={'/conversations'}>
             <FontAwesomeIcon icon={faMessage} style={{color: "#ffffff",}} className='message-icon'/>
           </Link>
