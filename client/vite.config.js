@@ -14,25 +14,21 @@ const manifestForPlugin = {
         "src": "client/public/icons/manifest-icon-192.maskable.png",
         "sizes": "192x192",
         "type": "image/png",
-        "purpose": "any"
       },
       {
         "src": "client/public/icons/manifest-icon-192.maskable.png",
         "sizes": "192x192",
         "type": "image/png",
-        "purpose": "maskable"
       },
       {
         "src": "client/public/icons/manifest-icon-512.maskable.png",
         "sizes": "512x512",
         "type": "image/png",
-        "purpose": "any"
       },
       {
         "src": "client/public/icons/manifest-icon-512.maskable.png",
         "sizes": "512x512",
         "type": "image/png",
-        "purpose": "maskable"
       }
     ],
     theme_color: '#171717',
