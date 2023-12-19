@@ -33,7 +33,12 @@ const manifestForPlugin = {
         "sizes": "512x512",
         "type": "image/png",
         "purpose": "maskable"
-      }
+      },
+      {
+        "src": "client/public/icons/manifest-icon-512.maskable.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      },
     ],
     theme_color: '#171717',
     background_color: '#e8ebf2',
@@ -46,7 +51,7 @@ const manifestForPlugin = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), VitePWA({ registerType: 'autoUpdate' })],
+  plugins: [react(), VitePWA(manifestForPlugin)],
   server: {
     port: 3000,
     open: true,
