@@ -4,9 +4,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -61,12 +63,19 @@
   justify-content: space-between;
 }
 
+.clear {
+  padding: 0!important;
+}
+
 .friends-container {
-  max-height: vh ;
+  max-height: 50vh;
+  overflow-y: auto;
+  white-space: nowrap; 
 }
 
 a {
   color: white!important;
+  text-decoration: none!important;
 }
 
 @keyframes logo-spin {
@@ -83,6 +92,9 @@ a {
     animation: logo-spin infinite 20s linear;
   }
 }
+
+.f2 {
+  font-size: 1.5rem;}
 
 .card {
   padding: 2em;
