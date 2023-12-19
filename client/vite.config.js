@@ -11,25 +11,25 @@ const manifestForPlugin = {
     description: 'An app to find and track workouts and progress',
     icons: [
       {
-        "src": "manifest-icon-192.maskable.png",
+        "src": "client/public/icons/manifest-icon-192.maskable.png",
         "sizes": "192x192",
         "type": "image/png",
         "purpose": "any"
       },
       {
-        "src": "manifest-icon-192.maskable.png",
+        "src": "client/public/icons/manifest-icon-192.maskable.png",
         "sizes": "192x192",
         "type": "image/png",
         "purpose": "maskable"
       },
       {
-        "src": "manifest-icon-512.maskable.png",
+        "src": "client/public/icons/manifest-icon-512.maskable.png",
         "sizes": "512x512",
         "type": "image/png",
         "purpose": "any"
       },
       {
-        "src": "manifest-icon-512.maskable.png",
+        "src": "client/public/icons/manifest-icon-512.maskable.png",
         "sizes": "512x512",
         "type": "image/png",
         "purpose": "maskable"
