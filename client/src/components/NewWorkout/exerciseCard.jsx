@@ -1,6 +1,7 @@
 import { useState, useEffect  } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-bootstrap/Modal';
 
 export default function ExerciseCard({superset, index, addToSuperSet}) {
   console.log(superset, index);
@@ -9,6 +10,11 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
   const [allSetsCompleted, setAllSetsCompleted] = useState(false);
   const [addExercise, setAddExercise] = useState(false);
   const [exerciseInput, setExerciseInput] = useState('');
+  const [notes, setNotes] = useState('');
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleSetComplete = async (setIndex) => {
     setCompletedSets((prevCompletedSets) => {
@@ -31,13 +37,40 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
 
   return (
     <div key={index} className='exercise-card d-flex flex-column my-2'>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Note</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='d-flex flex-column'>
+            <textarea
+            onChange={(e) => setNotes(e.target.value)}
+            value={notes}
+            className="form-control"
+            placeholder="Enter exercise"
+            name="" id="" cols="30" rows="10"></textarea>
+          <button variant="primary" onClick={handleClose} className='modal-btn ms-1 px-1'>
+            Add notes
+          </button>
+          </div>
+        </Modal.Body>
+      </Modal>
       {superset.map((exercise) => (
         <div>
           <h4 className='text-white'>{exercise.exerciseName}</h4>
           <div className='text-white d-flex align-items-center justify-content-start'>
             <h4 className='w20 text-center'>Sets</h4>
-            <h4 className='w30 text-center'>Reps</h4>
-            <h4 className='w30 text-center'>Weight</h4>
+            <h4 className='w30 text-center me-1'>Reps</h4>
+            <h4 className='w30 text-center ms-1'>Weight</h4>
+            <button
+                onClick={() => handleSetComplete}
+                className={"set-checkmark-btn hide"}
+                >
+                <FontAwesomeIcon
+                  icon={faSquareCheck}
+                  className={`set-checkmark `}
+                  />
+              </button>
           </div>
           {Array.from({ length: setCount }, (_, setIndex) => (
             <div key={setIndex} className='d-flex align-items-center justify-content-start mb-2'>
@@ -46,7 +79,7 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
               <input className='w30 px-2 ms-1 form-control' type="text" placeholder='weight'/>
               <button
                 onClick={() => handleSetComplete}
-                className={"set-checkmark-btn"}
+                className={"set-checkmark-btn "}
                 >
                 <FontAwesomeIcon
                   icon={faSquareCheck}
@@ -55,6 +88,12 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
               </button>
             </div>
           ))}
+          {notes ? (
+            <div className='round border border-dark bg-secondary text-white mt-3'>
+              <h5 className='px-2'>Notes</h5>
+              <p className='px-3'>{notes}</p>
+            </div>
+          ) : ''}
         </div>
       ))}
       {addExercise ? (
@@ -72,14 +111,14 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
               </button>
             </div>
           ) : ''}
-      <div className='d-flex mt-2'>
+      <div className='d-flex mt-3'>
         <button className='modal-btn me-1 px-1' onClick={() => setSetCount(setCount + 1)}>
           Add set
         </button>
         <button className='modal-btn mx-1 px-1' onClick={() => setAddExercise(!addExercise)}>
           Add exercise
         </button>
-        <button className='modal-btn ms-1 px-1'>
+        <button variant="primary" onClick={handleShow} className='modal-btn ms-1 px-1'>
           Add notes
         </button>
       </div>

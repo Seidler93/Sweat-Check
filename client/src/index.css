@@ -21,7 +21,10 @@
 
 .round {
   border-radius: 6px;
-  border: none;
+}
+
+.hide {
+  visibility: hidden!important;
 }
 
 .w30 {
