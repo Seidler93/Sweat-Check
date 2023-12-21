@@ -13,7 +13,33 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.exercise-card {
+  background-color: grey;
+  padding: 10px 10px 5px 10px;
+  border-radius: 6px;
+}
 
+.round {
+  border-radius: 6px;
+  border: none;
+}
+
+.w30 {
+  width: 33%;
+}
+
+.w20 {
+  width: 20%;
+}
+
+.set-checkmark-btn {
+  background-color: transparent;
+  border: none;
+}
+
+.set-checkmark {
+  font-size: 24px;
+}
 
 body {
   margin: 0;

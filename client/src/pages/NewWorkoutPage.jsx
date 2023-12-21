@@ -5,6 +5,7 @@ import HomeMenu from '../components/HomeMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Button } from 'bootstrap';
+import ExerciseCard from '../components/NewWorkout/exerciseCard';
 
 export default function NewWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
@@ -14,13 +15,39 @@ export default function NewWorkoutPage() {
   
   let workout = []
   const handleAddExercise = () => {
-    workout = [...workout, {exerciseName: exerciseInput}]
-    setNewWorkout(workout)
+    // Use the current value of exerciseInput
+    const newExercise = [{ 
+        exerciseName: exerciseInput,
+     }];
+  
+    // Update the workout array with the new exercise
+    setNewWorkout(prevWorkout => [...prevWorkout, newExercise]);
+  
     console.log('Adding exercise:', exerciseInput);
+  
     // Clear the input field after adding the exercise
     setExerciseInput('');
-    setAddExercise(false)
-  } 
+    setAddExercise(false);
+  };  
+
+  console.log(newWorkout);
+
+  const addToSuperSet = (newSSExercise, supersetIndex) => {
+    setNewWorkout((prevWorkout) => {
+      const updatedWorkout = [...prevWorkout];
+      // Get the exercise group at the specified index
+      const exerciseGroup = [...updatedWorkout[supersetIndex]];
+      // Add a new exercise to the exercise group
+      const updatedExerciseGroup = [...exerciseGroup, { exerciseName: newSSExercise }];
+  
+      // Update the exercise group in the workout array
+      updatedWorkout[supersetIndex] = [ ...updatedExerciseGroup ];
+  
+      return updatedWorkout;
+    });
+  };
+  
+  console.log(newWorkout);
 
   return (
     <>
@@ -30,7 +57,7 @@ export default function NewWorkoutPage() {
         ) : (
         <div className='mx-10px hp'>
           <div className='d-flex flex-column my-2'>
-            {newWorkout.map((workout) => <div key={workout.exerciseName} className='btn btn-primary'>{workout.exerciseName}</div>)}
+            {newWorkout.map((exercises, index) => <ExerciseCard superset={exercises} index={index} addToSuperSet={addToSuperSet}/>)}
           </div>
           {addExercise ? (
             <div className='d-flex align-items-center mb-2 justify-content-between'>
