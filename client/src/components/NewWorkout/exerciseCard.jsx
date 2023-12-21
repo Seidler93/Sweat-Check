@@ -56,7 +56,7 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
         </Modal.Body>
       </Modal>
       {superset.map((exercise) => (
-        <div>
+        <div className='mb-3'>
           <h4 className='text-white'>{exercise.exerciseName}</h4>
           <div className='text-white d-flex align-items-center justify-content-start'>
             <h4 className='w20 text-center'>Sets</h4>
@@ -88,14 +88,14 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
               </button>
             </div>
           ))}
-          {notes ? (
-            <div className='round border border-dark bg-secondary text-white mt-3'>
-              <h5 className='px-2'>Notes</h5>
-              <p className='px-3'>{notes}</p>
-            </div>
-          ) : ''}
         </div>
       ))}
+      {notes ? (
+        <div className='round border border-dark bg-secondary text-white my-2'>
+          <h5 className='px-2'>Notes</h5>
+          <p className='px-3'>{notes}</p>
+        </div>
+      ) : ''}
       {addExercise ? (
             <div className='d-flex align-items-center mb-2 justify-content-between'>
               <input
