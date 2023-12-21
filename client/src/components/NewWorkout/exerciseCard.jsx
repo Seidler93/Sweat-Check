@@ -4,7 +4,7 @@ import { faSquareCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 
 export default function ExerciseCard({superset, index, addToSuperSet}) {
-  console.log(superset, index);
+  // console.log(superset, index);
   const [setCount, setSetCount] = useState(1);
   const [completedSets, setCompletedSets] = useState([]);
   const [allSetsCompleted, setAllSetsCompleted] = useState(false);
@@ -30,10 +30,18 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
 
   const handleAddToSuperSet = () => {
     addToSuperSet(exerciseInput, index)
-    console.log('adding exercise:', exerciseInput, index);
+    // console.log('adding exercise:', exerciseInput, index);
     setAddExercise(false)
     setExerciseInput('')
   }
+
+  useEffect(() => {
+    if (completedSets.length === setCount) {
+      return setAllSetsCompleted(true)
+    } else if (completedSets.length != setCount) {
+      return setAllSetsCompleted(false)
+    }
+  }, [completedSets, setCount]);
 
   return (
     <div key={index} className='exercise-card d-flex flex-column my-2'>
@@ -62,15 +70,12 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
             <h4 className='w20 text-center'>Sets</h4>
             <h4 className='w30 text-center me-1'>Reps</h4>
             <h4 className='w30 text-center ms-1'>Weight</h4>
-            <button
-                onClick={() => handleSetComplete}
-                className={"set-checkmark-btn hide"}
-                >
-                <FontAwesomeIcon
-                  icon={faSquareCheck}
-                  className={`set-checkmark `}
-                  />
-              </button>
+            <p className={"set-checkmark-btn pbmatch m-0"}>
+              <FontAwesomeIcon
+                icon={faSquareCheck}
+                className={`set-checkmark ${allSetsCompleted ? 'completed-set' : ''}`}
+              />
+            </p>
           </div>
           {Array.from({ length: setCount }, (_, setIndex) => (
             <div key={setIndex} className='d-flex align-items-center justify-content-start mb-2'>
@@ -78,12 +83,12 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
               <input className='w30 px-2 me-1 form-control' type="text" placeholder='reps'/>
               <input className='w30 px-2 ms-1 form-control' type="text" placeholder='weight'/>
               <button
-                onClick={() => handleSetComplete}
+                onClick={() => handleSetComplete(setIndex)}
                 className={"set-checkmark-btn "}
                 >
                 <FontAwesomeIcon
                   icon={faSquareCheck}
-                  className={`set-checkmark `}
+                  className={`set-checkmark ${completedSets.includes(setIndex) ? 'completed-set' : ''}`}
                   />
               </button>
             </div>
@@ -92,7 +97,7 @@ export default function ExerciseCard({superset, index, addToSuperSet}) {
       ))}
       {notes ? (
         <div className='round border border-dark bg-secondary text-white my-2'>
-          <h5 className='px-2'>Notes</h5>
+          <h5 className='px-2 pt-2'>Notes</h5>
           <p className='px-3'>{notes}</p>
         </div>
       ) : ''}

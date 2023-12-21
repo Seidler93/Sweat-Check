@@ -44,6 +44,14 @@
   font-size: 24px;
 }
 
+.completed-set {
+  color: rgb(16, 146, 16);
+}
+
+.pbmatch {
+  padding: 0.6em 1.2em;
+}
+
 body {
   margin: 0;
   place-items: center;

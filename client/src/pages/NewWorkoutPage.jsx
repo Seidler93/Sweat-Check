@@ -23,14 +23,14 @@ export default function NewWorkoutPage() {
     // Update the workout array with the new exercise
     setNewWorkout(prevWorkout => [...prevWorkout, newExercise]);
   
-    console.log('Adding exercise:', exerciseInput);
+    // console.log('Adding exercise:', exerciseInput);
   
     // Clear the input field after adding the exercise
     setExerciseInput('');
     setAddExercise(false);
   };  
 
-  console.log(newWorkout);
+  // console.log(newWorkout);
 
   const addToSuperSet = (newSSExercise, supersetIndex) => {
     setNewWorkout((prevWorkout) => {
@@ -47,7 +47,7 @@ export default function NewWorkoutPage() {
     });
   };
   
-  console.log(newWorkout);
+  // console.log(newWorkout);
 
   return (
     <>
