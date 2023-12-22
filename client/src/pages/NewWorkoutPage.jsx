@@ -10,7 +10,7 @@ import ExerciseCard from '../components/NewWorkout/exerciseCard';
 export default function NewWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [newWorkout, setNewWorkout] = useState([]);
-  const [addExercise, setAddExercise] = useState(false);
+  const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
   
   let workout = []
@@ -75,7 +75,7 @@ export default function NewWorkoutPage() {
             </div>
           ) : ''}
           <div className='d-flex'>
-            <button className='modal-btn me-1' onClick={() => setAddExercise(!addExercise)}>
+            <button className='modal-btn me-1' onClick={() => setAddExercise(true)}>
               <FontAwesomeIcon className='pe-3' icon={faPlus} />
               Add exercise
             </button>

@@ -17,6 +17,7 @@
   background-color: grey;
   padding: 10px 10px 5px 10px;
   border-radius: 6px;
+  position: relative;
 }
 
 .round {
@@ -42,6 +43,18 @@
 
 .set-checkmark {
   font-size: 24px;
+}
+
+.carrot {
+background-color: transparent;
+border: none;
+}
+
+.openSets-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px 30px;
 }
 
 .completed-set {
