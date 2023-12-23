@@ -1,5 +1,5 @@
 import { useState, useEffect  } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header/index'
 import HomeMenu from '../components/HomeMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -48,13 +48,13 @@ export default function NewWorkoutPage() {
   };
 
 
-  useEffect(() => {
-    const storedWorkout = JSON.parse(localStorage.getItem('woip'));
-    if (storedWorkout) {
-      setNewWorkout(storedWorkout);
-      setAddExercise(false)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const storedWorkout = JSON.parse(localStorage.getItem('woip'));
+  //   if (storedWorkout) {
+  //     setNewWorkout(storedWorkout);
+  //     setAddExercise(false)
+  //   }
+  // }, [])
 
   useEffect(() => {
     // Save the updated workout to local storage
@@ -84,7 +84,7 @@ export default function NewWorkoutPage() {
       {showMenu ? (
         <HomeMenu />
         ) : (
-        <div className='mx-10px hp'>
+        <div className='mx-10px hp d-flex flex-column'>
           <div className='d-flex flex-column my-2'>
             {newWorkout.map((exercises, index) => <ExerciseCard superset={exercises} index={index} addToSuperSet={addToSuperSet}/>)}
           </div>
@@ -113,6 +113,7 @@ export default function NewWorkoutPage() {
               Add circuit
             </button>
           </div>
+          <button>Complete Workout</button>
         </div>
       )}
     </>

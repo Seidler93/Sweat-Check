@@ -6,12 +6,22 @@ import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 
-export default function HomePage() {
+export default function WorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [show, setShow] = useState(false);
+  const [woip, setWoip] = useState([]);
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    const storedWorkout = JSON.parse(localStorage.getItem('woip'));
+    if (storedWorkout) {
+      setWoip(storedWorkout);
+    }
+  }, [])
+
   return (
     <>
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
@@ -30,6 +40,7 @@ export default function HomePage() {
               <button className='current-program-btn'><Link to={'/store/programId'}>Program 1</Link></button>
               <div className='d-flex flex-column'>
                 <button className='modal-btn'><Link to={'/newWorkoutPage'}><FontAwesomeIcon className='pe-3' icon={faPlus} />New Workout</Link></button>
+                {woip ? <button className='modal-btn'><Link to={'/workout/woip'}>Resume Workout</Link></button> : ''}
                 <div className='d-flex'>
                   <button className='modal-btn me-1'><Link to={'/store'}>Find Workout</Link></button>
                   <button className='modal-btn ms-1'><Link to={'/store'}>Find Program</Link></button>

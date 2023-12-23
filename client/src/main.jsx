@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       { path: '/createWorkout', element: <CreateWorkoutPage /> },
       { path: '/justWorkout', element: <JustWorkoutPage /> },
       { path: '/:programId/:workoutId', element: <ProgramPage /> },
-      { path: '/workoutId', element: <WorkoutPage /> },
+      { path: '/workout/:workoutId', element: <WorkoutPage /> },
       { path: '/store/:productId', element: <ProductPage /> },
       { path: '/myStats', element: <MyStatsPage /> },
       { path: '/settings', element: <SettingsPage /> },
