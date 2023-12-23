@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faPlus, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
+import SetsRepsComp from './SetsRepsComp';
 
 export default function ExerciseCard({ superset, index, addToSuperSet }) {
   const [setCount, setSetCount] = useState(1);
@@ -20,15 +21,15 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
     setShowSets((prevShowSets) => !prevShowSets);
   };
 
-  const handleSetComplete = async (setIndex) => {
-    setCompletedSets((prevCompletedSets) => {
-      if (prevCompletedSets.includes(setIndex)) {
-        return prevCompletedSets.filter((index) => index !== setIndex);
-      } else {
-        return [...prevCompletedSets, setIndex];
-      }
-    });
-  };
+  // const handleSetComplete = async (setIndex) => {
+  //   setCompletedSets((prevCompletedSets) => {
+  //     if (prevCompletedSets.includes(setIndex)) {
+  //       return prevCompletedSets.filter((index) => index !== setIndex);
+  //     } else {
+  //       return [...prevCompletedSets, setIndex];
+  //     }
+  //   });
+  // };
 
   const handleAddToSuperSet = () => {
     addToSuperSet(exerciseInput, index);
@@ -36,13 +37,13 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
     setExerciseInput('');
   };
 
-  useEffect(() => {
-    if (completedSets.length === setCount) {
-      setAllSetsCompleted(true);
-    } else if (completedSets.length !== setCount) {
-      setAllSetsCompleted(false);
-    }
-  }, [completedSets, setCount]);
+  // useEffect(() => {
+  //   if (completedSets.length === setCount) {
+  //     setAllSetsCompleted(true);
+  //   } else if (completedSets.length !== setCount) {
+  //     setAllSetsCompleted(false);
+  //   }
+  // }, [completedSets, setCount]);
 
   return (
     <div key={index} className='exercise-card d-flex flex-column my-2'>
@@ -84,7 +85,8 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
           {superset.map((exercise, exerciseIndex) => (
             <div className='mb-3' key={exerciseIndex}>
               <h3 className='text-white'>{exercise.exerciseName}</h3>
-              <div className='text-white d-flex align-items-center justify-content-start'>
+              <SetsRepsComp setCount={setCount} />
+              {/* <div className='text-white d-flex align-items-center justify-content-start'>
                 <h4 className='w20 text-center'>Sets</h4>
                 <h4 className='w30 text-center me-1'>Reps</h4>
                 <h4 className='w30 text-center ms-1'>Weight</h4>
@@ -110,7 +112,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
                     />
                   </button>
                 </div>
-              ))}
+              ))} */}
               {notes ? (
                 <div className='round border border-dark bg-secondary text-white my-2'>
                   <h5 className='px-2 pt-2'>Notes</h5>
@@ -153,7 +155,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
         <h2 className='text-white ps-1'>
           {superset.map((exercise, index) => (
             <span key={index}>
-              {index > 0 && ' + '}
+              {index > 0 && ', '}
               {exercise.exerciseName}
             </span>
           ))}
