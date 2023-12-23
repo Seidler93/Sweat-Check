@@ -46,14 +46,21 @@
 }
 
 .carrot {
-background-color: transparent;
-border: none;
+  background-color: transparent;
+  border: none;
 }
 
 .openSets-toggle {
   position: absolute;
   top: 0;
   right: 0;
+  padding: 15px 30px;
+}
+
+.set-description {
+  position: absolute;
+  top: 0;
+  left: 0;
   padding: 15px 30px;
 }
 

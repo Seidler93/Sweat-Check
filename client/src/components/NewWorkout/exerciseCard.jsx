@@ -65,7 +65,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
           </div>
         </Modal.Body>
       </Modal>
-      <button className='carrot'>{showSets ? (
+      <button className='openSets-toggle carrot'>{showSets ? (
         <FontAwesomeIcon
           icon={faCaretDown}
           onClick={() => handleDropDownClick(!showSets)}
@@ -83,7 +83,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
         <>
           {superset.map((exercise, exerciseIndex) => (
             <div className='mb-3' key={exerciseIndex}>
-              <h4 className='text-white'>{exercise.exerciseName}</h4>
+              <h3 className='text-white'>{exercise.exerciseName}</h3>
               <div className='text-white d-flex align-items-center justify-content-start'>
                 <h4 className='w20 text-center'>Sets</h4>
                 <h4 className='w30 text-center me-1'>Reps</h4>
@@ -146,7 +146,20 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
             </button>
           </div>
           </>
-      ) : ''}
+      ) : 
+       superset.length === 1 ? (
+        <h2 className='text-white ps-1'>{superset[0].exerciseName}</h2>
+      ) : (
+        <h2 className='text-white ps-1'>
+          {superset.map((exercise, index) => (
+            <span key={index}>
+              {index > 0 && ' + '}
+              {exercise.exerciseName}
+            </span>
+          ))}
+        </h2>
+      )}
+            
     </div>
   );
 };
