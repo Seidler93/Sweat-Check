@@ -13,7 +13,7 @@ export default function NewWorkoutPage() {
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
   
-  let workout = []
+  let workout = {}
   const handleAddExercise = () => {
     // Use the current value of exerciseInput
     const newExercise = [{ 
@@ -41,11 +41,40 @@ export default function NewWorkoutPage() {
       const updatedExerciseGroup = [...exerciseGroup, { exerciseName: newSSExercise }];
   
       // Update the exercise group in the workout array
+      updatedWorkout[supersetIndex] = [ ...updatedExerciseGroup ];      
+
+      return updatedWorkout;
+    });
+  };
+
+
+  useEffect(() => {
+    const storedWorkout = JSON.parse(localStorage.getItem('woip'));
+    if (storedWorkout) {
+      setNewWorkout(storedWorkout);
+      setAddExercise(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    // Save the updated workout to local storage
+    localStorage.setItem('woip', JSON.stringify(newWorkout));
+  }, [newWorkout]);
+
+  const addToExercise = (supersetIndex, setRepInfo) => {
+    setNewWorkout((prevWorkout) => {
+      const updatedWorkout = [...prevWorkout];
+      // Get the exercise group at the specified index
+      const exerciseGroup = [...updatedWorkout[supersetIndex]];
+      // Add a new exercise to the exercise group
+      const updatedExerciseGroup = [...exerciseGroup, { exerciseName: newSSExercise }];
+  
+      // Update the exercise group in the workout array
       updatedWorkout[supersetIndex] = [ ...updatedExerciseGroup ];
   
       return updatedWorkout;
     });
-  };
+  }
   
   // console.log(newWorkout);
 
