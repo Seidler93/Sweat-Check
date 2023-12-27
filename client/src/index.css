@@ -19,7 +19,9 @@
   border-radius: 6px;
   position: relative;
 }
-
+span {
+  color: black;
+}
 .round {
   border-radius: 6px;
 }
@@ -27,7 +29,14 @@
 .hide {
   visibility: hidden!important;
 }
-
+button {
+  color: green;
+}
+.highlighted-tile {
+  background-color: green !important;
+  color: white !important; /* Adjust text color for better visibility */
+  
+}
 .w30 {
   width: 33%;
 }
