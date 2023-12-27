@@ -44,12 +44,9 @@ export default function Header ({ showMenu, setShowMenu}) {
       {/* <Nav.Item className='p-1'>
             <FontAwesomeIcon icon={faCheck} style={{color: "#ffffff",}} className='message-icon pe-2'/>
         </Nav.Item> */}
-        <Nav.Item className='p-1'>
-          {/* <Link to={'/myPrograms'}>
-            <FontAwesomeIcon icon={faDumbbell} style={{color: "#ffffff",}} className='CheckIn-icon pe-2'/>
-          </Link> */}
+        <Nav.Item className='py-2 px-1 clear'>
           <FontAwesomeIcon onClick={() => saveTheDate()} icon={faDumbbell} style={{color: "#ffffff",}} className='CheckIn-icon pe-2'/>
-          </Nav.Item>
+        </Nav.Item>
         <Nav.Item className='py-2 px-1 clear'>
           <Link to={'/conversations'}>
             <FontAwesomeIcon icon={faMessage} style={{color: "#ffffff",}} className='message-icon'/>
