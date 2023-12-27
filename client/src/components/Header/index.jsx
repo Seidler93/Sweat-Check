@@ -4,18 +4,20 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage, faBars, faDumbbell, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { useState, useEffect } from 'react';
+import { useUserContext } from "../../utils/UserContext";
+
 
 export default function Header ({ showMenu, setShowMenu}) {
-  const [checkedIn, setCheckedIn] = useState(false)
   const [fadeOut, setFadeOut] = useState(false);
+  const {checkedIn, setCheckedIn} = useUserContext()
 
   const handleMenu = () => {
     setFadeOut(!fadeOut);
     setShowMenu(!showMenu);
   };
-  let datesWorkedOut = []
 
   const saveTheDate = () => {
+    setCheckedIn(true)
     // Create a new Date object, which represents the current date and time
     const currentDate = new Date();
     
@@ -25,17 +27,10 @@ export default function Header ({ showMenu, setShowMenu}) {
     const day = currentDate.getDate();
     
     // Format the date as a string
-    const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+    const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`
         localStorage.setItem('checkedIn', JSON.stringify(formattedDate));
         console.log(formattedDate);
-      }
-
-  // useEffect(() => {
-  //   const storedWorkout = JSON.parse(localStorage.getItem('woip'));
-  //   if (storedWorkout) {
-  //     setWoip(storedWorkout);
-  //   }
-  // }, [])
+     }
 
   return (
     <Nav className='f2 bg-dark d-flex justify-content-between fixed-top border '>
