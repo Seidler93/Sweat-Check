@@ -38,7 +38,7 @@ export default function Header ({ showMenu, setShowMenu}) {
   // }, [])
 
   return (
-    <Nav className='f2 bg-dark d-flex justify-content-between fixed-top'>
+    <Nav className='f2 bg-dark d-flex justify-content-between fixed-top border '>
       <NavDropdown  title="Sweat Check" id="nav-dropdown" className='ps-3 d-flex align-items-center justify-content-center'>
         <NavDropdown.Item >Feed 1</NavDropdown.Item>
         <NavDropdown.Item >Feed 2</NavDropdown.Item>

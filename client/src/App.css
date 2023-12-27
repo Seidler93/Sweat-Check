@@ -1,9 +1,14 @@
+
 h2 {
   color: white!important;
 }
-/* calendar.css */
-
-/* Customize the size of the Calendar component */
+.CalPage{
+  padding-top: 3.4rem;
+  
+}
+.Cal{
+  margin: 10%;
+}
 .custom-calendar {
   max-width: 900px; 
   margin: 0 auto;
@@ -14,14 +19,13 @@ h2 {
 
 .react-calendar *{
   color:white;
+  
 }
-.longest{
-  margin: 10%;
+.Streaks{
+  margin: 10.9886%;
 
 }
-.Current{
-  margin: 10%;
-}
+
 
 .logo {
   height: 6em;
