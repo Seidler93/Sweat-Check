@@ -28,9 +28,10 @@ export default function Header ({ showMenu, setShowMenu}) {
     
     // Format the date as a string
     const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`
-        localStorage.setItem('checkedIn', JSON.stringify(formattedDate));
-        console.log(formattedDate);
-     }
+
+    localStorage.setItem('checkedIn', JSON.stringify(true));
+    console.log(formattedDate);
+  }
 
   return (
     <Nav className='f2 bg-dark d-flex justify-content-between fixed-top border '>

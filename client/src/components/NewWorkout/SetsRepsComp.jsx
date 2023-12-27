@@ -10,9 +10,9 @@ export default function SetsRepsComp({setCount, completeSet, exerciseIndex, sets
   console.log('setsInfo:', setsInfo);
 
   useEffect(() => {
-    if (completedSets.length === setCount) {
+    if (completedSets.length === setsInfo.length) {
       setAllSetsCompleted(true);
-    } else if (completedSets.length !== setCount) {
+    } else if (completedSets.length !== setsInfo.length) {
       setAllSetsCompleted(false);
     }
   }, [completedSets, setCount]);
