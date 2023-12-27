@@ -1,6 +1,31 @@
+
 h2 {
   color: white!important;
 }
+.CalPage{
+  padding-top: 3.4rem;
+  
+}
+.Cal{
+  margin: 10%;
+}
+.custom-calendar {
+  max-width: 900px; 
+  margin: 0 auto;
+  height: 350px;
+  
+}
+/* calendar.css */
+
+.react-calendar *{
+  color:white;
+  
+}
+.Streaks{
+  margin: 10.9886%;
+
+}
+
 
 .logo {
   height: 6em;
