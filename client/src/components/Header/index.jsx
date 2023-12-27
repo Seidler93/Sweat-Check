@@ -30,12 +30,12 @@ export default function Header ({ showMenu, setShowMenu}) {
         console.log(formattedDate);
       }
 
-  useEffect(() => {
-    const storedWorkout = JSON.parse(localStorage.getItem('woip'));
-    if (storedWorkout) {
-      setWoip(storedWorkout);
-    }
-  }, [])
+  // useEffect(() => {
+  //   const storedWorkout = JSON.parse(localStorage.getItem('woip'));
+  //   if (storedWorkout) {
+  //     setWoip(storedWorkout);
+  //   }
+  // }, [])
 
   return (
     <Nav className='f2 bg-dark d-flex justify-content-between fixed-top'>

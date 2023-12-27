@@ -1,6 +1,27 @@
 h2 {
   color: white!important;
 }
+/* calendar.css */
+
+/* Customize the size of the Calendar component */
+.custom-calendar {
+  max-width: 900px; 
+  margin: 0 auto;
+  height: 350px;
+  
+}
+/* calendar.css */
+
+.react-calendar *{
+  color:white;
+}
+.longest{
+  margin: 10%;
+
+}
+.Current{
+  margin: 10%;
+}
 
 .logo {
   height: 6em;

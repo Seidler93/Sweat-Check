@@ -41,14 +41,13 @@ datesWorkedOut = [...datesWorkedOut, dateCheckedIn]
         <HomeMenu />
       ) : (
         <>
-<<<<<<< HEAD
-        <div className='hp text-black'>
-            <Calendar onChange={onChange} value = {date} className={'text-black'}/>
-=======
-        <div className='hp'>
+        <div className='hp bg-dark  '>
             {/* <Calendar onChange={onChange} value = {date}/> */}
-            <Calendar onChange={onChange} value={date} tileClassName={getTileClassName} />
->>>>>>> 048f6b49f5495c8e4b1fec9f468f52a0fc15adbf
+            <Calendar onChange={onChange} value={date} tileClassName={getTileClassName} className="custom-calendar bg-black text-light " />
+         <div className='streaks'>
+          <h3 className='longest  bg-black text-warning rounded p-3 border'>Longest Streak:</h3>
+          <h3 className='Current bg-black text-primary rounded p-3 border'>Current Streak:</h3>
+         </div>
          </div>
         </>
       )}
