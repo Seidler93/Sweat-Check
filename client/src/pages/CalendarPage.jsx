@@ -11,6 +11,7 @@ export default function CalendarPage(){
     const onChange = (selectedDate) => {
         setDate(selectedDate);
       };
+      let datesWorkedOut = []
     return (
         <>
         <Header showMenu={showMenu} setShowMenu={setShowMenu} />

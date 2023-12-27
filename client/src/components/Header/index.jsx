@@ -13,6 +13,22 @@ export default function Header ({ showMenu, setShowMenu}) {
     setFadeOut(!fadeOut);
     setShowMenu(!showMenu);
   };
+  let datesWorkedOut = []
+
+  const saveTheDate = () => {
+    // Create a new Date object, which represents the current date and time
+    const currentDate = new Date();
+    
+    // Extract individual components of the date (year, month, day)
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
+    const day = currentDate.getDate();
+    
+    // Format the date as a string
+    const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+        localStorage.setItem('checkedIn', JSON.stringify(formattedDate));
+        console.log(formattedDate);
+      }
 
   return (
     <Nav className='f2 bg-dark d-flex justify-content-between fixed-top'>
@@ -22,6 +38,15 @@ export default function Header ({ showMenu, setShowMenu}) {
         <NavDropdown.Item >Feed 3</NavDropdown.Item>
       </NavDropdown>
       <div className='d-flex pe-1'>
+      {/* <Nav.Item className='p-1'>
+            <FontAwesomeIcon icon={faCheck} style={{color: "#ffffff",}} className='message-icon pe-2'/>
+        </Nav.Item> */}
+        <Nav.Item className='p-1'>
+          {/* <Link to={'/myPrograms'}>
+            <FontAwesomeIcon icon={faDumbbell} style={{color: "#ffffff",}} className='CheckIn-icon pe-2'/>
+          </Link> */}
+          <FontAwesomeIcon onClick={() => saveTheDate()} icon={faDumbbell} style={{color: "#ffffff",}} className='CheckIn-icon pe-2'/>
+          </Nav.Item>
         <Nav.Item className='py-2 px-1 clear'>
           <Link to={'/conversations'}>
             <FontAwesomeIcon icon={faMessage} style={{color: "#ffffff",}} className='message-icon'/>
