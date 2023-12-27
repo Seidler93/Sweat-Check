@@ -1,5 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import UserProvider from '../src/utils/UserContext';
 
 import {
   ApolloClient,
@@ -37,7 +38,9 @@ const client = new ApolloClient({
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <Outlet />
+      <UserProvider>
+        <Outlet />
+      </UserProvider>
     </ApolloProvider>
   );
 }
