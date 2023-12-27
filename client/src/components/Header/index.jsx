@@ -17,7 +17,7 @@ export default function Header ({ showMenu, setShowMenu}) {
   };
 
   const saveTheDate = () => {
-    setCheckedIn(true)
+    setCheckedIn(!checkedIn)
     // Create a new Date object, which represents the current date and time
     const currentDate = new Date();
     
@@ -45,7 +45,7 @@ export default function Header ({ showMenu, setShowMenu}) {
             <FontAwesomeIcon icon={faCheck} style={{color: "#ffffff",}} className='message-icon pe-2'/>
         </Nav.Item> */}
         <Nav.Item className='py-2 px-1 clear'>
-          <FontAwesomeIcon onClick={() => saveTheDate()} icon={faDumbbell} style={{color: "#ffffff",}} className='CheckIn-icon pe-2'/>
+          <FontAwesomeIcon onClick={() => saveTheDate()} icon={faDumbbell} style={{color: "#ffffff",}} className={`pe-1 ${checkedIn ? 'checked-in' : ''}`}/>
         </Nav.Item>
         <Nav.Item className='py-2 px-1 clear'>
           <Link to={'/conversations'}>

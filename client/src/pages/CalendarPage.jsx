@@ -104,16 +104,16 @@ export default function CalendarPage(){
         <HomeMenu />
       ) : (
         <>
-        <div className='CalPage bg-dark border  '>
-          <div className='Cal'>
+        <div className='cal-page bg-dark border  '>
+          <div className='cal'>
             {/* <Calendar onChange={onChange} value = {date}/> */}
             <Calendar onChange={onChange} value={date} tileClassName={getTileClassName} className="custom-calendar bg-black text-light " />
             </div>
          <div className='streaks'>
-          <h3 className='Streaks  bg-black text-warning rounded p-3 border'>Longest Streak:</h3>
-          <h3 className='Streaks bg-black text-primary rounded p-3 border'>Current Streak:</h3>
-          <h3 className='Streaks  bg-black text-success rounded p-3 border'>Total Days This Month:</h3>
-          <h3 className='Streaks bg-black text-info rounded p-3 border'>Total Days This Year:</h3>
+          <h3 className='streaks  bg-black text-warning rounded p-3 border'>Longest Streak:</h3>
+          <h3 className='streaks bg-black text-primary rounded p-3 border'>Current Streak:</h3>
+          <h3 className='streaks  bg-black text-success rounded p-3 border'>Total Days This Month:</h3>
+          <h3 className='streaks bg-black text-info rounded p-3 border'>Total Days This Year:</h3>
          </div>
          </div>
         </>

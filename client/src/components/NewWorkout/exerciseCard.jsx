@@ -69,18 +69,18 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
           </div>
         </Modal.Body>
       </Modal>
-      <button className='openSets-toggle carrot'>{showSets ? (
+      <button className='open-sets-toggle carrot'>{showSets ? (
         <FontAwesomeIcon
           icon={faCaretDown}
           onClick={() => handleDropDownClick(!showSets)}
-          className='openSets-toggle'
+          className='open-sets-toggle'
           rotation={180}
         />
       ) : (
         <FontAwesomeIcon
           icon={faCaretDown}
           onClick={() => handleDropDownClick(!showSets)}
-          className='openSets-toggle'
+          className='open-sets-toggle'
         />
       )}</button>
       {showSets ? (
