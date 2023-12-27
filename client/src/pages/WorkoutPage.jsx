@@ -77,6 +77,11 @@ export default function NewWorkoutPage() {
       return updatedWorkout;
     });
   }
+
+  const handleCompleteWorkout = () => {
+    console.log('deleted');
+    localStorage.removeItem('woip');
+  }
   
   // console.log(newWorkout);
 
@@ -86,7 +91,7 @@ export default function NewWorkoutPage() {
       {showMenu ? (
         <HomeMenu />
         ) : (
-        <div className='mx-10px hp'>
+        <div className='mx-10px hp d-flex flex-column'>
           <div className='d-flex flex-column my-2'>
             {newWorkout.map((exercises, index) => <ExerciseCard superset={exercises} index={index} addToSuperSet={addToSuperSet}/>)}
           </div>
@@ -115,6 +120,7 @@ export default function NewWorkoutPage() {
               Add circuit
             </button>
           </div>
+          <button onClick={() => handleCompleteWorkout()} className='modal-btn mt-1'>Complete Workout</button>
         </div>
       )}
     </>

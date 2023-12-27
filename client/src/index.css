@@ -50,6 +50,16 @@
   border: none;
 }
 
+.text-black {
+  color: black!important;
+}
+button {
+  color: green;
+}
+span {
+  color: black;
+}
+
 .openSets-toggle {
   position: absolute;
   top: 0;

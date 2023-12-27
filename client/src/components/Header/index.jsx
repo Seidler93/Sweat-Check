@@ -3,16 +3,23 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage, faBars, faDumbbell, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Header ({ showMenu, setShowMenu}) {
- 
+  const [checkedIn, setCheckedIn] = useState(false)
   const [fadeOut, setFadeOut] = useState(false);
 
   const handleMenu = () => {
     setFadeOut(!fadeOut);
     setShowMenu(!showMenu);
   };
+
+  useEffect(() => {
+    const storedWorkout = JSON.parse(localStorage.getItem('woip'));
+    if (storedWorkout) {
+      setWoip(storedWorkout);
+    }
+  }, [])
 
   return (
     <Nav className='f2 bg-dark d-flex justify-content-between fixed-top'>

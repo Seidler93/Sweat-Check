@@ -18,8 +18,8 @@ export default function CalendarPage(){
         <HomeMenu />
       ) : (
         <>
-        <div className='psomething'>
-            <Calendar onChange={onChange} value = {date}/>
+        <div className='hp text-black'>
+            <Calendar onChange={onChange} value = {date} className={'text-black'}/>
          </div>
         </>
       )}

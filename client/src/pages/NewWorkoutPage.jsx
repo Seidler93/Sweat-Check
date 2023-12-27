@@ -59,6 +59,7 @@ export default function NewWorkoutPage() {
   useEffect(() => {
     // Save the updated workout to local storage
     localStorage.setItem('woip', JSON.stringify(newWorkout));
+    localStorage.setItem('checkedIn', JSON.stringify(Date.now));
   }, [newWorkout]);
 
   const addToExercise = (supersetIndex, setRepInfo) => {
@@ -74,6 +75,11 @@ export default function NewWorkoutPage() {
   
       return updatedWorkout;
     });
+  }
+
+  const handleCompleteWorkout = () => {
+    console.log('deleted');
+    localStorage.removeItem('woip');
   }
   
   // console.log(newWorkout);
@@ -113,7 +119,7 @@ export default function NewWorkoutPage() {
               Add circuit
             </button>
           </div>
-          <button>Complete Workout</button>
+          {newWorkout.length > 0 ? <button onClick={() => handleCompleteWorkout()} className='modal-btn mt-1'>Complete Workout</button> : '' }
         </div>
       )}
     </>
