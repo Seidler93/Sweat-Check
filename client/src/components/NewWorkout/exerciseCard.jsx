@@ -4,7 +4,7 @@ import { faSquareCheck, faPlus, faCaretDown } from '@fortawesome/free-solid-svg-
 import Modal from 'react-bootstrap/Modal';
 import SetsRepsComp from './SetsRepsComp';
 
-export default function ExerciseCard({ superset, index, addToSuperSet }) {
+export default function ExerciseCard({ superset, index, addToSuperSet, updateExercise, addSetToExercise }) {
   const [setCount, setSetCount] = useState(1);
   const [addExercise, setAddExercise] = useState(false);
   const [exerciseInput, setExerciseInput] = useState('');
@@ -24,6 +24,22 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
     setAddExercise(false);
     setExerciseInput('');
   };
+
+  const handleAddSet = () => {
+    setSetCount(setCount + 1)
+    for (let i = 0; i < superset.length; i++) {
+      addSetToExercise(i, index)      
+    }
+  };
+
+  const completeSet = (setIndex, repsInput, weightInput, exerciseIndex) => {
+    const exerciseObject = {
+      reps: repsInput,
+      weight: weightInput, 
+      completed: true,
+    }
+    updateExercise(exerciseObject, setIndex, exerciseIndex, index )
+  }
 
   return (
     <div key={index} className='exercise-card d-flex flex-column my-2'>
@@ -65,7 +81,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
           {superset.map((exercise, exerciseIndex) => (
             <div className='mb-3' key={exerciseIndex}>
               <h3 className='text-white'>{exercise.exerciseName}</h3>
-              <SetsRepsComp setCount={setCount} />
+              <SetsRepsComp setCount={setCount} completeSet={completeSet} exerciseIndex={exerciseIndex}/>
             </div>
           ))}
           {notes ? (
@@ -90,7 +106,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet }) {
             </div>
           ) : ''}
           <div className='d-flex mt-3'>
-            <button className='modal-btn me-1 px-1' onClick={() => setSetCount(setCount + 1)}>
+            <button className='modal-btn me-1 px-1' onClick={() => handleAddSet()}>
               Add set
             </button>
             <button className='modal-btn mx-1 px-1' onClick={() => setAddExercise(!addExercise)}>

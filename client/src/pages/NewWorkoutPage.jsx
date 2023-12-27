@@ -18,6 +18,7 @@ export default function NewWorkoutPage() {
     // Use the current value of exerciseInput
     const newExercise = [{ 
         exerciseName: exerciseInput,
+        sets: [{reps: '', weight: '', completed: false}]
      }];
   
     // Update the workout array with the new exercise
@@ -37,6 +38,7 @@ export default function NewWorkoutPage() {
       const updatedWorkout = [...prevWorkout];
       // Get the exercise group at the specified index
       const exerciseGroup = [...updatedWorkout[supersetIndex]];
+
       // Add a new exercise to the exercise group
       const updatedExerciseGroup = [...exerciseGroup, { exerciseName: newSSExercise }];
   
@@ -47,6 +49,32 @@ export default function NewWorkoutPage() {
     });
   };
 
+  const updateExercise = (exerciseObject, setIndex, exerciseIndex, supersetIndex) => {
+    setNewWorkout((prevWorkout) => {
+      const updatedWorkout = [...prevWorkout];
+      // Get the exercise group at the specified index
+      const exerciseGroup = [...updatedWorkout[supersetIndex]];
+
+      // Update exercise sets
+      exerciseGroup[exerciseIndex].sets[setIndex] = exerciseObject     
+      console.log(updatedWorkout);
+      return updatedWorkout;
+    });
+  }
+
+  const addSetToExercise = (exerciseIndex, supersetIndex) => {
+    setNewWorkout((prevWorkout) => {
+      const updatedWorkout = [...prevWorkout];
+      // Get the exercise group at the specified index
+      const exerciseGroup = [...updatedWorkout[supersetIndex]];
+
+      // Update sets with a new empty set
+      const newSets = [...exerciseGroup[exerciseIndex].sets, {reps: '', weight: '', completed: false}]
+      exerciseGroup[exerciseIndex].sets = newSets     
+      console.log(updatedWorkout);
+      return updatedWorkout;
+    });
+  }
 
   // useEffect(() => {
   //   const storedWorkout = JSON.parse(localStorage.getItem('woip'));
@@ -61,21 +89,6 @@ export default function NewWorkoutPage() {
     localStorage.setItem('woip', JSON.stringify(newWorkout));
     localStorage.setItem('checkedIn', JSON.stringify(Date.now));
   }, [newWorkout]);
-
-  const addToExercise = (supersetIndex, setRepInfo) => {
-    setNewWorkout((prevWorkout) => {
-      const updatedWorkout = [...prevWorkout];
-      // Get the exercise group at the specified index
-      const exerciseGroup = [...updatedWorkout[supersetIndex]];
-      // Add a new exercise to the exercise group
-      const updatedExerciseGroup = [...exerciseGroup, { exerciseName: newSSExercise }];
-  
-      // Update the exercise group in the workout array
-      updatedWorkout[supersetIndex] = [ ...updatedExerciseGroup ];
-  
-      return updatedWorkout;
-    });
-  }
 
   const handleCompleteWorkout = () => {
     console.log('deleted');
@@ -92,7 +105,7 @@ export default function NewWorkoutPage() {
         ) : (
         <div className='mx-10px hp d-flex flex-column'>
           <div className='d-flex flex-column my-2'>
-            {newWorkout.map((exercises, index) => <ExerciseCard superset={exercises} index={index} addToSuperSet={addToSuperSet}/>)}
+              {newWorkout.map((exercises, index) => <ExerciseCard key={index} superset={exercises} index={index} addToSuperSet={addToSuperSet} updateExercise={updateExercise} addSetToExercise={addSetToExercise}/>)}
           </div>
           {addExercise ? (
             <div className='d-flex align-items-center mb-2 justify-content-between'>

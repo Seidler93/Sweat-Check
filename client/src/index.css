@@ -27,9 +27,7 @@
 .hide {
   visibility: hidden!important;
 }
-button {
-  color: green;
-}
+
 .highlighted-tile {
   background-color: green !important;
   color: white !important; 
@@ -60,9 +58,7 @@ button {
 .text-black {
   color: black!important;
 }
-button {
-  color: green;
-}
+
 span {
   color: black;
 }
