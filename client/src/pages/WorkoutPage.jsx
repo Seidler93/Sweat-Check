@@ -93,7 +93,7 @@ export default function NewWorkoutPage() {
         ) : (
         <div className='mx-10px hp d-flex flex-column'>
           <div className='d-flex flex-column my-2'>
-            {newWorkout.map((exercises, index) => <ExerciseCard superset={exercises} index={index} addToSuperSet={addToSuperSet}/>)}
+            {newWorkout.map((exercises, index) => <ExerciseCard key={index} superset={exercises} index={index} addToSuperSet={addToSuperSet} woip={true}/>)}
           </div>
           {addExercise ? (
             <div className='d-flex align-items-center mb-2 justify-content-between'>

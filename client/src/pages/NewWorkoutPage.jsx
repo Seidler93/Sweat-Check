@@ -40,7 +40,10 @@ export default function NewWorkoutPage() {
       const exerciseGroup = [...updatedWorkout[supersetIndex]];
 
       // Add a new exercise to the exercise group
-      const updatedExerciseGroup = [...exerciseGroup, { exerciseName: newSSExercise }];
+      const updatedExerciseGroup = [...exerciseGroup, { 
+        exerciseName: newSSExercise,
+        sets: [{reps: '', weight: '', completed: false}]
+      }];
   
       // Update the exercise group in the workout array
       updatedWorkout[supersetIndex] = [ ...updatedExerciseGroup ];      
@@ -57,7 +60,6 @@ export default function NewWorkoutPage() {
 
       // Update exercise sets
       exerciseGroup[exerciseIndex].sets[setIndex] = exerciseObject     
-      console.log(updatedWorkout);
       return updatedWorkout;
     });
   }
@@ -71,7 +73,6 @@ export default function NewWorkoutPage() {
       // Update sets with a new empty set
       const newSets = [...exerciseGroup[exerciseIndex].sets, {reps: '', weight: '', completed: false}]
       exerciseGroup[exerciseIndex].sets = newSets     
-      console.log(updatedWorkout);
       return updatedWorkout;
     });
   }

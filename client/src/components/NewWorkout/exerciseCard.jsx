@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faPlus, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 import SetsRepsComp from './SetsRepsComp';
 
-export default function ExerciseCard({ superset, index, addToSuperSet, updateExercise, addSetToExercise }) {
+export default function ExerciseCard({ superset, index, addToSuperSet, updateExercise, addSetToExercise, woip }) {
   const [setCount, setSetCount] = useState(1);
   const [addExercise, setAddExercise] = useState(false);
   const [exerciseInput, setExerciseInput] = useState('');
   const [notes, setNotes] = useState('');
   const [showSets, setShowSets] = useState(true);
   const [show, setShow] = useState(false);
+  console.log(superset);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -40,6 +41,12 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
     }
     updateExercise(exerciseObject, setIndex, exerciseIndex, index )
   }
+
+  // useEffect(() => {
+  //   if (woip) {
+      
+  //   }
+  // }, [])
 
   return (
     <div key={index} className='exercise-card d-flex flex-column my-2'>
@@ -81,7 +88,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
           {superset.map((exercise, exerciseIndex) => (
             <div className='mb-3' key={exerciseIndex}>
               <h3 className='text-white'>{exercise.exerciseName}</h3>
-              <SetsRepsComp setCount={setCount} completeSet={completeSet} exerciseIndex={exerciseIndex}/>
+              <SetsRepsComp setCount={setCount} completeSet={completeSet} exerciseIndex={exerciseIndex} setsInfo={exercise.sets}/>
             </div>
           ))}
           {notes ? (

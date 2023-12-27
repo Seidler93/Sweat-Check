@@ -4,9 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faPlus, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import SetsRepsInput from './SetsRepsInput';
 
-export default function SetsRepsComp({setCount, completeSet, exerciseIndex}) {
+export default function SetsRepsComp({setCount, completeSet, exerciseIndex, setsInfo}) {
   const [completedSets, setCompletedSets] = useState([]);
   const [allSetsCompleted, setAllSetsCompleted] = useState(false);
+  console.log('setsInfo:', setsInfo);
 
   useEffect(() => {
     if (completedSets.length === setCount) {
@@ -27,6 +28,16 @@ export default function SetsRepsComp({setCount, completeSet, exerciseIndex}) {
     completeSet(setIndex, repsInput, weightInput, exerciseIndex)
   };
 
+  const setCheckCompleted = (setIndex) => {
+    setCompletedSets((prevCompletedSets) => {
+      if (prevCompletedSets.includes(setIndex)) {
+        return prevCompletedSets.filter((index) => index !== setIndex);
+      } else {
+        return [...prevCompletedSets, setIndex];
+      }
+    });
+  }
+
   return (
     <>
       <div className='text-white d-flex align-items-center justify-content-start'>
@@ -40,7 +51,7 @@ export default function SetsRepsComp({setCount, completeSet, exerciseIndex}) {
           />
         </p>
       </div>
-      {Array.from({ length: setCount }, (_, setIndex) => (
+      {Array.from({ length: setsInfo.length }, (_, setIndex) => (
         // <div key={setIndex} className='d-flex align-items-center justify-content-start mb-2'>
         //   <p className='text-white p-2 m-0 w20 text-center'>{setIndex + 1}</p>
         //   <input className='w30 px-2 me-1 form-control' type="text" placeholder='reps' />
@@ -55,7 +66,7 @@ export default function SetsRepsComp({setCount, completeSet, exerciseIndex}) {
         //     />
         //   </button>
         // </div>
-        <SetsRepsInput key={setIndex} setIndex={setIndex} handleSetComplete={handleSetComplete} completedSets={completedSets}/>
+        <SetsRepsInput key={setIndex} setIndex={setIndex} handleSetComplete={handleSetComplete} completedSets={completedSets} setInfo={setsInfo[setIndex]} setCheckCompleted={setCheckCompleted}/>
       ))}
     </>
   );

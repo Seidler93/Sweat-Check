@@ -2,9 +2,18 @@ import { useState, useEffect  } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 
-export default function SetsRepsInput({setIndex, handleSetComplete, completedSets }) {
-  const [repsInput, setRepsInput] = useState('');
-  const [weightInput, setWeightInput] = useState('');
+export default function SetsRepsInput({setIndex, handleSetComplete, completedSets, setInfo, setCheckCompleted }) {
+  const [repsInput, setRepsInput] = useState(setInfo.reps || '');
+  const [weightInput, setWeightInput] = useState(setInfo.weight || '');
+
+  console.log(setInfo);
+
+  useEffect(() => {
+    if (setInfo.completed) {
+      setCheckCompleted(setIndex)
+    }
+  }, [])
+    
 
   return (
     <>
