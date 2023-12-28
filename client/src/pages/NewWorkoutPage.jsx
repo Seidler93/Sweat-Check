@@ -1,18 +1,25 @@
 import { useState, useEffect  } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header/index'
 import HomeMenu from '../components/HomeMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Button } from 'bootstrap';
 import ExerciseCard from '../components/NewWorkout/exerciseCard';
+import { useUserContext } from "../utils/UserContext";
 
 export default function NewWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [newWorkout, setNewWorkout] = useState([]);
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
+  const {checkedIn, setCheckedIn} = useUserContext()
   
+  useEffect(() => {
+    // Move the setCheckedIn call inside useEffect
+    setCheckedIn(true);
+  }, []); // The empty dependency array ensures this runs only once on mount
+
   let workout = {}
   const handleAddExercise = () => {
     // Use the current value of exerciseInput
@@ -44,7 +51,7 @@ export default function NewWorkoutPage() {
         exerciseName: newSSExercise,
         sets: [{reps: '', weight: '', completed: false}]
       }];
-  
+      
       // Update the exercise group in the workout array
       updatedWorkout[supersetIndex] = [ ...updatedExerciseGroup ];      
 
@@ -64,7 +71,7 @@ export default function NewWorkoutPage() {
     });
   }
 
-  const addSetToExercise = (exerciseIndex, supersetIndex) => {
+  const addSetToExercise = (exerciseIndex, supersetIndex, setCount) => {
     setNewWorkout((prevWorkout) => {
       const updatedWorkout = [...prevWorkout];
       // Get the exercise group at the specified index
@@ -72,8 +79,14 @@ export default function NewWorkoutPage() {
 
       // Update sets with a new empty set
       const newSets = [...exerciseGroup[exerciseIndex].sets, {reps: '', weight: '', completed: false}]
-      exerciseGroup[exerciseIndex].sets = newSets     
+      exerciseGroup[exerciseIndex].sets = newSets  
       return updatedWorkout;
+      
+      // if (newSets.length == setCount) {
+      //   return updatedWorkout;
+      // } else {
+      //   return addSetToExercise(exerciseIndex, supersetIndex, setCount)
+      // }
     });
   }
 
@@ -91,9 +104,17 @@ export default function NewWorkoutPage() {
     localStorage.setItem('checkedIn', JSON.stringify(Date.now));
   }, [newWorkout]);
 
+  const history = useNavigate();
+
   const handleCompleteWorkout = () => {
     console.log('deleted');
     localStorage.removeItem('woip');
+    setCheckedIn(false)
+    const workouts = localStorage.getItem('workouts') || '';
+    const newWorkouts = [...workouts, newWorkout]
+    localStorage.setItem('workouts', JSON.stringify(newWorkouts));
+    // Redirect to the homepage
+    history.push('/');
   }
   
   // console.log(newWorkout);

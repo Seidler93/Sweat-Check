@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { useUserContext } from "../utils/UserContext";
 
 export default function WorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [show, setShow] = useState(false);
   const [woip, setWoip] = useState([]);
 
+  const {checkedIn, setCheckedIn} = useUserContext()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -42,7 +44,7 @@ export default function WorkoutPage() {
               <button className='current-program-btn'><Link to={'/store/programId'}>Program 1</Link></button>
               <div className='d-flex flex-column'>
                 <button className='modal-btn'><Link to={'/newWorkoutPage'}><FontAwesomeIcon className='pe-3' icon={faPlus} />New Workout</Link></button>
-                {woip ? <button className='modal-btn'><Link to={'/workout/woip'}>Resume Workout</Link></button> : ''}
+                {checkedIn ? <button className='modal-btn'><Link to={'/workout/woip'}>Resume Workout</Link></button> : ''}
                 <div className='d-flex'>
                   <button className='modal-btn me-1'><Link to={'/store'}>Find Workout</Link></button>
                   <button className='modal-btn ms-1'><Link to={'/store'}>Find Program</Link></button>

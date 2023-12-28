@@ -8,8 +8,9 @@ import { useUserContext } from "../utils/UserContext";
 
 export default function CalendarPage(){
   const [showMenu, setShowMenu] = useState(false);
-  const [date,setDate] = useState(new Date());
-  
+  const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+
   let datesWorkedOut = [ '2023-12-25','2023-12-24','2023-12-23',]
   const dateCheckedIn = JSON.parse(localStorage.getItem('checkedIn')) || '';
 
@@ -19,7 +20,23 @@ export default function CalendarPage(){
   // Function to handle date change
   const onChange = (newDate) => {
     setDate(newDate);
+        
+    // You can also format the date as needed
+    // For example, using toLocaleDateString()
+    console.log(newDate.toLocaleDateString());
   }
+
+  const handleDateClick = date => {
+    // Log the selected date when a day is clicked
+    console.log(date);
+    
+    // You can also format the date as needed
+    // For example, using toLocaleDateString()
+    console.log(date.toLocaleDateString());
+
+    // Update the state with the selected date
+    setSelectedDate(date);
+  };
 
   // Function to determine the CSS class for a specific date
   const getTileClassName = ({ date }) => {

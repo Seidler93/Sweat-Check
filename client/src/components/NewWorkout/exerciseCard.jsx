@@ -29,7 +29,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
   const handleAddSet = () => {
     setSetCount(setCount + 1)
     for (let i = 0; i < superset.length; i++) {
-      addSetToExercise(i, index)      
+      addSetToExercise(i, index, setCount)      
     }
   };
 
