@@ -91,6 +91,23 @@ button {
   width: 100%;
   overflow-x: auto;
   white-space: nowrap; 
+  scrollbar-width: thin; /* Adjust the width as needed */
+  scrollbar-color: #c4c4c4 #f1f1f1;
+}
+
+/* For WebKit browsers (e.g., Chrome, Safari) */
+.home-programs::-webkit-scrollbar {
+  width: 8px; /* Adjust the width as needed */
+  height: 4px;
+}
+
+.home-programs::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4; /* Adjust the color as needed */
+  border-radius: 4px; /* Adjust the border-radius as needed */
+}
+
+.home-programs::-webkit-scrollbar-track {
+  background-color: transparent; /* Adjust the color as needed */
 }
 
 .hp {
@@ -211,4 +228,63 @@ a {
   background-color: #333; 
   padding: 15px;
   transition: transform 0.3s;  */
+}
+
+.profile-toggle-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 26px;
+  padding-bottom: 5px;
+  border-radius: 0;
+}
+
+.profile-toggle-active {
+  border-bottom: 2px solid white!important;
+}
+
+.post-card {
+  width: 50%;
+  max-width: 500px;
+}
+
+.my-progress-card {
+  margin: 15px 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 30px;
+}
+
+.progress-container {
+  padding-bottom: 100px;
+}
+
+.iphone {
+  width: 350px;
+  height: 758px;
+  border: 5px black solid;
+  margin: 50px;
+  position: relative;
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+.iphone-content {
+  max-height: calc(758px - 10px); /* Subtract the border width from the height */
+  overflow-y: auto;
+  /* position: relative; */
+  /* Hide the scrollbar for WebKit browsers (e.g., Chrome, Safari) */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: transparent transparent; /* For Firefox */
+
+  /* Hide the scrollbar for WebKit browsers (e.g., Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 5px; /* Adjust the width as needed */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}
+
+.my-nav-fixed {
+  position: absolute;
 }
