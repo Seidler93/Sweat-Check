@@ -288,3 +288,38 @@ a {
 .my-nav-fixed {
   position: absolute;
 }
+
+.logo-login {
+  position: absolute;
+  top: 50%;
+  max-width: 100%;
+  opacity: .65;
+}
+
+.rel {
+  position: relative;
+}
+
+.z5 {
+  z-index: 5;
+}
+
+.wh100 {
+  width: 100%;
+  height: 100%;
+}
+
+.mt50 {
+  margin-top: 50%;
+}
+
+.background-img {
+  background-image: url('../src/assets/Sweat-Check-Logo.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.login-input {
+  background-color: rgba(70, 90, 126, 0.708)!important;
+}
