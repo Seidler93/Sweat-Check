@@ -372,3 +372,10 @@ a {
   right: 0;
   margin-top: 10px;
 }
+
+.none {
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+}
+

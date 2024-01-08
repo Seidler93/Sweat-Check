@@ -6,16 +6,21 @@ import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { useUserContext } from "../utils/UserContext";
+import Programs from '../components/HomePageUI/Programs';
+import Friends from '../components/HomePageUI/Friends';
 
 export default function WorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [show, setShow] = useState(false);
+  const [showWP, setShowWP] = useState(true);
   const [woip, setWoip] = useState([]);
 
   const {checkedIn, setCheckedIn} = useUserContext()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleWP = () => setShowWP(true);
+  const hanldeFriends = () => setShowWP(false);
 
   useEffect(() => {
     const storedWorkout = JSON.parse(localStorage.getItem('woip'));
@@ -33,6 +38,11 @@ export default function WorkoutPage() {
         <div className='hp d-flex flex-column'>
           {/* when you click the workout button, it will as you if you want to continue to your current program */}
           <button variant="primary" onClick={handleShow} className='workout-btn'>Workout</button>
+          <div className='home-programs p-3'>
+            <button className={`bg-tr none mx-2 p-0 ${showWP ? 'profile-toggle-active' : ''}`} onClick={handleWP}><h2 className=''>Workouts/Programs</h2></button>
+            <button className={`bg-tr none mx-2 p-0 ${!showWP ? 'profile-toggle-active' : ''}`} onClick={hanldeFriends}><h2 className=''>Friends</h2></button>
+          </div>
+          {showWP ? <Programs/> : <Friends/>}
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Select Workout</Modal.Title>
@@ -50,47 +60,6 @@ export default function WorkoutPage() {
               </div>
             </Modal.Body>
           </Modal>
-        
-            <h2 className='ms-3'>My Programs</h2>
-            <div className='home-programs'>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 1</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 2</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 3</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 4</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Find more...</Link></button>              
-            </div>
-          {/* query to db to find everything that is for sale here */}
-            <h2 className='ms-3'>Featured Workouts</h2>
-            <div className='home-programs'>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 1</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 2</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 3</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 4</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Find more...</Link></button>              
-            </div> 
-            <h2 className='ms-3'>Featured Programs</h2> 
-            <div className='home-programs'>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 1</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 2</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 3</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Program 4</Link></button>
-              <button className='program-btn'><Link to={'/store/programId'}>Find more...</Link></button>              
-            </div> 
-          <button className='see-all-btn'><Link to={'/store'}>See All</Link></button>
-
-            <h2 className='ms-3'>Friends</h2> 
-            <div className='d-flex flex-column friends-container'>
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-              <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-            </div> 
         </div>
       )}
     </>
