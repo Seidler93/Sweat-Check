@@ -4,6 +4,7 @@ import HomeWorkoutCard from './HomeWorkoutCard';
 
 export default function Programs() {
   const [workouts, setWorkouts] = useState([])
+
   useEffect(() => {
     // Save the updated workout to local storage
     const storedWorkouts = JSON.parse(localStorage.getItem('workouts')) || '';
@@ -14,7 +15,11 @@ export default function Programs() {
     <>
       <h2 className='ms-3 mt-1'>My Workouts</h2>
       <div className='home-programs'>
-        {workouts.map((workout, index) => <HomeWorkoutCard workout={workout} key={index}/>)}
+        {workouts.length > 0 ? (
+          workouts.map((workout, index) => <HomeWorkoutCard workout={workout} key={index} />)
+        ) : (
+          null
+        )}
         <button className='program-btn'><Link to={'/store/programId'}>Find workouts</Link></button>              
       </div>
       <h2 className='ms-3 mt-4'>My Programs</h2>

@@ -100,22 +100,34 @@ export default function NewWorkoutPage() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    return `${month}/${day}/${year}`;
+  }
+
   const handleCompleteWorkout = () => {
+    const workoutDate = formatTimestamp(Date.now());
     localStorage.removeItem('woip');
-    setCheckedIn(false)
+    setCheckedIn(false);
+  
     const workout = {
       userId: Auth.getProfile().data._id,
       name: formState.workoutName,
       description: formState.description,
-      dateCompleted: Date.now(),
+      dateCompleted: workoutDate,
       workout: newWorkout,
-    }
-    const workouts = JSON.parse(localStorage.getItem('workouts')) || '';
-    const newWorkouts = [...workouts, workout]
+    };
+  
+    const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+    const newWorkouts = [...workouts, workout];
     localStorage.setItem('workouts', JSON.stringify(newWorkouts));
     navigate('/');
-  }
-
+  };
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
 

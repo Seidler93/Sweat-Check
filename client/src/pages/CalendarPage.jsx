@@ -5,138 +5,91 @@ import Header from '../components/Header/index';
 import HomeMenu from '../components/HomeMenu';
 import { useQuery } from '@apollo/client';
 import { useUserContext } from "../utils/UserContext";
+import Modal from 'react-bootstrap/Modal';
+import { Link } from 'react-router-dom';
+import HomeExerciseCard from '../components/HomePageUI/HomeExerciseCard';
 
-export default function CalendarPage(){
+export default function CalendarPage() {
   const [showMenu, setShowMenu] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [date, setDate] = useState('');
+  const [show, setShow] = useState(false);
+  const [workoutsOfDate, setWorkoutsOfDate] = useState([])
 
-  let datesWorkedOut = [ '2023-12-25','2023-12-24','2023-12-23',]
-  const dateCheckedIn = JSON.parse(localStorage.getItem('checkedIn')) || '';
+  const handleClose = () => setShow(false);
 
-  datesWorkedOut = [...datesWorkedOut, dateCheckedIn]
-  const {checkedIn, setCheckedIn} = useUserContext()
+  // Use optional chaining to handle the case when workouts is null or undefined
+  const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+
+  function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${month}/${day}/${year}`;
+  }
+
+  const workoutDates = workouts.map((workout) => workout.dateCompleted)
+  const dates = workoutDates.map((date) => formatTimestamp(date))
 
   // Function to handle date change
   const onChange = (newDate) => {
-    setDate(newDate);
-        
+    const chosenDate = formatTimestamp(newDate);
+    setDate(chosenDate);
+
     // You can also format the date as needed
     // For example, using toLocaleDateString()
-    console.log(newDate.toLocaleDateString());
+    const filteredWorkouts = workouts.filter((workout) => formatTimestamp(workout.dateCompleted) === chosenDate);
+    setWorkoutsOfDate(filteredWorkouts)
+    setShow(true)
   }
-
-  const handleDateClick = date => {
-    // Log the selected date when a day is clicked
-    console.log(date);
-    
-    // You can also format the date as needed
-    // For example, using toLocaleDateString()
-    console.log(date.toLocaleDateString());
-
-    // Update the state with the selected date
-    setSelectedDate(date);
-  };
 
   // Function to determine the CSS class for a specific date
   const getTileClassName = ({ date }) => {
     const dateString = date.toISOString().split('T')[0];
-    return datesWorkedOut.includes(dateString) ? 'highlighted-tile' : null;
+    return dates.includes(dateString) ? 'highlighted-tile' : null;
   };
 
-  useEffect(() => {
-    const dateCheckedIn = JSON.parse(localStorage.getItem('checkedIn')) || '';
-    datesWorkedOut = [...datesWorkedOut, dateCheckedIn]
-  }, [checkedIn])
-
-  function countConsecutiveDates(dateArray) {
-    if (dateArray.length === 0) {
-      return 0; // Empty array has no consecutive dates
-    }
-    console.log(dateArray);
-    let count = 1;
-    let currentDate = new Date(dateArray[0]);
-  
-    for (let i = 1; i < dateArray.length; i++) {
-      const nextDate = new Date(dateArray[i]);
-      const oneDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
-  
-      if (nextDate - currentDate === oneDay) {
-        count++;
-        currentDate = nextDate;
-      } else {
-        break; // Break the sequence if the next date is not one day ahead
-      }
-    }
-    console.log(count);
-    return count;
-  }
-
-  let longestStreak = 0;
-  let currentStreak = 0;
-
-  const calculateWorkoutStreak = (dates) => {
-    if (dates.length === 0) {
-      return 0; // No workouts, so streak is 0
-    }
-  
-    // Sort the dates in descending order (newest to oldest)
-    const sortedDates = dates.sort((a, b) => new Date(b) - new Date(a));
-    // console.log(sortedDates);
-  
-    let currentStreak = 0;
-  
-    
-    // Check if the current date is consecutive with yesterday's date
-    const lastCheckedIn = (sortedDates[0]);
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const year = yesterday.getFullYear();
-    const month = yesterday.getMonth() + 1; // Months are zero-indexed, so add 1
-    const day = yesterday.getDate();
-    
-    // Format the date as a string
-    const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
-
-    // console.log('last checked in date:',lastCheckedIn);
-    // console.log('yesterday:',formattedDate);
-
-    if (lastCheckedIn === formattedDate) {
-      // Consecutive days
-      currentStreak = countConsecutiveDates(sortedDates);
-    }
-  
-    return currentStreak;
-  };
-
-
-  const streak = calculateWorkoutStreak(datesWorkedOut);
-
-
-
-    return (
-        <>
-        <Header showMenu={showMenu} setShowMenu={setShowMenu} />
+  return (
+    <>
+      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
       {showMenu ? (
         <HomeMenu />
       ) : (
         <>
-        <div className='cal-page bg-dark border  '>
-          <div className='cal'>
-            {/* <Calendar onChange={onChange} value = {date}/> */}
-            <Calendar onChange={onChange} value={date} tileClassName={getTileClassName} className="custom-calendar bg-black text-light " />
+          <div className='cal-page bg-dark border  '>
+            <div className='cal'>
+              {/* <Calendar onChange={onChange} value = {date}/> */}
+              <Calendar onChange={onChange} value={date} tileClassName={getTileClassName} className="custom-calendar bg-black text-light " />
             </div>
-         <div className='streaks'>
-          <h3 className='streaks  bg-black text-warning rounded p-3 border'>Longest Streak:</h3>
-          <h3 className='streaks bg-black text-primary rounded p-3 border'>Current Streak:</h3>
-          <h3 className='streaks  bg-black text-success rounded p-3 border'>Total Days This Month:</h3>
-          <h3 className='streaks bg-black text-info rounded p-3 border'>Total Days This Year:</h3>
-         </div>
-         </div>
+            <div className='streaks'>
+              <h3 className='streaks  bg-black text-warning rounded p-3 border'>Longest Streak:</h3>
+              <h3 className='streaks bg-black text-primary rounded p-3 border'>Current Streak:</h3>
+              <h3 className='streaks  bg-black text-success rounded p-3 border'>Total Days This Month:</h3>
+              <h3 className='streaks bg-black text-info rounded p-3 border'>Total Days This Year:</h3>
+            </div>
+          </div>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>{date}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {workoutsOfDate.length > 0 ? (
+                workoutsOfDate.map((workout, index) => (
+                  <div className='border-blue p-3' key={index}>
+                    <p>{workout.name}</p>
+                    {workout.workout.map((lift, liftIndex) => (
+                      <HomeExerciseCard key={liftIndex} exercises={lift} />
+                    ))}
+                  </div>
+                ))
+              ) : (
+                <p>No workouts for this date</p>
+              )}
+            </Modal.Body>
+          </Modal>
         </>
       )}
-      </>
-    )
+    </>
+  )
 }
-
-
