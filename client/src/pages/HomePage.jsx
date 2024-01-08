@@ -24,8 +24,6 @@ export default function WorkoutPage() {
     }
   }, [])
 
-  
-
   return (
     <>
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
