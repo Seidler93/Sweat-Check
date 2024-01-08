@@ -4,20 +4,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faPlus, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import SetsRepsInput from './SetsRepsInput';
 
-export default function SetsRepsComp({setCount, completeSet, exerciseIndex, setsInfo}) {
+export default function SetsRepsComp({setCount, completeSet, exerciseIndex, setsInfo, updateSet}) {
   const [completedSets, setCompletedSets] = useState([]);
   const [allSetsCompleted, setAllSetsCompleted] = useState(false);
   console.log('setsInfo:', setsInfo);
 
+  const getTotalCompletedSets = (sets) => {
+    return sets.reduce((totalCompletedSets, set) => {
+      return totalCompletedSets + (set.completed ? 1 : 0);
+    }, 0);
+  };
+
   useEffect(() => {
-    if (completedSets.length === setsInfo.length) {
+    if (getTotalCompletedSets(setsInfo) === setsInfo.length) {
       setAllSetsCompleted(true);
     } else if (completedSets.length !== setsInfo.length) {
       setAllSetsCompleted(false);
     }
   }, [completedSets, setCount]);
 
-  const handleSetComplete = async (setIndex, repsInput, weightInput) => {
+  const handleSetComplete = async (setIndex, repsInput, weightInput, completedInput) => {
     setCompletedSets((prevCompletedSets) => {
       if (prevCompletedSets.includes(setIndex)) {
         return prevCompletedSets.filter((index) => index !== setIndex);
@@ -25,7 +31,18 @@ export default function SetsRepsComp({setCount, completeSet, exerciseIndex, sets
         return [...prevCompletedSets, setIndex];
       }
     });
-    completeSet(setIndex, repsInput, weightInput, exerciseIndex)
+    completeSet(setIndex, repsInput, weightInput, exerciseIndex, completedInput)
+  };
+
+  const handleSetChange = async (setIndex, repsInput, weightInput, completedInput) => {
+    setCompletedSets((prevCompletedSets) => {
+      if (prevCompletedSets.includes(setIndex)) {
+        return prevCompletedSets.filter((index) => index !== setIndex);
+      } else {
+        return [...prevCompletedSets, setIndex];
+      }
+    });
+    updateSet(setIndex, repsInput, weightInput, exerciseIndex, completedInput)
   };
 
   const setCheckCompleted = (setIndex) => {
@@ -52,21 +69,7 @@ export default function SetsRepsComp({setCount, completeSet, exerciseIndex, sets
         </p>
       </div>
       {Array.from({ length: setsInfo.length }, (_, setIndex) => (
-        // <div key={setIndex} className='d-flex align-items-center justify-content-start mb-2'>
-        //   <p className='text-white p-2 m-0 w20 text-center'>{setIndex + 1}</p>
-        //   <input className='w30 px-2 me-1 form-control' type="text" placeholder='reps' />
-        //   <input className='w30 px-2 ms-1 form-control' type="text" placeholder='weight' />
-        //   <button
-        //     onClick={() => handleSetComplete(setIndex)}
-        //     className={"set-checkmark-btn "}
-        //   >
-        //     <FontAwesomeIcon
-        //       icon={faSquareCheck}
-        //       className={`set-checkmark ${completedSets.includes(setIndex) ? 'completed-set' : ''}`}
-        //     />
-        //   </button>
-        // </div>
-        <SetsRepsInput key={setIndex} setIndex={setIndex} handleSetComplete={handleSetComplete} completedSets={completedSets} setInfo={setsInfo[setIndex]} setCheckCompleted={setCheckCompleted}/>
+        <SetsRepsInput key={setIndex} setIndex={setIndex} handleSetComplete={handleSetComplete} completedSets={completedSets} setInfo={setsInfo[setIndex]} setCheckCompleted={setCheckCompleted} handleSetChange={handleSetChange}/>
       ))}
     </>
   );

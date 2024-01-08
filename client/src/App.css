@@ -129,9 +129,11 @@ button {
 
 .modal-btn {
   margin: 0 0 5px;
-  height: 5vh;
+  min-height: 5vh;
   background-color: blue;
   flex: 1;
+  text-align: center;
+  padding: 10px;
 }
 
 .program-btn {
@@ -313,12 +315,21 @@ a {
   margin-top: 50%;
 }
 
-.background-img {
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('../src/assets/fadedlogo.png');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+/* .background-img {
   background-image: url('../src/assets/Sweat-Check-Logo.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-}
+} */
 
 .login-input {
   background-color: rgba(70, 90, 126, 0.708)!important;
@@ -379,3 +390,8 @@ a {
   border-radius: 0;
 }
 
+.border-red {
+  border: 2px solid red;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}

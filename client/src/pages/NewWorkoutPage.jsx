@@ -6,14 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import ExerciseCard from '../components/NewWorkout/exerciseCard';
 import { useUserContext } from "../utils/UserContext";
+import Modal from 'react-bootstrap/Modal';
+import Auth from '../utils/auth';
 
 export default function NewWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [newWorkout, setNewWorkout] = useState([]);
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
+  const [show, setShow] = useState(false);
   const {checkedIn, setCheckedIn} = useUserContext()
-  
+  const [formState, setFormState] = useState({ workoutName: '', description: '' });
+
   useEffect(() => {
     // Move the setCheckedIn call inside useEffect
     if (!checkedIn) {
@@ -82,21 +86,8 @@ export default function NewWorkoutPage() {
       exerciseGroup[exerciseIndex].sets = newSets  
       return updatedWorkout;
       
-      // if (newSets.length == setCount) {
-      //   return updatedWorkout;
-      // } else {
-      //   return addSetToExercise(exerciseIndex, supersetIndex, setCount)
-      // }
     });
   }
-
-  // useEffect(() => {
-  //   const storedWorkout = JSON.parse(localStorage.getItem('woip'));
-  //   if (storedWorkout) {
-  //     setNewWorkout(storedWorkout);
-  //     setAddExercise(false)
-  //   }
-  // }, [])
 
   useEffect(() => {
     // Save the updated workout to local storage
@@ -104,18 +95,36 @@ export default function NewWorkoutPage() {
     localStorage.setItem('checkedIn', true);
   }, [newWorkout]);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleCompleteWorkout = () => {
-    console.log('deleted');
     localStorage.removeItem('woip');
     setCheckedIn(false)
-    const workouts = localStorage.getItem('workouts') || '';
-    const newWorkouts = [...workouts, newWorkout]
+    const workout = {
+      userId: Auth.getProfile().data._id,
+      name: formState.workoutName,
+      description: formState.description,
+      dateCompleted: Date.now(),
+      workout: newWorkout,
+    }
+    const workouts = JSON.parse(localStorage.getItem('workouts')) || '';
+    const newWorkouts = [...workouts, workout]
     localStorage.setItem('workouts', JSON.stringify(newWorkouts));
-    
+    navigate('/');
   }
-  
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
   return (
     <>
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
@@ -151,9 +160,42 @@ export default function NewWorkoutPage() {
               Add circuit
             </button>
           </div>
-          {newWorkout.length > 0 ? <Link to={'/'} onClick={() => handleCompleteWorkout()} className='modal-btn mt-1'>Complete Workout</Link> : '' }
+          {newWorkout.length > 0 ? <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button> : '' }
         </div>
       )}
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Complete Workout</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form action="" onSubmit={handleCompleteWorkout} className='d-flex flex-column'>
+            <input
+              className="mb-2 p-3 login-input"
+              placeholder="Workout Name"
+              name="workoutName"
+              type="text"
+              value={formState.workoutName}
+              onChange={handleChange}
+            />
+            <input
+              className="mb-2 p-3 login-input"
+              placeholder="Description"
+              name="description"
+              type="text"
+              value={formState.description}
+              onChange={handleChange}
+            />
+            <button
+              className="btn btn-block btn-primary"
+              style={{ cursor: 'pointer' }}
+              type="submit"
+            >
+              Complete Workout
+            </button>
+          </form>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

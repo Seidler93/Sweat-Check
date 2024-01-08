@@ -33,20 +33,23 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
     }
   };
 
-  const completeSet = (setIndex, repsInput, weightInput, exerciseIndex) => {
+  const completeSet = (setIndex, repsInput, weightInput, exerciseIndex, completedInput) => {
     const exerciseObject = {
       reps: repsInput,
       weight: weightInput, 
-      completed: true,
+      completed: completedInput,
     }
     updateExercise(exerciseObject, setIndex, exerciseIndex, index )
   }
 
-  // useEffect(() => {
-  //   if (woip) {
-      
-  //   }
-  // }, [])
+  const updateSet = (setIndex, repsInput, weightInput, exerciseIndex, completedInput) => {
+    const exerciseObject = {
+      reps: repsInput,
+      weight: weightInput, 
+      completed: completedInput,
+    }
+    updateExercise(exerciseObject, setIndex, exerciseIndex, index )
+  }
 
   return (
     <div key={index} className='exercise-card d-flex flex-column my-2'>
@@ -88,7 +91,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
           {superset.map((exercise, exerciseIndex) => (
             <div className='mb-3' key={exerciseIndex}>
               <h3 className='text-white'>{exercise.exerciseName}</h3>
-              <SetsRepsComp setCount={setCount} completeSet={completeSet} exerciseIndex={exerciseIndex} setsInfo={exercise.sets}/>
+              <SetsRepsComp updateSet={updateSet} setCount={setCount} completeSet={completeSet} exerciseIndex={exerciseIndex} setsInfo={exercise.sets}/>
             </div>
           ))}
           {notes ? (

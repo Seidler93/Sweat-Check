@@ -58,3 +58,12 @@
     }
   ]
 }
+
+const exercises = {
+    exerciseName: "Squat",
+    sets: [{reps: "5", weight: "200", completed: true}, {reps: "5", weight: "200", completed: false}, {reps: "10", weight: "150", completed: false}, {reps: "10", weight: "150", completed: false}, {reps: "10", weight: "150", completed: false}]
+}
+
+const formatted = '2x5/3x10'
+
+
