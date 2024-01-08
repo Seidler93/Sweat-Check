@@ -3,9 +3,6 @@
 const { Schema, model } = require('mongoose');
 
 const commentSchema = new Schema({
-  postId: {
-    type: String,
-  },
   commentText: {
       type: String,
   },

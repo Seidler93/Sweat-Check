@@ -86,7 +86,6 @@ const typeDefs = `
 
   type Comment {
     _id: ID
-    postId: ID
     commentText: String
     commentAuthor: String
     createdAt: String

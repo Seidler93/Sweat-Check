@@ -23,4 +23,17 @@ export const ADD_USER = gql`
   }
 `;
 
-
+export const ADD_COMMENT = gql`
+  mutation AddComment($commentInput: CommentInput!) {
+    addComment(commentInput: $commentInput) {
+      _id
+      comments {
+        _id
+        username
+        commentText
+        userId
+      }
+      postText
+    }
+  }
+`;

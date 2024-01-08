@@ -4,9 +4,9 @@ export default function MyFriendCard({ friend }) {
   console.log('Friend prop:', friend);
 
   return (
-    <Link to={`/profile/${friend._id}`} className='my-friend-card'>
-      <p className='friend-username'>{friend.username}</p>
-      <p className='friend-status'>{friend.status}</p>
+    <Link to={`/profile/${friend.id}`} className='my-friend-card'>
+      <p className='friend-username text-dark'>{friend.username}</p>
+      <p className='friend-status text-dark'>{friend.status}</p>
     </Link>
   );
 }
