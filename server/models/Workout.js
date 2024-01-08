@@ -1,9 +1,5 @@
 // taken from module 22 activity 24
-
-const mongoose = require('mongoose');
-const validator = require('validator');
-const { Schema } = mongoose;
-const bcrypt = require('bcrypt');
+const { Schema, model } = require('mongoose');
 
 const exerciseSchema = new Schema({
   name: {
@@ -91,6 +87,6 @@ const workoutSchema = new Schema({
   workout: [superSetSchema],
 });
 
-const Workout = mongoose.model('Workout', workoutSchema);
+const Workout = model('Workout', workoutSchema);
 
 module.exports = Workout;

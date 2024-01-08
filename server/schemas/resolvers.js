@@ -1,6 +1,6 @@
 const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')(/* insert dotenv reference here */);
+// const stripe = require('stripe')(/* insert dotenv reference here */);
 
 const resolvers = {
   Query: {
@@ -26,8 +26,8 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+    addUser: async (parent, { input }) => {
+      const user = await User.create(input);
       const token = signToken(user);
       return { token, user };
     },

@@ -1,9 +1,6 @@
 // taken from module 22 activity 24
 
-const mongoose = require('mongoose');
-const validator = require('validator');
-const { Schema } = mongoose;
-const bcrypt = require('bcrypt');
+const { Schema, model } = require('mongoose');
 
 const commentSchema = new Schema({
   postId: {
@@ -51,6 +48,6 @@ const postSchema = new Schema({
   comments: [ commentSchema ],
 });
 
-const Post = mongoose.model('Post', postSchema);
+const Post = model('Post', postSchema);
 
 module.exports = Post;

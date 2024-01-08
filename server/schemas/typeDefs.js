@@ -13,6 +13,14 @@ const typeDefs = `
     posts: [Post]
   }
 
+  input UserInput {
+    firstName: String
+    lastName: String
+    username: String
+    email: String
+    password: String
+  }
+
   type Friend {
     _id: ID
     user: ID
@@ -96,7 +104,7 @@ const typeDefs = `
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!): Auth
+    addUser(input: UserInput): Auth
     login(email: String!, password: String!): Auth
   }
 `;

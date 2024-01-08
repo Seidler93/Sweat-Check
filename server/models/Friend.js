@@ -1,9 +1,6 @@
 // taken from module 22 activity 24
 
-const mongoose = require('mongoose');
-const validator = require('validator');
-const { Schema } = mongoose;
-const bcrypt = require('bcrypt');
+const { Schema, model } = require('mongoose');
 
 const friendSchema = new Schema({
   user: {
@@ -17,6 +14,6 @@ const friendSchema = new Schema({
   },
 });
 
-const Friend = mongoose.model('Friend', friendSchema);
+const Friend = model('Friend', friendSchema);
 
 module.exports = Friend;

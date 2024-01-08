@@ -1,9 +1,6 @@
 // taken from module 22 activity 24
 
-const mongoose = require('mongoose');
-const validator = require('validator');
-const { Schema } = mongoose;
-const bcrypt = require('bcrypt');
+const { Schema, model } = require('mongoose');
 
 const programSchema = new Schema({
     originalId: {
@@ -42,6 +39,6 @@ const programSchema = new Schema({
     // Other fields specific to the program
 });
 
-const Program = mongoose.model('Program', programSchema);
+const Program = model('Program', programSchema);
 
 module.exports = Program;
