@@ -5,6 +5,17 @@ const validator = require('validator');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
+const statusSchema = new Schema({
+  statusName: {
+    type: String,
+    default: 'not at gym',
+  },
+  checkInTime: {
+    type: Date,
+    default: Date.now
+  },
+});
+
 const userSchema = new Schema({
   firstName: {
     type: String,
@@ -16,23 +27,46 @@ const userSchema = new Schema({
     required: true,
     trim: true,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
   email: {
     type: String,
     required: true,
     unique: true,
+    match: [/.+@.+\..+/, 'Must match an email address!'],
   },
   password: {
     type: String,
     required: true,
     minlength: 5,
   },
-  savedJobs: [
+  friends: {
+    type: Schema.Types.ObjectId,
+    ref: 'Friend',
+  },
+  status: statusSchema, 
+  workouts: [
 		{
 			type: Schema.Types.ObjectId,
-			ref: 'JobPosting',
+			ref: 'Workout',
 		}
 	],
-  // additional schemas ad hoc
+  programs: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Program',
+		}
+	],
+  posts: [
+    {
+		type: Schema.Types.ObjectId,
+		ref: 'Post',
+    } 
+  ],
 });
 
 // set up pre-save middleware to create password

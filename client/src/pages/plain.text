@@ -1,0 +1,60 @@
+{
+  name:
+  email:
+  password:
+  status: away, 
+  friends: [
+    { friendId: 1, friendName: John },
+    { friendId: 1, friendName: John },
+    { friendId: 1, friendName: John },
+    { friendId: 1, friendName: John },
+  ]
+  workouts: [
+    { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+    { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+    { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+    { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+    { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+  ]
+  programs: [
+    { 
+      name: program 1, 
+      length: '2 weeks', 
+      NumOfWorkouts: 10,
+      workouts: [
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+      ]
+    },
+    { 
+      name: program 2, 
+      length: '2 weeks', 
+      NumOfWorkouts: 10,
+      workouts: [
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+      ]
+    },
+    { 
+      name: program 3, 
+      length: '2 weeks', 
+      NumOfWorkouts: 10,
+      workouts: [
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+        { id: 1, name: workout 1, date: 1/1/24, notes: 'was hard' },
+      ]
+    }
+  ]
+  posts: [
+    { 
+      postId: 1, 
+      postText: 'some text',
+      comments: [
+        { comment: text, userId: 1 }
+      ]
+    }
+  ]
+}

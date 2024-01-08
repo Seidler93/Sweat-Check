@@ -16,7 +16,6 @@ import SettingsPage from './pages/SettingsPage.jsx';
 import MyStatsPage from './pages/MyStatsPage.jsx';
 import ProductPage from './pages/ProductPage.jsx';
 import CreateWorkoutPage from './pages/CreateWorkoutPage.jsx';
-import JustWorkoutPage from './pages/JustWorkoutPage.jsx';
 import ProgramPage from './pages/ProgramPage.jsx';
 import WorkoutPage from './pages/WorkoutPage.jsx'
 import ExercisePage from './pages/ExercisePage.jsx';
@@ -37,7 +36,6 @@ const router = createBrowserRouter([
       { path: '/library', element: <LibraryPage /> },       
       { path: '/store', element: <StorePage /> },
       { path: '/createWorkout', element: <CreateWorkoutPage /> },
-      { path: '/justWorkout', element: <JustWorkoutPage /> },
       { path: '/:programId/:workoutId', element: <ProgramPage /> },
       { path: '/workout/:workoutId', element: <WorkoutPage /> },
       { path: '/store/:productId', element: <ProductPage /> },

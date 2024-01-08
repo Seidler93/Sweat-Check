@@ -3,21 +3,100 @@ const typeDefs = `
     _id: ID
     firstName: String
     lastName: String
+    username: String
     email: String
     password: String
+    friends: [Friend]
+    status: Status
+    workouts: [Workout]    
+    programs: [Program]
+    posts: [Post]
+  }
+
+  type Friend {
+    _id: ID
+    user: ID
+    friend: User
+  }
+
+  type Workout {
+    _id: ID
+    originalId: ID
+    userId: String
+    name: String
+    description: String
+    dateCompleted: String
+    workout: [SuperSet]
+  }
+
+  type SuperSet {
+    exercises: [Exercises]
+  }
+
+  type Exercises {
+    exerciseName: String
+    sets: [SetsReps]
+  }
+
+  type SetsReps {
+    reps: Int
+    weight: Int
+    completed: Boolean
+  }
+
+  type Program {
+    _id: ID!
+    originalId: ID
+    userId: ID
+    name: String!
+    description: String
+    duration: String
+    workouts: [ProgramWorkout]
+  }
+
+  type ProgramWorkout {
+    day: String!
+    workout: String!
+  }
+
+  type Status {
+    statusName: String
+    checkInTime: String
+  }
+
+  type Post {
+    username: String
+    userId: String
+    workoutId: String
+    workoutName: String
+    mediaUrl: String
+    postText: String
+    createdAt: String
+    visibility: String
+    comments: [Comment]
+  }
+
+  type Comment {
+    _id: ID
+    postId: ID
+    commentText: String
+    commentAuthor: String
+    createdAt: String
   }
 
   type Auth {
-    token: ID
+    token: ID!
     user: User
   }
 
   type Query {
-    getUser: User
+    users: [User]
+    user(username: String!): User
+    me: User
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!, firstName: String!, lastName: String!): Auth
     login(email: String!, password: String!): Auth
   }
 `;

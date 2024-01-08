@@ -20,7 +20,7 @@ export default function WorkoutPage() {
   useEffect(() => {
     const storedWorkout = JSON.parse(localStorage.getItem('woip'));
     if (storedWorkout) {
-      setWoip(storedWorkout);
+      setCheckedIn(true);
     }
   }, [])
 

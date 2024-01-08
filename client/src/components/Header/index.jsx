@@ -29,7 +29,7 @@ export default function Header ({ showMenu, setShowMenu}) {
     // Format the date as a string
     const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`
 
-    localStorage.setItem('checkedIn', JSON.stringify(true));
+    localStorage.setItem('checkedIn', true);
     console.log(formattedDate);
   }
 

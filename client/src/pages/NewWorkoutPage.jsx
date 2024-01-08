@@ -4,7 +4,6 @@ import Header from '../components/Header/index'
 import HomeMenu from '../components/HomeMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import { Button } from 'bootstrap';
 import ExerciseCard from '../components/NewWorkout/exerciseCard';
 import { useUserContext } from "../utils/UserContext";
 
@@ -17,10 +16,11 @@ export default function NewWorkoutPage() {
   
   useEffect(() => {
     // Move the setCheckedIn call inside useEffect
-    setCheckedIn(true);
-  }, []); // The empty dependency array ensures this runs only once on mount
+    if (!checkedIn) {
+      setCheckedIn(true);
+    }
+  }, []); 
 
-  let workout = {}
   const handleAddExercise = () => {
     // Use the current value of exerciseInput
     const newExercise = [{ 
@@ -101,7 +101,7 @@ export default function NewWorkoutPage() {
   useEffect(() => {
     // Save the updated workout to local storage
     localStorage.setItem('woip', JSON.stringify(newWorkout));
-    localStorage.setItem('checkedIn', JSON.stringify(Date.now));
+    localStorage.setItem('checkedIn', true);
   }, [newWorkout]);
 
   const history = useNavigate();
@@ -113,12 +113,9 @@ export default function NewWorkoutPage() {
     const workouts = localStorage.getItem('workouts') || '';
     const newWorkouts = [...workouts, newWorkout]
     localStorage.setItem('workouts', JSON.stringify(newWorkouts));
-    // Redirect to the homepage
-    history.push('/');
+    
   }
   
-  // console.log(newWorkout);
-
   return (
     <>
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
@@ -154,7 +151,7 @@ export default function NewWorkoutPage() {
               Add circuit
             </button>
           </div>
-          {newWorkout.length > 0 ? <button onClick={() => handleCompleteWorkout()} className='modal-btn mt-1'>Complete Workout</button> : '' }
+          {newWorkout.length > 0 ? <Link to={'/'} onClick={() => handleCompleteWorkout()} className='modal-btn mt-1'>Complete Workout</Link> : '' }
         </div>
       )}
     </>
