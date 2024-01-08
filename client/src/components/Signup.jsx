@@ -28,7 +28,7 @@ export default function Signup({ setCreatingAccount }) {
 
     try {
       const { data } = await addUser({
-        variables: { ...formState },
+        variables: {input: formState },
       });
 
       Auth.login(data.addUser.token);
