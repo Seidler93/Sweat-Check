@@ -5,9 +5,7 @@ import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 export default function SetsRepsInput({setIndex, handleSetComplete, completedSets, setInfo, setCheckCompleted, handleSetChange }) {
   const [repsInput, setRepsInput] = useState(setInfo.reps || '');
   const [weightInput, setWeightInput] = useState(setInfo.weight || '');
-  const [completedSet, setCompletedSet] = useState(false)
-
-  console.log(setInfo);
+  const [completedSet, setCompletedSet] = useState(setInfo.completed || false)
 
   useEffect(() => {
     if (completedSet) {
@@ -35,8 +33,6 @@ export default function SetsRepsInput({setIndex, handleSetComplete, completedSet
     handleSetChange(setIndex, repsInput, weightInput, newCompletedSet);
   };
   
-  
-    
   return (
     <>
       <div key={setIndex} className='d-flex align-items-center justify-content-start mb-2'>

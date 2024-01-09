@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Workout } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 // const stripe = require('stripe')(/* insert dotenv reference here */);
 
@@ -50,7 +50,24 @@ const resolvers = {
 
       return { token, user };
     },
-  //   addThought: async (parent, { thoughtText }, context) => {
+    createWorkout: async (parent, { workoutInput }, context) => {
+      try {
+        const createdWorkout = await Workout.create(workoutInput);
+
+        if (workoutInput.userId != "") {
+          await User.findOneAndUpdate(
+            { _id: workoutInput.userId },
+            { $addToSet: { workouts: createdWorkout._id } }
+          );
+        }
+
+        return createdWorkout
+      } catch (error) {
+        console.error('Error creating workout:', error.message);
+        throw new Error('Failed to create workout');
+      }
+    },
+  //   createWorkout: async (parent, { thoughtText }, context) => {
   //     if (context.user) {
   //       const thought = await Thought.create({
   //         thoughtText,

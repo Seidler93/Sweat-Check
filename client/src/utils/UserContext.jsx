@@ -7,6 +7,7 @@ export const useUserContext = () => useContext(UserContext)
 
 const UserProvider = (props) => {
   const [checkedIn, setCheckedIn] = useState(false)
+  const [currentWorkout, setCurrentWorkout] = useState({})
 
   // Example function to update the user context
   // const updateUser = async (newUser) => {
@@ -15,7 +16,7 @@ const UserProvider = (props) => {
   // };
 
   return (
-    <UserContext.Provider value={{ checkedIn, setCheckedIn, }} {...props} />
+    <UserContext.Provider value={{ checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout }} {...props} />
   );
 };
 

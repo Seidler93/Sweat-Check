@@ -6,21 +6,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import ExerciseCard from '../components/NewWorkout/exerciseCard';
 import { useUserContext } from "../utils/UserContext";
+import Modal from 'react-bootstrap/Modal';
+import Auth from '../utils/auth';
 
 export default function NewWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [newWorkout, setNewWorkout] = useState([]);
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
-  const {checkedIn, setCheckedIn} = useUserContext()
-
-  const { woip } = useParams();
-  console.log(woip);
+  const [show, setShow] = useState(false);
+  const {checkedIn, setCheckedIn, } = useUserContext()
+  const [workoutId, setWorkoutId] = useState('')
+  const [formState, setFormState] = useState({ workoutName: '', description: '', template: false });
 
   useEffect(() => {
-    // Move the setCheckedIn call inside useEffect
     if (!checkedIn) {
       setCheckedIn(true);
+    } 
+
+    const storedWorkout = JSON.parse(localStorage.getItem('woip') || '');
+
+    if (storedWorkout) {
+      setWorkoutId(storedWorkout._id)
+      setNewWorkout(storedWorkout.workout);
+      setAddExercise(false)
     }
   }, []);
   
@@ -40,8 +49,6 @@ export default function NewWorkoutPage() {
     setExerciseInput('');
     setAddExercise(false);
   };
-
-  // console.log(newWorkout);
 
   const addToSuperSet = (newSSExercise, supersetIndex) => {
     setNewWorkout((prevWorkout) => {
@@ -74,19 +81,6 @@ export default function NewWorkoutPage() {
     });
   }
 
-  useEffect(() => {
-    const storedWorkout = JSON.parse(localStorage.getItem('woip'));
-    if (storedWorkout) {
-      setNewWorkout(storedWorkout);
-      setAddExercise(false)
-    }
-  }, [])
-
-  useEffect(() => {
-    // Save the updated workout to local storage
-    localStorage.setItem('woip', JSON.stringify(newWorkout));
-  }, [newWorkout]);
-
   const addSetToExercise = (exerciseIndex, supersetIndex, setCount) => {
     setNewWorkout((prevWorkout) => {
       const updatedWorkout = [...prevWorkout];
@@ -97,27 +91,59 @@ export default function NewWorkoutPage() {
       const newSets = [...exerciseGroup[exerciseIndex].sets, {reps: '', weight: '', completed: false}]
       exerciseGroup[exerciseIndex].sets = newSets  
       return updatedWorkout;
-      
-      // if (newSets.length == setCount) {
-      //   return updatedWorkout;
-      // } else {
-      //   return addSetToExercise(exerciseIndex, supersetIndex, setCount)
-      // }
     });
   }
 
-  const history = useNavigate();
+  useEffect(() => {
+    // Save the updated workout to local storage
+    localStorage.setItem('woip', JSON.stringify({id: workoutId, workout: newWorkout}));
+  }, [newWorkout]);
+
+  const navigate = useNavigate();
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    return `${month}/${day}/${year}`;
+  }
 
   const handleCompleteWorkout = () => {
-    console.log('deleted');
+    const workoutDate = formatTimestamp(Date.now());
     localStorage.removeItem('woip');
-    setCheckedIn(false)
-    const workouts = localStorage.getItem('workouts') || '';
-    const newWorkouts = [...workouts, newWorkout]
-    localStorage.setItem('workouts', JSON.stringify(newWorkouts));
-    
+    setCheckedIn(false);
+
+    const workout = {
+      _id: workoutId._id,
+      originalId: null,
+      userId: Auth.getProfile().data._id,
+      name: formState.workoutName,
+      description: formState.description,
+      dateCompleted: workoutDate,
+      template: formState.template,
+      workout: newWorkout,
+    };
+
+    const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+    // Filter out the newWorkout from workouts
+    const otherWorkouts = workouts.filter((existingWorkout) => existingWorkout._id !== workout._id);
+    const newWorkouts = [...otherWorkouts, workout]
+    localStorage.setItem('workouts', JSON.stringify(newWorkouts));   
+    navigate('/');
   }
   
+  const handleChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
 
   return (
     <>
@@ -154,9 +180,50 @@ export default function NewWorkoutPage() {
               Add circuit
             </button>
           </div>
-          <Link to={'/'} onClick={() => handleCompleteWorkout()} className='modal-btn mt-1'>Complete Workout</Link>
+          <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button>
         </div>
       )}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Complete Workout</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form action="" onSubmit={handleCompleteWorkout} className='d-flex flex-column'>
+            <input
+              className="mb-2 p-3 login-input"
+              placeholder="Workout Name"
+              name="workoutName"
+              type="text"
+              value={formState.workoutName}
+              onChange={handleChange}
+            />
+            <input
+              className="mb-2 p-3 login-input"
+              placeholder="Description"
+              name="description"
+              type="text"
+              value={formState.description}
+              onChange={handleChange}
+            />
+            <label>
+            <input
+              type="checkbox"
+              name="template"
+              checked={formState.template}
+              onChange={handleChange}
+            />
+            Save workout as Template
+          </label>
+            <button
+              className="btn btn-block btn-primary"
+              style={{ cursor: 'pointer' }}
+              type="submit"
+            >
+              Complete Workout
+            </button>
+          </form>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

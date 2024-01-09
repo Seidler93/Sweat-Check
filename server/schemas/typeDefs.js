@@ -34,6 +34,7 @@ const typeDefs = `
     name: String
     description: String
     dateCompleted: String
+    template: Boolean
     workout: [SuperSet]
   }
 
@@ -47,6 +48,31 @@ const typeDefs = `
   }
 
   type SetsReps {
+    reps: Int
+    weight: Int
+    completed: Boolean
+  }
+
+  input CreateWorkoutInput {
+    originalId: ID
+    userId: String
+    name: String
+    description: String
+    dateCompleted: String
+    template: Boolean
+    workout: [SuperSetInput]
+  }
+
+  input SuperSetInput {
+    exercises: [ExerciseInput]
+  }
+
+  input ExerciseInput {
+    exerciseName: String
+    sets: [SetsRepsInput]
+  }
+
+  input SetsRepsInput {
     reps: Int
     weight: Int
     completed: Boolean
@@ -105,6 +131,7 @@ const typeDefs = `
   type Mutation {
     addUser(input: UserInput): Auth
     login(email: String!, password: String!): Auth
+    createWorkout(workoutInput: CreateWorkoutInput): Workout
   }
 `;
 

@@ -8,6 +8,8 @@ import ExerciseCard from '../components/NewWorkout/exerciseCard';
 import { useUserContext } from "../utils/UserContext";
 import Modal from 'react-bootstrap/Modal';
 import Auth from '../utils/auth';
+import { useMutation } from '@apollo/client';
+import { CREATE_WORKOUT } from '../utils/mutations';
 
 export default function NewWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
@@ -15,14 +17,41 @@ export default function NewWorkoutPage() {
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
   const [show, setShow] = useState(false);
-  const {checkedIn, setCheckedIn} = useUserContext()
-  const [formState, setFormState] = useState({ workoutName: '', description: '' });
+  const {checkedIn, setCheckedIn, } = useUserContext()
+  const [formState, setFormState] = useState({workoutName: '', description: '', template: false });
+  const [workoutId, setWorkoutId] = useState('')
+  const [createWorkout, { createWorkoutError, createWorkoutData }] = useMutation(CREATE_WORKOUT);
+
+  const getNewWorkoutID = async () => {
+    const workoutInput = {
+      originalId: null,
+      userId: Auth.getProfile().data._id,
+      name: null,
+      description: null,
+      dateCompleted: null,
+      template: null,
+      workout: null
+    }
+
+    try {
+      const { data } = await createWorkout({
+        variables: { workoutInput },
+      });
+
+      setWorkoutId(data.createWorkout._id)
+
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     // Move the setCheckedIn call inside useEffect
     if (!checkedIn) {
       setCheckedIn(true);
-    }
+    } 
+
+    getNewWorkoutID()
   }, []); 
 
   const handleAddExercise = () => {
@@ -34,15 +63,11 @@ export default function NewWorkoutPage() {
   
     // Update the workout array with the new exercise
     setNewWorkout(prevWorkout => [...prevWorkout, newExercise]);
-  
-    // console.log('Adding exercise:', exerciseInput);
-  
+    
     // Clear the input field after adding the exercise
     setExerciseInput('');
     setAddExercise(false);
   };  
-
-  // console.log(newWorkout);
 
   const addToSuperSet = (newSSExercise, supersetIndex) => {
     setNewWorkout((prevWorkout) => {
@@ -85,14 +110,12 @@ export default function NewWorkoutPage() {
       const newSets = [...exerciseGroup[exerciseIndex].sets, {reps: '', weight: '', completed: false}]
       exerciseGroup[exerciseIndex].sets = newSets  
       return updatedWorkout;
-      
     });
   }
 
   useEffect(() => {
     // Save the updated workout to local storage
-    localStorage.setItem('woip', JSON.stringify(newWorkout));
-    localStorage.setItem('checkedIn', true);
+    localStorage.setItem('woip', JSON.stringify({id: workoutId, workout: newWorkout}));
   }, [newWorkout]);
 
   const navigate = useNavigate();
@@ -115,10 +138,13 @@ export default function NewWorkoutPage() {
     setCheckedIn(false);
   
     const workout = {
+      _id: workoutId,
+      originalId: null,
       userId: Auth.getProfile().data._id,
       name: formState.workoutName,
       description: formState.description,
       dateCompleted: workoutDate,
+      template: formState.template,
       workout: newWorkout,
     };
   
@@ -129,12 +155,11 @@ export default function NewWorkoutPage() {
   };
   
   const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
+    const { name, value, type, checked } = event.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
 
   return (
@@ -198,6 +223,15 @@ export default function NewWorkoutPage() {
               value={formState.description}
               onChange={handleChange}
             />
+            <label>
+            <input
+              type="checkbox"
+              name="template"
+              checked={formState.template}
+              onChange={handleChange}
+            />
+            Save workout as Template
+          </label>
             <button
               className="btn btn-block btn-primary"
               style={{ cursor: 'pointer' }}

@@ -37,3 +37,27 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const CREATE_WORKOUT = gql`
+  mutation CreateWorkout($workoutInput: CreateWorkoutInput) {
+    createWorkout(workoutInput: $workoutInput) {
+      _id
+      originalId
+      userId
+      name
+      description
+      dateCompleted
+      template
+      workout {
+        exercises {
+          exerciseName
+          sets {
+            reps
+            weight
+            completed
+          }
+        }
+      }
+    }
+  }
+`;
