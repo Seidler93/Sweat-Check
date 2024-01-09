@@ -11,7 +11,6 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
   const [notes, setNotes] = useState('');
   const [showSets, setShowSets] = useState(true);
   const [show, setShow] = useState(false);
-  console.log(superset);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

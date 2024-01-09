@@ -23,6 +23,15 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    getAllWorkouts: async () => {
+      try {
+        const workouts = await Workout.find();
+        return workouts;
+      } catch (error) {
+        console.error('Error fetching workouts:', error.message);
+        throw new Error('Failed to fetch workouts');
+      }
+    },
   },
 
   Mutation: {
@@ -65,6 +74,26 @@ const resolvers = {
       } catch (error) {
         console.error('Error creating workout:', error.message);
         throw new Error('Failed to create workout');
+      }
+    },
+    updateWorkout: async (parent, { workoutId, updatedWorkout }) => {
+      try {
+        // Assuming you're using Mongoose for MongoDB
+        const workout = await Workout.findByIdAndUpdate(
+          workoutId,
+          updatedWorkout,
+          { new: true }
+        );
+
+        if (!workout) {
+          throw new Error('Workout not found');
+        }
+
+        return workout;
+      } catch (error) {
+        // Handle the error as needed, log it, etc.
+        console.error('Error updating workout:', error.message);
+        throw new Error('Failed to update workout');
       }
     },
   //   createWorkout: async (parent, { thoughtText }, context) => {

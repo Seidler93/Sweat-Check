@@ -39,7 +39,7 @@ export const ADD_COMMENT = gql`
 `;
 
 export const CREATE_WORKOUT = gql`
-  mutation CreateWorkout($workoutInput: CreateWorkoutInput) {
+  mutation CreateWorkout($workoutInput: WorkoutInput) {
     createWorkout(workoutInput: $workoutInput) {
       _id
       originalId
@@ -58,6 +58,15 @@ export const CREATE_WORKOUT = gql`
           }
         }
       }
+    }
+  }
+`;
+
+export const UPDATE_WORKOUT = gql`
+  mutation UpdateWorkout($workoutId: ID, $updatedWorkout: WorkoutInput) {
+    updateWorkout(workoutId: $workoutId, updatedWorkout: $updatedWorkout) {
+      _id
+      name
     }
   }
 `;

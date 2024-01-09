@@ -53,14 +53,14 @@ const typeDefs = `
     completed: Boolean
   }
 
-  input CreateWorkoutInput {
+  input WorkoutInput {
     originalId: ID
     userId: String
     name: String
     description: String
     dateCompleted: String
     template: Boolean
-    workout: [SuperSetInput]
+    workout: [[ExerciseInput]]
   }
 
   input SuperSetInput {
@@ -126,12 +126,14 @@ const typeDefs = `
     users: [User]
     user(username: String!): User
     me: User
+    getAllWorkouts: [Workout]
   }
 
   type Mutation {
     addUser(input: UserInput): Auth
     login(email: String!, password: String!): Auth
-    createWorkout(workoutInput: CreateWorkoutInput): Workout
+    createWorkout(workoutInput: WorkoutInput): Workout
+    updateWorkout(workoutId: ID, updatedWorkout: WorkoutInput): Workout
   }
 `;
 

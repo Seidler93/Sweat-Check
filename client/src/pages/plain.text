@@ -67,3 +67,25 @@ const exercises = {
 const formatted = '2x5/3x10'
 
 
+workout = {
+  originalId: "2514551552"
+  userId: "235656652"
+  name: "test workout"
+  description: "this is a test workout"
+  dateCompleted: "05/09/2024"
+  template: true
+  workout: [
+    [
+      {exerciseName: "squat", sets: [{reps: "10", weight: "50", completed: false},{reps: "10", weight: "50", completed: false}, {reps: "10", weight: "50", completed: false}]},
+      {exerciseName: "box jump", sets: [{reps: "5", weight: "5", completed: false},{reps: "5", weight: "5", completed: false}, {reps: "5", weight: "5", completed: false}]},
+    ],
+    [
+      {exerciseName: "deadlift", sets: [{reps: "10", weight: "50", completed: false},{reps: "10", weight: "50", completed: false}, {reps: "10", weight: "50", completed: false}]},
+      {exerciseName: "sit ups", sets: [{reps: "5", weight: "5", completed: false},{reps: "5", weight: "5", completed: false}, {reps: "5", weight: "5", completed: false}]},
+    ],
+    [
+      {exerciseName: "pull up", sets: [{reps: "10", weight: "50", completed: false},{reps: "10", weight: "50", completed: false}, {reps: "10", weight: "50", completed: false}]},
+      {exerciseName: "push up", sets: [{reps: "5", weight: "5", completed: false},{reps: "5", weight: "5", completed: false}, {reps: "5", weight: "5", completed: false}]},
+    ],
+  ]
+}

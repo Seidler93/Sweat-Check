@@ -8,6 +8,8 @@ import ExerciseCard from '../components/NewWorkout/exerciseCard';
 import { useUserContext } from "../utils/UserContext";
 import Modal from 'react-bootstrap/Modal';
 import Auth from '../utils/auth';
+import { useMutation } from '@apollo/client';
+import { UPDATE_WORKOUT } from '../utils/mutations';
 
 export default function NewWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
@@ -18,26 +20,45 @@ export default function NewWorkoutPage() {
   const {checkedIn, setCheckedIn, } = useUserContext()
   const [workoutId, setWorkoutId] = useState('')
   const [formState, setFormState] = useState({ workoutName: '', description: '', template: false });
+  const [updateWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(UPDATE_WORKOUT);
+
+  const navigate = useNavigate();
+
+  const updateWorkoutInDB = async (wId, wo) => {
+    console.log(wId, wo);
+    try {
+      const { data } = await updateWorkout({
+        variables: { workoutId: wId, updatedWorkout: wo },
+      });
+
+    navigate('/');
+
+    } catch (e) {  
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     if (!checkedIn) {
       setCheckedIn(true);
     } 
 
-    const storedWorkout = JSON.parse(localStorage.getItem('woip') || '');
+    const storedWorkout = JSON.parse(localStorage.getItem('woip')) || '';
 
     if (storedWorkout) {
-      setWorkoutId(storedWorkout._id)
+      console.log(true);
+      setWorkoutId(storedWorkout.id)
       setNewWorkout(storedWorkout.workout);
       setAddExercise(false)
     }
+
   }, []);
   
   const handleAddExercise = () => {
     // Use the current value of exerciseInput
     const newExercise = [{ 
         exerciseName: exerciseInput,
-        sets: [{reps: '', weight: '', completed: false}]
+        sets: [{reps: 0, weight: 0, completed: false}]
      }];
   
     // Update the workout array with the new exercise
@@ -95,11 +116,12 @@ export default function NewWorkoutPage() {
   }
 
   useEffect(() => {
+    console.log(workoutId, newWorkout);
     // Save the updated workout to local storage
-    localStorage.setItem('woip', JSON.stringify({id: workoutId, workout: newWorkout}));
+    if (workoutId) {
+      localStorage.setItem('woip', JSON.stringify({id: workoutId, workout: newWorkout}));
+    }
   }, [newWorkout]);
-
-  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -113,13 +135,14 @@ export default function NewWorkoutPage() {
     return `${month}/${day}/${year}`;
   }
 
-  const handleCompleteWorkout = () => {
+  const handleCompleteWorkout = (event) => {
+    // Prevent the default form submission behavior
+    event.preventDefault();
     const workoutDate = formatTimestamp(Date.now());
     localStorage.removeItem('woip');
     setCheckedIn(false);
 
     const workout = {
-      _id: workoutId._id,
       originalId: null,
       userId: Auth.getProfile().data._id,
       name: formState.workoutName,
@@ -129,12 +152,12 @@ export default function NewWorkoutPage() {
       workout: newWorkout,
     };
 
-    const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
-    // Filter out the newWorkout from workouts
-    const otherWorkouts = workouts.filter((existingWorkout) => existingWorkout._id !== workout._id);
-    const newWorkouts = [...otherWorkouts, workout]
-    localStorage.setItem('workouts', JSON.stringify(newWorkouts));   
-    navigate('/');
+    // const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+    // // Filter out the newWorkout from workouts
+    // const otherWorkouts = workouts.filter((existingWorkout) => existingWorkout._id !== workoutId);
+    // const newWorkouts = [...otherWorkouts, {...workout, _id: workoutId,}]
+    // localStorage.setItem('workouts', JSON.stringify(newWorkouts));      
+    updateWorkoutInDB(workoutId, workout)
   }
   
   const handleChange = (event) => {
@@ -188,7 +211,7 @@ export default function NewWorkoutPage() {
           <Modal.Title>Complete Workout</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form action="" onSubmit={handleCompleteWorkout} className='d-flex flex-column'>
+          <form action="" onSubmit={(event) => handleCompleteWorkout(event)} className='d-flex flex-column'>
             <input
               className="mb-2 p-3 login-input"
               placeholder="Workout Name"

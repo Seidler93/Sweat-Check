@@ -7,7 +7,7 @@ import SetsRepsInput from './SetsRepsInput';
 export default function SetsRepsComp({setCount, completeSet, exerciseIndex, setsInfo, updateSet}) {
   const [completedSets, setCompletedSets] = useState([]);
   const [allSetsCompleted, setAllSetsCompleted] = useState(false);
-  console.log('setsInfo:', setsInfo);
+  // console.log('setsInfo:', setsInfo);
 
   const getTotalCompletedSets = (sets) => {
     return sets.reduce((totalCompletedSets, set) => {

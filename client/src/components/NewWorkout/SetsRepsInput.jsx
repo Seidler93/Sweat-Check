@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function SetsRepsInput({setIndex, handleSetComplete, completedSets, setInfo, setCheckCompleted, handleSetChange }) {
-  const [repsInput, setRepsInput] = useState(setInfo.reps || '');
-  const [weightInput, setWeightInput] = useState(setInfo.weight || '');
+  const [repsInput, setRepsInput] = useState(setInfo.reps || 0);
+  const [weightInput, setWeightInput] = useState(setInfo.weight || 0);
   const [completedSet, setCompletedSet] = useState(setInfo.completed || false)
 
   useEffect(() => {
@@ -15,6 +15,7 @@ export default function SetsRepsInput({setIndex, handleSetComplete, completedSet
     if (completedSets.includes(setIndex)) {
       setCompletedSet(true)
     }
+
   }, [])
 
   const handleRepsChange = (value) => {
@@ -39,18 +40,18 @@ export default function SetsRepsInput({setIndex, handleSetComplete, completedSet
         <p className='text-white p-2 m-0 w20 text-center'>{setIndex + 1}</p>
         <input 
           className='w30 px-2 me-1 form-control' 
-          type="text" 
+          type="number" 
           placeholder='reps' 
           value={repsInput}
-          onChange={(e) => handleRepsChange(e.target.value)}
-          />
+          onChange={(e) => handleRepsChange(parseInt(e.target.value, 10))}
+        />
         <input 
           className='w30 px-2 ms-1 form-control' 
-          type="text" 
+          type="number" 
           placeholder='weight' 
           value={weightInput}
-          onChange={(e) => handleWeightChange(e.target.value)}
-          />
+          onChange={(e) => handleWeightChange(parseInt(e.target.value, 10))}
+        />
         <button
           onClick={() => handleCompleteChange()}
           className={"set-checkmark-btn "}
