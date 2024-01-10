@@ -62,30 +62,30 @@ export default function NewWorkoutPage() {
      }];
   
     // Update the workout array with the new exercise
-    setNewWorkout(prevWorkout => [...prevWorkout, newExercise]);
-  
-    // console.log('Adding exercise:', exerciseInput);
-  
+    setNewWorkout(prevWorkout => [...prevWorkout, {exercises: newExercise}]);
+    
     // Clear the input field after adding the exercise
     setExerciseInput('');
     setAddExercise(false);
   };
 
-  const addToSuperSet = (newSSExercise, supersetIndex) => {
+  const addToSuperSet = (newSSExercise, supersetIndex, setCount) => {
     setNewWorkout((prevWorkout) => {
       const updatedWorkout = [...prevWorkout];
       // Get the exercise group at the specified index
-      const exerciseGroup = [...updatedWorkout[supersetIndex]];
-
+      const superSet = updatedWorkout[supersetIndex].exercises;
+      let sets = [];
+      for (let i = 0; i < setCount; i++) {
+        sets = [...sets, {reps: 0, weight: 0, completed: false} ]
+      }
       // Add a new exercise to the exercise group
-      const updatedExerciseGroup = [...exerciseGroup, { 
+      const updatedSuperSet = [...superSet, { 
         exerciseName: newSSExercise,
-        sets: [{reps: '', weight: '', completed: false}]
+        sets: sets
       }];
       
       // Update the exercise group in the workout array
-      updatedWorkout[supersetIndex] = [ ...updatedExerciseGroup ];      
-
+      updatedWorkout[supersetIndex].exercises = [ ...updatedSuperSet ];
       return updatedWorkout;
     });
   };
@@ -94,7 +94,7 @@ export default function NewWorkoutPage() {
     setNewWorkout((prevWorkout) => {
       const updatedWorkout = [...prevWorkout];
       // Get the exercise group at the specified index
-      const exerciseGroup = [...updatedWorkout[supersetIndex]];
+      const exerciseGroup = [...updatedWorkout[supersetIndex].exercises];
 
       // Update exercise sets
       exerciseGroup[exerciseIndex].sets[setIndex] = exerciseObject     
@@ -106,17 +106,16 @@ export default function NewWorkoutPage() {
     setNewWorkout((prevWorkout) => {
       const updatedWorkout = [...prevWorkout];
       // Get the exercise group at the specified index
-      const exerciseGroup = [...updatedWorkout[supersetIndex]];
+      const superSet = updatedWorkout[supersetIndex].exercises;
 
       // Update sets with a new empty set
-      const newSets = [...exerciseGroup[exerciseIndex].sets, {reps: '', weight: '', completed: false}]
-      exerciseGroup[exerciseIndex].sets = newSets  
+      const newSets = [...superSet[exerciseIndex].sets, {reps: superSet[exerciseIndex].sets[setCount], weight: superSet[exerciseIndex].sets[setCount], completed: false}]
+      superSet[exerciseIndex].sets = newSets  
       return updatedWorkout;
     });
   }
 
   useEffect(() => {
-    console.log(workoutId, newWorkout);
     // Save the updated workout to local storage
     if (workoutId) {
       localStorage.setItem('woip', JSON.stringify({id: workoutId, workout: newWorkout}));
@@ -151,12 +150,7 @@ export default function NewWorkoutPage() {
       template: formState.template,
       workout: newWorkout,
     };
-
-    // const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
-    // // Filter out the newWorkout from workouts
-    // const otherWorkouts = workouts.filter((existingWorkout) => existingWorkout._id !== workoutId);
-    // const newWorkouts = [...otherWorkouts, {...workout, _id: workoutId,}]
-    // localStorage.setItem('workouts', JSON.stringify(newWorkouts));      
+   
     updateWorkoutInDB(workoutId, workout)
   }
   

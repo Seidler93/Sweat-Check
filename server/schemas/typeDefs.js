@@ -60,7 +60,7 @@ const typeDefs = `
     description: String
     dateCompleted: String
     template: Boolean
-    workout: [[ExerciseInput]]
+    workout: [SuperSetInput]
   }
 
   input SuperSetInput {

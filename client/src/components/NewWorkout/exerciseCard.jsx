@@ -12,6 +12,8 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
   const [showSets, setShowSets] = useState(true);
   const [show, setShow] = useState(false);
 
+  // console.log(superset); 
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -20,16 +22,16 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
   };
 
   const handleAddToSuperSet = () => {
-    addToSuperSet(exerciseInput, index);
+    addToSuperSet(exerciseInput, index, setCount);
     setAddExercise(false);
     setExerciseInput('');
   };
 
   const handleAddSet = () => {
-    setSetCount(setCount + 1)
-    for (let i = 0; i < superset.length; i++) {
+    for (let i = 0; i < superset.exercises.length; i++) {
       addSetToExercise(i, index, setCount)      
     }
+    setSetCount(setCount + 1)
   };
 
   const completeSet = (setIndex, repsInput, weightInput, exerciseIndex, completedInput) => {
@@ -87,7 +89,7 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
       )}</button>
       {showSets ? (
         <>
-          {superset.map((exercise, exerciseIndex) => (
+          {superset.exercises.map((exercise, exerciseIndex) => (
             <div className='mb-3' key={exerciseIndex}>
               <h3 className='text-white'>{exercise.exerciseName}</h3>
               <SetsRepsComp updateSet={updateSet} setCount={setCount} completeSet={completeSet} exerciseIndex={exerciseIndex} setsInfo={exercise.sets}/>
