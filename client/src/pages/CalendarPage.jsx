@@ -8,38 +8,33 @@ import { useUserContext } from "../utils/UserContext";
 import Modal from 'react-bootstrap/Modal';
 import { Link } from 'react-router-dom';
 import HomeExerciseCard from '../components/HomePageUI/HomeExerciseCard';
+import { QUERY_WORKOUTS_BY_USER } from '../utils/queries';
+import Auth from '../utils/auth';
 
 export default function CalendarPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [date, setDate] = useState('');
   const [show, setShow] = useState(false);
   const [workoutsOfDate, setWorkoutsOfDate] = useState([])
+  const [dates, setDates] = useState([])
 
   const handleClose = () => setShow(false);
 
-  // Use optional chaining to handle the case when workouts is null or undefined
-  const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+  const { loading: loadingFirst, data: dataFirst } = useQuery(QUERY_WORKOUTS_BY_USER, {
+    variables: { userId: Auth.getProfile().data._id },
+  });
 
-  function formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${month}/${day}/${year}`;
-  }
-
-  const workoutDates = workouts.map((workout) => workout.dateCompleted)
-  const dates = workoutDates.map((date) => formatTimestamp(date))
+  useEffect(() => {
+    const workoutDates = dataFirst?.getWorkoutsByUserId.map((workout) => workout.dateCompleted)
+    setDates(workoutDates)
+  }, [dataFirst])
 
   // Function to handle date change
   const onChange = (newDate) => {
-    const chosenDate = formatTimestamp(newDate);
+    const chosenDate = Auth.getDate(newDate);
     setDate(chosenDate);
 
-    // You can also format the date as needed
-    // For example, using toLocaleDateString()
-    const filteredWorkouts = workouts.filter((workout) => formatTimestamp(workout.dateCompleted) === chosenDate);
+    const filteredWorkouts = dataFirst?.getWorkoutsByUserId.filter((workout) => workout.dateCompleted === chosenDate);
     setWorkoutsOfDate(filteredWorkouts)
     setShow(true)
   }
@@ -47,7 +42,7 @@ export default function CalendarPage() {
   // Function to determine the CSS class for a specific date
   const getTileClassName = ({ date }) => {
     const dateString = date.toISOString().split('T')[0];
-    return dates.includes(dateString) ? 'highlighted-tile' : null;
+    return workoutsOfDate.includes(dateString) ? 'highlighted-tile' : null;
   };
 
   return (
