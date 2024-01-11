@@ -127,6 +127,8 @@ const typeDefs = `
     user(username: String!): User
     me: User
     getAllWorkouts: [Workout]
+    getWorkoutsByUserId(userId: ID!): [Workout]
+    getWorkoutById(_id: ID!): Workout
   }
 
   type Mutation {

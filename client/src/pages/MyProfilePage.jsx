@@ -15,7 +15,7 @@ export default function MyProfilePage(){
   const [profileSection, setProfileSection] = useState('feed');
   
   const profile = Auth.getProfile().data
-  console.log(profile);
+  //console.log(profile);
   return (
       <>
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />

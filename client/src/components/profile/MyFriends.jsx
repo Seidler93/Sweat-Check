@@ -20,7 +20,7 @@ export default function MyFriends() {
   ];
   
 
-  console.log(friends);
+  //console.log(friends);
 
   return (
     <div className='bg-light friends-container'>

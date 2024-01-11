@@ -21,17 +21,20 @@ export default function NewWorkoutPage() {
   const [workoutId, setWorkoutId] = useState('')
   const [formState, setFormState] = useState({ workoutName: '', description: '', template: false });
   const [updateWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(UPDATE_WORKOUT);
+  
 
+  const { workoutID } = useParams()
+  const { woip } = useParams()
   const navigate = useNavigate();
 
-  const updateWorkoutInDB = async (wId, wo) => {
+const updateWorkoutInDB = async (wId, wo) => {
     console.log(wId, wo);
     try {
-      const { data } = await updateWorkout({
-        variables: { workoutId: wId, updatedWorkout: wo },
-      });
+  const { data } = await updateWorkout({
+    variables: { workoutId: wId, updatedWorkout: wo },
+  });
 
-    navigate('/');
+navigate('/');
 
     } catch (e) {  
       console.error(e);
@@ -43,16 +46,26 @@ export default function NewWorkoutPage() {
       setCheckedIn(true);
     } 
 
-    const storedWorkout = JSON.parse(localStorage.getItem('woip')) || '';
+    if (workoutID && dataFirst) {
+      setNewWorkout(dataFirst)
+      //console.log(dataFirst);
+    }
 
-    if (storedWorkout) {
-      console.log(true);
+    if (woip) {
+      const storedWorkout = JSON.parse(localStorage.getItem('woip')) || '';
       setWorkoutId(storedWorkout.id)
       setNewWorkout(storedWorkout.workout);
       setAddExercise(false)
     }
 
-  }, []);
+    // if (storedWorkout) {
+    //   //console.log(true);
+    //   setWorkoutId(storedWorkout.id)
+    //   setNewWorkout(storedWorkout.workout);
+    //   setAddExercise(false)
+    // }
+
+  }, [dataFirst]);
   
   const handleAddExercise = () => {
     // Use the current value of exerciseInput

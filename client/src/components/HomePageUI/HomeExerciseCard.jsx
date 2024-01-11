@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 
 export default function HomeExerciseCard({ exercises }) {
-  console.log(exercises);
+  // //console.log(exercises);
 
   const getFormattedSets = (sets) => {
     const groupedSets = sets.reduce((grouped, set) => {
@@ -30,7 +30,7 @@ export default function HomeExerciseCard({ exercises }) {
 
   return (
     <div className='border-red'>
-      {exercises.map((exercise, index) => (
+      {exercises.exercises.map((exercise, index) => (
         <div key={exercise.exerciseName} className='d-flex flex-column'>
           <div className='d-flex'>
             <h3 className='px-2'>{exercise.exerciseName}</h3>

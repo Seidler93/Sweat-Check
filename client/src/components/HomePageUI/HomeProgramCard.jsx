@@ -19,7 +19,7 @@ export default function HomeProgramCard({ program }) {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log({...formState});
+    // //console.log({...formState});
     try {
       const { data } = await login({
         variables: { ...formState },

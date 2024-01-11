@@ -17,8 +17,15 @@ export default function NewWorkoutPage() {
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
   const [show, setShow] = useState(false);
-  const {checkedIn, setCheckedIn, } = useUserContext()
-  const [formState, setFormState] = useState({workoutName: '', description: '', template: false });
+  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
+  const [formState, setFormState] = useState({
+    originalId: null,
+    userId: Auth.getProfile().data._id,
+    workoutName: '', 
+    description: '', 
+    dateCompleted: null,
+    template: false 
+  });
   const [workoutId, setWorkoutId] = useState('')
   const [createWorkout, { createWorkoutError, createWorkoutData }] = useMutation(CREATE_WORKOUT);
   const [updateWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(UPDATE_WORKOUT);
@@ -48,7 +55,7 @@ export default function NewWorkoutPage() {
   };
 
   const updateWorkoutInDB = async (wId, wo) => {
-    console.log(wId, wo);
+    // console.log(wId, wo);
     try {
       const { data } = await updateWorkout({
         variables: { workoutId: wId, updatedWorkout: wo },
@@ -134,7 +141,7 @@ export default function NewWorkoutPage() {
   useEffect(() => {
     // Save the updated workout to local storage
     localStorage.setItem('woip', JSON.stringify({id: workoutId, workout: newWorkout}));
-    console.log(newWorkout);
+    //console.log(newWorkout);
   }, [newWorkout]);
 
   const handleClose = () => setShow(false);

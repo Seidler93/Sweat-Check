@@ -14,7 +14,7 @@ export default function MyPostCard({ post }) {
   const handleClose = () => setShow(false);
 
   const [addComment, { error, data }] = useMutation(ADD_COMMENT);
-  console.log(post.comments); 
+  //console.log(post.comments); 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
     addComment({
@@ -30,7 +30,7 @@ export default function MyPostCard({ post }) {
     })
       .then((result) => {
         // Handle success
-        console.log('Comment added successfully', result);
+        //console.log('Comment added successfully', result);
       })
       .catch((error) => {
         // Handle error
