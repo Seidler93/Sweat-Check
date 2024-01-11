@@ -3,16 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck, faPlus, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 import SetsRepsComp from './SetsRepsComp';
+import { useUserContext } from "../../utils/UserContext";
 
-export default function ExerciseCard({ superset, index, addToSuperSet, updateExercise, addSetToExercise, woip }) {
+export default function ExerciseCard({ superset, index, }) {
   const [setCount, setSetCount] = useState(1);
   const [addExercise, setAddExercise] = useState(false);
   const [exerciseInput, setExerciseInput] = useState('');
   const [notes, setNotes] = useState('');
   const [showSets, setShowSets] = useState(true);
   const [show, setShow] = useState(false);
-
-  // //console.log(superset); 
+  const {setCurrentWorkout} = useUserContext()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -21,11 +21,45 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
     setShowSets((prevShowSets) => !prevShowSets);
   };
 
+  const addToSuperSet = (newSSExercise, supersetIndex, setCount) => {
+    setCurrentWorkout((prevCurrentWorkout) => {
+      const updatedWorkout = [...prevCurrentWorkout.workout];
+      // Get the exercise group at the specified index
+      const superSet = updatedWorkout[supersetIndex].exercises;
+      let sets = [];
+      for (let i = 0; i < setCount; i++) {
+        sets = [...sets, {reps: 0, weight: 0, completed: false} ]
+      }
+      // Add a new exercise to the exercise group
+      const updatedSuperSet = [...superSet, { 
+        exerciseName: newSSExercise,
+        sets: sets
+      }];
+      
+      // Update the exercise group in the workout array
+      updatedWorkout[supersetIndex].exercises = [ ...updatedSuperSet ];
+      return {...prevCurrentWorkout, workout: updatedWorkout};
+    });
+  };
+
   const handleAddToSuperSet = () => {
     addToSuperSet(exerciseInput, index, setCount);
     setAddExercise(false);
     setExerciseInput('');
   };
+
+  const addSetToExercise = (exerciseIndex, supersetIndex, setCount) => {
+    setCurrentWorkout((prevCurrentWorkout) => {
+      const updatedWorkout = [...prevCurrentWorkout.workout];
+      // Get the exercise group at the specified index
+      const superSet = updatedWorkout[supersetIndex].exercises;
+
+      // Update sets with a new empty set
+      const newSets = [...superSet[exerciseIndex].sets, {reps: superSet[exerciseIndex].sets[setCount], weight: superSet[exerciseIndex].sets[setCount], completed: false}]
+      superSet[exerciseIndex].sets = newSets  
+      return {...prevCurrentWorkout, workout: updatedWorkout};
+    });
+  }
 
   const handleAddSet = () => {
     for (let i = 0; i < superset.exercises.length; i++) {
@@ -33,6 +67,18 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
     }
     setSetCount(setCount + 1)
   };
+
+  const updateExercise = (exerciseObject, setIndex, exerciseIndex, supersetIndex) => {
+    setCurrentWorkout((prevCurrentWorkout) => {
+      const updatedWorkout = [...prevCurrentWorkout.workout];
+      // Get the exercise group at the specified index
+      const exerciseGroup = [...updatedWorkout[supersetIndex].exercises];
+
+      // Update exercise sets
+      exerciseGroup[exerciseIndex].sets[setIndex] = exerciseObject     
+      return {...prevCurrentWorkout, workout: updatedWorkout};
+    });
+  }
 
   const completeSet = (setIndex, repsInput, weightInput, exerciseIndex, completedInput) => {
     const exerciseObject = {
@@ -129,17 +175,17 @@ export default function ExerciseCard({ superset, index, addToSuperSet, updateExe
           </div>
         </>
       ) : 
-       superset.length === 1 ? (
-        <h2 className='text-white ps-1'>{superset[0].exerciseName}</h2>
+       superset.exercises.length === 1 ? (
+        <h3 className='text-white'>{superset[0].exerciseName}</h3>
       ) : (
-        <h2 className='text-white ps-1'>
-          {superset.map((exercise, index) => (
-            <span key={index}>
+        <h3 className='text-white d-flex justify-content-start'>
+          {superset.exercises.map((exercise, index) => (
+            <h3 key={index}>
               {index > 0 && ', '}
               {exercise.exerciseName}
-            </span>
+            </h3>
           ))}
-        </h2>
+        </h3>
       )}            
     </div>
   );

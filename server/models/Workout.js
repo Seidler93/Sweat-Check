@@ -81,8 +81,8 @@ const workoutSchema = new Schema({
     trim: true,
   },
   dateCompleted: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    trim: true,
   },
   template: {
     type: Boolean,

@@ -1,5 +1,5 @@
 import { useState, useEffect  } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, redirect } from 'react-router-dom';
 import Header from '../components/Header/index'
 import HomeMenu from '../components/HomeMenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,70 +13,86 @@ import { CREATE_WORKOUT, UPDATE_WORKOUT } from '../utils/mutations';
 
 export default function NewWorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
-  const [newWorkout, setNewWorkout] = useState([]);
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
-  const [show, setShow] = useState(false);
-  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
-  const [formState, setFormState] = useState({
-    originalId: null,
-    userId: Auth.getProfile().data._id,
-    workoutName: '', 
-    description: '', 
-    dateCompleted: null,
-    template: false 
-  });
-  const [workoutId, setWorkoutId] = useState('')
+  const [show, setShow] = useState(false);  
   const [createWorkout, { createWorkoutError, createWorkoutData }] = useMutation(CREATE_WORKOUT);
   const [updateWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(UPDATE_WORKOUT);
-
+  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
   const navigate = useNavigate();
 
-  const getNewWorkoutID = async () => {
-    const workoutInput = {
-      originalId: null,
-      userId: Auth.getProfile().data._id,
-      name: null,
-      description: null,
-      dateCompleted: null,
-      template: null,
-      workout: null
-    }
-
-    try {
-      const { data } = await createWorkout({
-        variables: { workoutInput },
-      });
-      setWorkoutId(data.createWorkout._id)
-
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const updateWorkoutInDB = async (wId, wo) => {
-    // console.log(wId, wo);
-    try {
-      const { data } = await updateWorkout({
-        variables: { workoutId: wId, updatedWorkout: wo },
-      });
-
-    navigate('/');
-
-    } catch (e) {  
-      console.error(e);
-    }
-  };
-  
   useEffect(() => {
     // Move the setCheckedIn call inside useEffect
     if (!checkedIn) {
       setCheckedIn(true);
     } 
 
-    getNewWorkoutID()
-  }, []); 
+    const workout = JSON.parse(localStorage.getItem('currentWorkout')) || false;
+    
+    if (workout) {
+      setCurrentWorkout(workout)
+    } else {
+      getNewWorkoutID()
+    }
 
+  }, []);
+
+  useEffect(() => {
+    console.log('workout:', currentWorkout);
+    localStorage.setItem('currentWorkout', JSON.stringify(currentWorkout));
+  }, [currentWorkout]);
+
+  const getNewWorkoutID = async () => {
+    const workoutInput = currentWorkout
+
+    try {
+      const { data } = await createWorkout({
+        variables: { workoutInput },
+      });
+
+      setCurrentWorkout({
+        _id: data.createWorkout._id, 
+        originalId: null,
+        userId: Auth.getProfile().data._id,
+        name: '', 
+        description: '', 
+        dateCompleted: Auth.getDate(Date.now()),
+        template: false,
+        workout: [],
+      });
+
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const updateWorkoutInDB = async (wo) => {
+    try {
+      const wts = {
+        originalId: null,
+        userId: wo.userId,
+        name: wo.name, 
+        description: wo.description, 
+        dateCompleted: wo.dateCompleted,
+        template: wo.template,
+        workout: wo.workout,
+      }
+
+      const { data } = await updateWorkout({
+        variables: { workoutId: wo._id, updatedWorkout: wts },
+      });
+
+      localStorage.removeItem('currentWorkout');
+      setCheckedIn(false);
+      setCurrentWorkout({})
+      navigate('/');
+      // window.location.href = '/';
+
+    } catch (e) {  
+      console.error(e);
+    }
+  };
+  
   const handleAddExercise = () => {
     // Use the current value of exerciseInput
     const newExercise = [{ 
@@ -85,115 +101,45 @@ export default function NewWorkoutPage() {
      }];
   
     // Update the workout array with the new exercise
-    setNewWorkout(prevWorkout => [...prevWorkout, {exercises: newExercise}]);
+    setCurrentWorkout(prevCurrentWorkout => {
+      return {...prevCurrentWorkout, workout: [...prevCurrentWorkout.workout, {exercises: newExercise}]}
+    });
     
     // Clear the input field after adding the exercise
     setExerciseInput('');
     setAddExercise(false);
   };  
 
-  const addToSuperSet = (newSSExercise, supersetIndex, setCount) => {
-    setNewWorkout((prevWorkout) => {
-      const updatedWorkout = [...prevWorkout];
-      // Get the exercise group at the specified index
-      const superSet = updatedWorkout[supersetIndex].exercises;
-      let sets = [];
-      for (let i = 0; i < setCount; i++) {
-        sets = [...sets, {reps: 0, weight: 0, completed: false} ]
-      }
-      // Add a new exercise to the exercise group
-      const updatedSuperSet = [...superSet, { 
-        exerciseName: newSSExercise,
-        sets: sets
-      }];
-      
-      // Update the exercise group in the workout array
-      updatedWorkout[supersetIndex].exercises = [ ...updatedSuperSet ];
-      return updatedWorkout;
-    });
-  };
-
-  const updateExercise = (exerciseObject, setIndex, exerciseIndex, supersetIndex) => {
-    setNewWorkout((prevWorkout) => {
-      const updatedWorkout = [...prevWorkout];
-      // Get the exercise group at the specified index
-      const exerciseGroup = [...updatedWorkout[supersetIndex].exercises];
-
-      // Update exercise sets
-      exerciseGroup[exerciseIndex].sets[setIndex] = exerciseObject     
-      return updatedWorkout;
-    });
-  }
-
-  const addSetToExercise = (exerciseIndex, supersetIndex, setCount) => {
-    setNewWorkout((prevWorkout) => {
-      const updatedWorkout = [...prevWorkout];
-      // Get the exercise group at the specified index
-      const superSet = updatedWorkout[supersetIndex].exercises;
-
-      // Update sets with a new empty set
-      const newSets = [...superSet[exerciseIndex].sets, {reps: superSet[exerciseIndex].sets[setCount], weight: superSet[exerciseIndex].sets[setCount], completed: false}]
-      superSet[exerciseIndex].sets = newSets  
-      return updatedWorkout;
-    });
-  }
-
-  useEffect(() => {
-    // Save the updated workout to local storage
-    localStorage.setItem('woip', JSON.stringify({id: workoutId, workout: newWorkout}));
-    //console.log(newWorkout);
-  }, [newWorkout]);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  function formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-  
-    return `${month}/${day}/${year}`;
-  }
-
   const handleCompleteWorkout = (event) => {
-    // Prevent the default form submission behavior
-    event.preventDefault();
-    const workoutDate = formatTimestamp(Date.now());
-    localStorage.removeItem('woip');
-    setCheckedIn(false);
+    // Prevent page reload by default
+    event.preventDefault();    
     
-    const workout = {
-      originalId: null,
-      userId: Auth.getProfile().data._id,
-      name: formState.workoutName,
-      description: formState.description,
-      dateCompleted: workoutDate,
-      template: formState.template,
-      workout: newWorkout,
-    };
-    
-    updateWorkoutInDB(workoutId, workout)
+    updateWorkoutInDB(currentWorkout)
   };
   
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    setFormState((prevState) => ({
-      ...prevState,
+    setCurrentWorkout((prevCurrentWorkout) => ({
+      ...prevCurrentWorkout,
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
   return (
-    <>
+    <> 
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
       {showMenu ? (
         <HomeMenu />
         ) : (
         <div className='mx-10px hp d-flex flex-column'>
-          <div className='d-flex flex-column my-2'>
-              {newWorkout.map((exercises, index) => <ExerciseCard key={index} superset={exercises} index={index} addToSuperSet={addToSuperSet} updateExercise={updateExercise} addSetToExercise={addSetToExercise}/>)}
-          </div>
+          {currentWorkout.workout && (
+            <div className='d-flex flex-column my-2'>
+                {currentWorkout.workout.map((exercises, index) => <ExerciseCard key={index} superset={exercises} index={index}/>)}
+            </div>
+          )}
           {addExercise ? (
             <div className='d-flex align-items-center mb-2 justify-content-between'>
               <input
@@ -219,7 +165,7 @@ export default function NewWorkoutPage() {
               Add circuit
             </button>
           </div>
-          {newWorkout.length > 0 ? <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button> : '' }
+          {currentWorkout.workout ? <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button> : '' }
         </div>
       )}
 
@@ -232,9 +178,9 @@ export default function NewWorkoutPage() {
             <input
               className="mb-2 p-3 login-input"
               placeholder="Workout Name"
-              name="workoutName"
+              name="name"
               type="text"
-              value={formState.workoutName}
+              value={currentWorkout.name}
               onChange={handleChange}
             />
             <input
@@ -242,14 +188,14 @@ export default function NewWorkoutPage() {
               placeholder="Description"
               name="description"
               type="text"
-              value={formState.description}
+              value={currentWorkout.description}
               onChange={handleChange}
             />
             <label>
             <input
               type="checkbox"
               name="template"
-              checked={formState.template}
+              checked={currentWorkout.template}
               onChange={handleChange}
             />
             Save workout as Template

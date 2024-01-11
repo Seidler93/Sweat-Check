@@ -44,10 +44,10 @@ const typeDefs = `
 
   type Exercises {
     exerciseName: String
-    sets: [SetsReps]
+    sets: [Set]
   }
 
-  type SetsReps {
+  type Set {
     reps: Int
     weight: Int
     completed: Boolean
@@ -69,10 +69,10 @@ const typeDefs = `
 
   input ExerciseInput {
     exerciseName: String
-    sets: [SetsRepsInput]
+    sets: [SetInput]
   }
 
-  input SetsRepsInput {
+  input SetInput {
     reps: Int
     weight: Int
     completed: Boolean

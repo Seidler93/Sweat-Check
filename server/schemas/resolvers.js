@@ -32,6 +32,20 @@ const resolvers = {
         throw new Error('Failed to fetch workouts');
       }
     },
+    getWorkoutsByUserId: async (_, { userId }) => {
+      try {
+        const workout = await Workout.find({ userId: userId });
+
+        if (!workout) {
+          throw new Error('Workout not found');
+        }
+        return workout;
+      } catch (error) {
+        console.error(error)
+        console.error('Error fetching workout:', error.message);
+        throw new Error('Failed to fetch workout');
+      }
+    },
   },
 
   Mutation: {
@@ -66,7 +80,7 @@ const resolvers = {
         if (workoutInput.userId != "") {
           await User.findOneAndUpdate(
             { _id: workoutInput.userId },
-            { $addToSet: { workouts: createdWorkout._id } }
+            { $addToSet: { workouts: createdWorkout } }
           );
         }
 

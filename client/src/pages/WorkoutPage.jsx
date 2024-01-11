@@ -8,64 +8,64 @@ import ExerciseCard from '../components/NewWorkout/exerciseCard';
 import { useUserContext } from "../utils/UserContext";
 import Modal from 'react-bootstrap/Modal';
 import Auth from '../utils/auth';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_WORKOUT } from '../utils/mutations';
+import removeTypename from '../functions/helperFunctions';
 
-export default function NewWorkoutPage() {
+export default function WorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
-  const [newWorkout, setNewWorkout] = useState([]);
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
-  const [show, setShow] = useState(false);
-  const {checkedIn, setCheckedIn, } = useUserContext()
-  const [workoutId, setWorkoutId] = useState('')
-  const [formState, setFormState] = useState({ workoutName: '', description: '', template: false });
+  const [show, setShow] = useState(false);  
   const [updateWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(UPDATE_WORKOUT);
-  
-
-  const { workoutID } = useParams()
-  const { woip } = useParams()
+  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
   const navigate = useNavigate();
+  const { workoutId } = useParams()
+  const { woip } = useParams() 
 
-const updateWorkoutInDB = async (wId, wo) => {
-    console.log(wId, wo);
+  useEffect(() => {
+    // Make sure that the user is checked in for the workout
+    if (!checkedIn) {
+      setCheckedIn(true);
+    } 
+  }, []);
+
+  useEffect(() => {
+    console.log('workout:', currentWorkout);
+    localStorage.setItem('currentWorkout', JSON.stringify(currentWorkout));
+  }, [currentWorkout]);
+
+  const updateWorkoutInDB = async () => {
+    const wts = {
+      originalId: currentWorkout.originalId,
+      userId: currentWorkout.userId,
+      name: currentWorkout.name, 
+      description: currentWorkout.description, 
+      dateCompleted: Auth.getDate(Date.now()),
+      template: currentWorkout.template,
+      workout: currentWorkout.workout,
+    }
+
+    const formattedWorkout = removeTypename(wts)
+    console.log("workoutId:", currentWorkout._id, "updatedWorkout:", formattedWorkout);
+
     try {
-  const { data } = await updateWorkout({
-    variables: { workoutId: wId, updatedWorkout: wo },
-  });
 
-navigate('/');
+      const { data } = await updateWorkout({
+        variables: { workoutId: currentWorkout._id, updatedWorkout: formattedWorkout },
+      });
+
+      localStorage.removeItem('currentWorkout');
+      setCheckedIn(false);
+      setCurrentWorkout({})
+      // Refresh the current page
+      navigate('/');
+      window.location.reload();
 
     } catch (e) {  
       console.error(e);
     }
   };
-
-  useEffect(() => {
-    if (!checkedIn) {
-      setCheckedIn(true);
-    } 
-
-    if (workoutID && dataFirst) {
-      setNewWorkout(dataFirst)
-      //console.log(dataFirst);
-    }
-
-    if (woip) {
-      const storedWorkout = JSON.parse(localStorage.getItem('woip')) || '';
-      setWorkoutId(storedWorkout.id)
-      setNewWorkout(storedWorkout.workout);
-      setAddExercise(false)
-    }
-
-    // if (storedWorkout) {
-    //   //console.log(true);
-    //   setWorkoutId(storedWorkout.id)
-    //   setNewWorkout(storedWorkout.workout);
-    //   setAddExercise(false)
-    // }
-
-  }, [dataFirst]);
   
   const handleAddExercise = () => {
     // Use the current value of exerciseInput
@@ -75,116 +75,45 @@ navigate('/');
      }];
   
     // Update the workout array with the new exercise
-    setNewWorkout(prevWorkout => [...prevWorkout, {exercises: newExercise}]);
+    setCurrentWorkout(prevCurrentWorkout => {
+      return {...prevCurrentWorkout, workout: [...prevCurrentWorkout.workout, {exercises: newExercise}]}
+    });
     
     // Clear the input field after adding the exercise
     setExerciseInput('');
     setAddExercise(false);
-  };
-
-  const addToSuperSet = (newSSExercise, supersetIndex, setCount) => {
-    setNewWorkout((prevWorkout) => {
-      const updatedWorkout = [...prevWorkout];
-      // Get the exercise group at the specified index
-      const superSet = updatedWorkout[supersetIndex].exercises;
-      let sets = [];
-      for (let i = 0; i < setCount; i++) {
-        sets = [...sets, {reps: 0, weight: 0, completed: false} ]
-      }
-      // Add a new exercise to the exercise group
-      const updatedSuperSet = [...superSet, { 
-        exerciseName: newSSExercise,
-        sets: sets
-      }];
-      
-      // Update the exercise group in the workout array
-      updatedWorkout[supersetIndex].exercises = [ ...updatedSuperSet ];
-      return updatedWorkout;
-    });
-  };
-
-  const updateExercise = (exerciseObject, setIndex, exerciseIndex, supersetIndex) => {
-    setNewWorkout((prevWorkout) => {
-      const updatedWorkout = [...prevWorkout];
-      // Get the exercise group at the specified index
-      const exerciseGroup = [...updatedWorkout[supersetIndex].exercises];
-
-      // Update exercise sets
-      exerciseGroup[exerciseIndex].sets[setIndex] = exerciseObject     
-      return updatedWorkout;
-    });
-  }
-
-  const addSetToExercise = (exerciseIndex, supersetIndex, setCount) => {
-    setNewWorkout((prevWorkout) => {
-      const updatedWorkout = [...prevWorkout];
-      // Get the exercise group at the specified index
-      const superSet = updatedWorkout[supersetIndex].exercises;
-
-      // Update sets with a new empty set
-      const newSets = [...superSet[exerciseIndex].sets, {reps: superSet[exerciseIndex].sets[setCount], weight: superSet[exerciseIndex].sets[setCount], completed: false}]
-      superSet[exerciseIndex].sets = newSets  
-      return updatedWorkout;
-    });
-  }
-
-  useEffect(() => {
-    // Save the updated workout to local storage
-    if (workoutId) {
-      localStorage.setItem('woip', JSON.stringify({id: workoutId, workout: newWorkout}));
-    }
-  }, [newWorkout]);
+  };  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  function formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-  
-    return `${month}/${day}/${year}`;
-  }
-
   const handleCompleteWorkout = (event) => {
-    // Prevent the default form submission behavior
-    event.preventDefault();
-    const workoutDate = formatTimestamp(Date.now());
-    localStorage.removeItem('woip');
-    setCheckedIn(false);
-
-    const workout = {
-      originalId: null,
-      userId: Auth.getProfile().data._id,
-      name: formState.workoutName,
-      description: formState.description,
-      dateCompleted: workoutDate,
-      template: formState.template,
-      workout: newWorkout,
-    };
-   
-    updateWorkoutInDB(workoutId, workout)
-  }
+    // Prevent page reload by default
+    event.preventDefault();    
+    
+    updateWorkoutInDB()
+  };
   
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    setFormState((prevState) => ({
-      ...prevState,
+    setCurrentWorkout((prevCurrentWorkout) => ({
+      ...prevCurrentWorkout,
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
   return (
-    <>
+    <> 
       <Header showMenu={showMenu} setShowMenu={setShowMenu} />
       {showMenu ? (
         <HomeMenu />
         ) : (
         <div className='mx-10px hp d-flex flex-column'>
-          <div className='d-flex flex-column my-2'>
-            {newWorkout.map((exercises, index) => <ExerciseCard key={index} superset={exercises} index={index} addToSuperSet={addToSuperSet} updateExercise={updateExercise} addSetToExercise={addSetToExercise} woip={true}/>)}
-          </div>
+          {currentWorkout.workout && (
+            <div className='d-flex flex-column my-2'>
+                {currentWorkout.workout.map((exercises, index) => <ExerciseCard key={index} superset={exercises} index={index}/>)}
+            </div>
+          )}
           {addExercise ? (
             <div className='d-flex align-items-center mb-2 justify-content-between'>
               <input
@@ -222,9 +151,9 @@ navigate('/');
             <input
               className="mb-2 p-3 login-input"
               placeholder="Workout Name"
-              name="workoutName"
+              name="name"
               type="text"
-              value={formState.workoutName}
+              value={currentWorkout.name}
               onChange={handleChange}
             />
             <input
@@ -232,14 +161,14 @@ navigate('/');
               placeholder="Description"
               name="description"
               type="text"
-              value={formState.description}
+              value={currentWorkout.description}
               onChange={handleChange}
             />
             <label>
             <input
               type="checkbox"
               name="template"
-              checked={formState.template}
+              checked={currentWorkout.template}
               onChange={handleChange}
             />
             Save workout as Template

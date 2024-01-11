@@ -17,36 +17,41 @@ export default function WorkoutPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [show, setShow] = useState(false);
   const [showWP, setShowWP] = useState(true);
-  const [woip, setWoip] = useState([]);
   const [templateWorkouts, setTemplateWorkouts] = useState([])
 
-  const {checkedIn, setCheckedIn} = useUserContext()
+  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleWP = () => setShowWP(true);
   const hanldeFriends = () => setShowWP(false);
 
-  // const profile = Auth.getProfile().data
+  const profile = Auth.getProfile().data
+  // console.log(profile._id);
 
   const { loading: loadingFirst, data: dataFirst } = useQuery(QUERY_WORKOUTS_BY_USER, {
     variables: { userId: Auth.getProfile().data._id },
   });
 
   useEffect(() => {
-    const storedWorkout = JSON.parse(localStorage.getItem('woip'));
+    const storedWorkout = JSON.parse(localStorage.getItem('currentWorkout')) || false;
+
     if (storedWorkout) {
       setCheckedIn(true);
+      setCurrentWorkout(storedWorkout)
     }
 
     // Log the dataFirst variable
-    //console.log('Data First:', dataFirst);
+    console.log('Data First:', dataFirst);
 
     // Filter workouts where the key "template" is true
-    const storedTemplateWorkouts = dataFirst?.getWorkoutsByUserId.filter(workout => workout.template === true);
+    if (dataFirst?.getWorkoutsByUserId) {
+      const storedTemplateWorkouts = dataFirst?.getWorkoutsByUserId.filter(workout => workout.template === true) || false;
+      storedTemplateWorkouts ? setTemplateWorkouts(storedTemplateWorkouts) : []
+    }
+    // Refresh the current page
     //console.log('Template Workouts:', storedTemplateWorkouts);
-    storedTemplateWorkouts ? setTemplateWorkouts(storedTemplateWorkouts) : []
-  }, [dataFirst])
+  }, [dataFirst, checkedIn])
 
   return (
     <>
