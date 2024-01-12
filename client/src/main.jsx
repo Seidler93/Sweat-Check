@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       { path: '/conversations', element: <ConversationsPage /> },       
       { path: '/calendar', element: <CalendarPage /> },       
       { path: '/profile/me', element: <MyProfilePage /> },       
-      { path: '/myWorkouts', element: <MyWorkoutsPage /> },       
+      { path: '/myWorkouts/:myWorkouts', element: <MyWorkoutsPage /> },       
       { path: '/myPrograms', element: <LibraryPage /> },       
       { path: '/store', element: <StorePage /> },
       { path: '/createWorkout', element: <CreateWorkoutPage /> },

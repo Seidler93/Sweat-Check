@@ -1,5 +1,6 @@
 import { useState, useEffect  } from 'react';
 import BeginWorkoutModal from './BeginWorkoutModal';
+import CancelWorkoutBtn from './CancelWorkoutBtn';
 
 export default function MyWorkoutsCard({workout}) {
   const [show, setShow] = useState(false);

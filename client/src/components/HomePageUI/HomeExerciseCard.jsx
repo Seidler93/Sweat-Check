@@ -28,7 +28,7 @@ export default function HomeExerciseCard({ exercises }) {
             <h3 className='px-2'>{exercise.exerciseName}</h3>
             {getFormattedSets(exercise.sets)}
           </div>
-          {exercises.length === index +1 ? '' : <h3 className='text-center'>+</h3>}
+          {exercises.length === index +1 && <h3 className='text-center'>+</h3>}
         </div>
       ))}
     </div>

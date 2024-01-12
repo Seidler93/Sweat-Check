@@ -1,26 +1,32 @@
 import { useUserContext } from "../utils/UserContext";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { DELETE_WORKOUT } from '../utils/mutations';
 
-export default function CancelWorkoutBtn() {
+export default function CancelWorkoutBtn({workoutId}) {
   const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
   const [deleteWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(DELETE_WORKOUT);
   const navigate = useNavigate();
+  const {myWorkouts} = useParams()
+  console.log(myWorkouts);
 
   const handleCancelWorkout = async () => {
-    console.log({ workoutId: currentWorkout._id, userId: Auth.getProfile().data._id });
+    console.log({ workoutId: workoutId, userId: Auth.getProfile().data._id });
     try {
 
       const { data } = await deleteWorkout({
-        variables: { workoutId: currentWorkout._id, userId: Auth.getProfile().data._id },
+        variables: { workoutId: workoutId, userId: Auth.getProfile().data._id },
       });
-
-      localStorage.removeItem('currentWorkout');
-      setCheckedIn(false);
-      setCurrentWorkout({})
-      navigate('/');
+      
+      if (!myWorkouts) {
+        localStorage.removeItem('currentWorkout');
+        setCheckedIn(false);
+        setCurrentWorkout({})
+        navigate('/');
+      } else {
+        window.location.reload();
+      }
 
     } catch (e) {  
       console.error(e);
@@ -28,6 +34,6 @@ export default function CancelWorkoutBtn() {
   };
 
   return (
-    <button onClick={() => handleCancelWorkout()} className='modal-btn mt-1 bg-danger'>Cancel</button>
+    <button onClick={() => handleCancelWorkout()} className='modal-btn mt-1 bg-danger'>{myWorkouts ? 'Delete' : 'Cancel'}</button>
   )
 }

@@ -40,7 +40,7 @@ export default function WorkoutPage() {
     // Filter workouts where the key "template" is true
     if (dataFirst?.getWorkoutsByUserId) {
       const storedTemplateWorkouts = dataFirst?.getWorkoutsByUserId.filter(workout => workout.template === true) || false;
-      storedTemplateWorkouts ? setTemplateWorkouts(storedTemplateWorkouts) : []
+      storedTemplateWorkouts && setTemplateWorkouts(storedTemplateWorkouts)
     }
     // Refresh the current page
     //console.log('Template Workouts:', storedTemplateWorkouts);
@@ -48,7 +48,7 @@ export default function WorkoutPage() {
 
   return (
     <div className='hp d-flex flex-column'>
-      {/* when you click the workout button, it will as you if you want to continue to your current program */}
+      {/* when you click the workout button, it will ask you if you want to continue to your current program */}
       <button variant="primary" onClick={handleShow} className='workout-btn text-white'>Workout</button>
       <div className='home-programs p-3'>
         <button className={`bg-tr none mx-2 p-0 ${showWP ? 'profile-toggle-active' : ''}`} onClick={handleWP}><h2 className=''>Workouts/Programs</h2></button>

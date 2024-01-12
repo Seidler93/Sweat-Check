@@ -50,8 +50,6 @@ export default function BeginWorkoutBtn({workout}) {
   };
 
   return (
-    <div className='d-flex flex-column'>
-      <button onClick={() => handleBeginWorkout()} className='modal-btn'>Begin Workout</button>
-    </div>
+    <button onClick={() => handleBeginWorkout()} className='modal-btn'>Begin Workout</button>
   )
 }

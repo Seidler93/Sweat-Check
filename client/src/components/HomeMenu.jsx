@@ -5,7 +5,7 @@ import { useLockBodyScroll } from "@uidotdev/usehooks";
 export default function Homemenu ({showMenu, setShowMenu}) {
   const links = [
     {to: '/', name: 'Home'},
-    {to: 'myWorkouts', name: 'My Workouts'},
+    {to: 'myWorkouts/me', name: 'My Workouts'},
     {to: 'myPrograms', name: 'My Programs'},
     {to: '/profile/me', name: 'My Profile'},
     {to: '/myStats', name: 'Stats'},

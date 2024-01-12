@@ -4,21 +4,34 @@ import HomeWorkoutCard from './HomeWorkoutCard';
 import { Icon } from '@iconify/react';
 
 export default function Programs({loading, workouts}) {
-  // const [workouts, setWorkouts] = useState([])
 
-  useEffect(() => {
-    // Save the updated workout to local storage
-    const storedWorkouts = JSON.parse(localStorage.getItem('workouts')) || '';
-    // setWorkouts(storedWorkouts)
-    //console.log(workouts);
-  }, []);
+  function SortedWorkouts() {
+    const sortedWorkouts = workouts.sort((a, b) => {
+      const dateA = new Date(a.dateCompleted);
+      const dateB = new Date(b.dateCompleted);
+  
+      // Compare dates
+      return dateB - dateA;
+    });
+
+    console.log(sortedWorkouts);
+  
+    return (
+      <>
+        {sortedWorkouts.map((workout, index) => (
+          <HomeWorkoutCard workout={workout} key={index} />
+        ))}
+      </>
+    );
+  }
+  
 
   return (
     <>
       <h2 className='ms-3 mt-1'>My Workouts</h2>
-      <div className='home-programs d-flex flex-row-reverse'>
+      <div className='home-programs d-flex'>
+        {loading ? <Icon icon='line-md:loading-loop' width="100" height="100" className='me-1' color="white" /> : <SortedWorkouts />}
         <button className='program-btn'><Link to={'/store/programId'}>Find workouts</Link></button>              
-        {loading ? <Icon icon='line-md:loading-loop' width="100" height="100" className='me-1' color="white" /> : workouts.map((workout, index) => <HomeWorkoutCard workout={workout} key={index} />)}
       </div>
       <h2 className='ms-3 mt-4'>My Programs</h2>
       <div className='home-programs'>

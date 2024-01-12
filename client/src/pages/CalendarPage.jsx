@@ -182,11 +182,11 @@ export default function CalendarPage() {
               <div className='border-blue p-3' key={index}>
                 <div className='d-flex justify-content-between'>
                   <p>{workout.name}</p>
-                  <BeginWorkoutBtn workout={workout}/>
                 </div>
                 {workout.workout.map((lift, liftIndex) => (
                   <HomeExerciseCard key={liftIndex} exercises={lift} />
-                ))}
+                  ))}
+                  <BeginWorkoutBtn workout={workout}/>
               </div>
             ))
           ) : (
