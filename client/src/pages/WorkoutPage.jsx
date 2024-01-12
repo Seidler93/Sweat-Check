@@ -13,21 +13,27 @@ import { UPDATE_WORKOUT } from '../utils/mutations';
 import removeTypename from '../functions/helperFunctions';
 
 export default function WorkoutPage() {
-  const [showMenu, setShowMenu] = useState(false);
   const [addExercise, setAddExercise] = useState(true);
   const [exerciseInput, setExerciseInput] = useState('');
   const [show, setShow] = useState(false);  
   const [updateWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(UPDATE_WORKOUT);
   const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
   const navigate = useNavigate();
-  const { workoutId } = useParams()
-  const { woip } = useParams() 
+
 
   useEffect(() => {
-    // Make sure that the user is checked in for the workout
+    // Move the setCheckedIn call inside useEffect
     if (!checkedIn) {
       setCheckedIn(true);
     } 
+
+    const workout = JSON.parse(localStorage.getItem('currentWorkout')) || false;
+    
+    if (workout) {
+      setCurrentWorkout(workout)
+    } else {
+      getNewWorkoutID()
+    }
   }, []);
 
   useEffect(() => {
@@ -104,44 +110,39 @@ export default function WorkoutPage() {
 
   return (
     <> 
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu ? (
-        <HomeMenu />
-        ) : (
-        <div className='mx-10px hp d-flex flex-column'>
-          {currentWorkout.workout && (
-            <div className='d-flex flex-column my-2'>
-                {currentWorkout.workout.map((exercises, index) => <ExerciseCard key={index} superset={exercises} index={index}/>)}
-            </div>
-          )}
-          {addExercise ? (
-            <div className='d-flex align-items-center mb-2 justify-content-between'>
-              <input
-                type="text"
-                onChange={(e) => setExerciseInput(e.target.value)}
-                value={exerciseInput}
-                className="form-control"
-                placeholder="Enter exercise"
-                aria-describedby="basic-addon1"
-              />
-              <button type='submit' onClick={() => handleAddExercise()} className='ms-2 add-exercise-btn'>
-                <FontAwesomeIcon className='text-white' icon={faPlus} />
-              </button>
-            </div>
-          ) : ''}
-          <div className='d-flex'>
-            <button className='modal-btn me-1' onClick={() => setAddExercise(true)}>
-              <FontAwesomeIcon className='pe-3' icon={faPlus} />
-              Add exercise
-            </button>
-            <button className='modal-btn ms-1'>
-              <FontAwesomeIcon className='pe-3' icon={faPlus} />
-              Add circuit
+      <div className='mx-10px hp d-flex flex-column'>
+        {currentWorkout.workout && (
+          <div className='d-flex flex-column my-2'>
+              {currentWorkout.workout.map((exercises, index) => <ExerciseCard key={index} superset={exercises} index={index}/>)}
+          </div>
+        )}
+        {addExercise ? (
+          <div className='d-flex align-items-center mb-2 justify-content-between'>
+            <input
+              type="text"
+              onChange={(e) => setExerciseInput(e.target.value)}
+              value={exerciseInput}
+              className="form-control"
+              placeholder="Enter exercise"
+              aria-describedby="basic-addon1"
+            />
+            <button type='submit' onClick={() => handleAddExercise()} className='ms-2 add-exercise-btn'>
+              <FontAwesomeIcon className='text-white' icon={faPlus} />
             </button>
           </div>
-          <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button>
+        ) : ''}
+        <div className='d-flex'>
+          <button className='modal-btn me-1' onClick={() => setAddExercise(true)}>
+            <FontAwesomeIcon className='pe-3' icon={faPlus} />
+            Add exercise
+          </button>
+          <button className='modal-btn ms-1'>
+            <FontAwesomeIcon className='pe-3' icon={faPlus} />
+            Add circuit
+          </button>
         </div>
-      )}
+        <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button>
+      </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Complete Workout</Modal.Title>

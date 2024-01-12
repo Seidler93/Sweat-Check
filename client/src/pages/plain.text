@@ -93,3 +93,23 @@ workout = {
 
 
 ['01/02/2024', '01/03/2024', '01/08/2024', '01/09/2024', '01/010/2024', '01/11/2024']
+
+
+
+Hey guys heres some features that are working right now,
+
+log in, log out 
+
+create workout
+
+go to homepage and then able to resume current workout
+
+save workout as a template and then itll show from your workouts on home page to do that same workout again
+
+calendar page will update streaks based off of the month and year displayed on calendar
+
+all info is saved to the db
+
+there still a bumch of small stuff im going to adjust when creating workouts but its working for now
+
+

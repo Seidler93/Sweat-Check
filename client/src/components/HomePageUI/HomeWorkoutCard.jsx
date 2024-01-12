@@ -18,6 +18,19 @@ export default function HomeWorkoutCard({ workout }) {
   const {setCurrentWorkout} = useUserContext()
   const navigate = useNavigate();
 
+  function setSetsIncomplete(workout) {
+    workout.workout.forEach((supersets) => {
+      supersets.exercises.forEach((exercise) => {
+        exercise.sets.forEach((set) => {
+          set.completed = false;
+        });
+      });
+    });
+  
+    // Return the modified workout (optional)
+    return workout;
+  }
+
   const handleBeginWorkout = async () => {
     const newWorkout = {
       originalId: workout._id,
@@ -36,8 +49,8 @@ export default function HomeWorkoutCard({ workout }) {
       const { data } = await createWorkout({
         variables: { workoutInput: formattedWorkout },
       });
-  
-      localStorage.setItem('currentWorkout', JSON.stringify(data.createWorkout));
+      
+      localStorage.setItem('currentWorkout', JSON.stringify(setSetsIncomplete(data.createWorkout)));
       setCurrentWorkout(data.createWorkout);
       navigate(`/workout/${workout._id}`);
     } catch (e) {  
@@ -48,16 +61,16 @@ export default function HomeWorkoutCard({ workout }) {
   return (
     <>
       <button className='program-btn' onClick={handleShow}>
-        <h3>{workout.name}</h3>
+        <h3 className='f1'>{workout.name}</h3>
       </button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Select Workout</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h2 className='ms-3 text-dark'>{workout.name}</h2>
-          {workout.workout.map((exercises) => (
-            <HomeExerciseCard exercises={exercises}/>
+          <h2 className='ms-3 text-dark f1'>{workout.name}</h2>
+          {workout.workout.map((exercises, index) => (
+            <HomeExerciseCard key={index} exercises={exercises}/>
           ))}
           <div className='d-flex flex-column'>
             <button onClick={() => handleBeginWorkout()} className='modal-btn'>Begin Workout</button>

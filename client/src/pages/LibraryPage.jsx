@@ -9,19 +9,12 @@ export default function LibraryPage() {
   const WorkoutId = 1
   return (
     <>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu ? (
-        <HomeMenu />
-        ) : (
-          <>
-          {/* query for existing workouts and list them here with option to create a new workout */}
-          {/* loop through the query result of workouts */}
-          <Link to={`/program/${ProgramId}`}>Program 1</Link>
-          <Link to={`/workout/${WorkoutId}`}>Workout 1</Link>
-          <Link to={`/program/${ProgramId}`}>Program 1</Link>
-          <Link to={`/justWorkout`}>Just Workout</Link>
-        </>
-      )}
+      {/* query for existing workouts and list them here with option to create a new workout */}
+      {/* loop through the query result of workouts */}
+      <Link to={`/program/${ProgramId}`}>Program 1</Link>
+      <Link to={`/workout/${WorkoutId}`}>Workout 1</Link>
+      <Link to={`/program/${ProgramId}`}>Program 1</Link>
+      <Link to={`/justWorkout`}>Just Workout</Link>
     </>
   );
 }

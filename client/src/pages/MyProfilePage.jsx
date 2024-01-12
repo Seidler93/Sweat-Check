@@ -17,19 +17,12 @@ export default function MyProfilePage(){
   const profile = Auth.getProfile().data
   //console.log(profile);
   return (
-      <>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-    {showMenu ? (
-      <HomeMenu />
-    ) : (
-      <>
-        <div className='psomething'>
-          <ProfileHeader username={profile.username}/>
-          <ProfileSectionToggle setProfileSection={setProfileSection} profileSections={profileSections} activeSection={profileSection}/>
-          {profileSection === profileSections[0] ? <MyPosts/> : profileSection === profileSections[1] ? <MyProgress/> : profileSection === profileSections[2] ? <MyFriends/> : ''}
-        </div>
-      </>
-    )}
+    <>
+      <div className='psomething'>
+        <ProfileHeader username={profile.username}/>
+        <ProfileSectionToggle setProfileSection={setProfileSection} profileSections={profileSections} activeSection={profileSection}/>
+        {profileSection === profileSections[0] ? <MyPosts/> : profileSection === profileSections[1] ? <MyProgress/> : profileSection === profileSections[2] ? <MyFriends/> : ''}
+      </div>
     </>
   )
 }

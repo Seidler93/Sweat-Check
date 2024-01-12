@@ -8,22 +8,15 @@ export default function ProductPage() {
 
   return (
     <>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu ? (
-        <HomeMenu />
-        ) : (
-          <>
-          <h2>Settings</h2>
-          <button>Workout Settings</button>
-          <button>Edit Information</button>
-          <button>Subscriptions</button>
-          <button>Payment Methods</button>
-          <button>Notifications</button>
-          <button>Contact Us</button>
-          <button>FAQ</button>
-          <button>logout</button>
-        </>
-      )}
+      <h2>Settings</h2>
+      <button>Workout Settings</button>
+      <button>Edit Information</button>
+      <button>Subscriptions</button>
+      <button>Payment Methods</button>
+      <button>Notifications</button>
+      <button>Contact Us</button>
+      <button>FAQ</button>
+      <button>logout</button>
     </>
   );
 };

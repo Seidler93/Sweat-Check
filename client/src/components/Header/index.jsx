@@ -1,69 +1,60 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage, faBars, faDumbbell, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { useState, useEffect } from 'react';
 import { useUserContext } from "../../utils/UserContext";
+import Homemenu from '../HomeMenu';
 
+export default function Header () {
+  const [showMenu, setShowMenu] = useState(false);
+  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
+  const navigate = useNavigate();
 
-export default function Header ({ showMenu, setShowMenu}) {
-  const [fadeOut, setFadeOut] = useState(false);
-  const {checkedIn, setCheckedIn} = useUserContext()
-
-  const handleMenu = () => {
-    setFadeOut(!fadeOut);
-    setShowMenu(!showMenu);
-  };
-
-  const saveTheDate = () => {
+  function handleIconPress() {
     setCheckedIn(!checkedIn)
-    // Create a new Date object, which represents the current date and time
-    const currentDate = new Date();
-    
-    // Extract individual components of the date (year, month, day)
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
-    const day = currentDate.getDate();
-    
-    // Format the date as a string
-    const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`
+    setShowMenu(false)
 
-    localStorage.setItem('checkedIn', true);
-    console.log(formattedDate);
+    if (currentWorkout?._id) {
+      navigate('/workout/woip')
+    } else {
+      localStorage.removeItem('currentWorkout');
+      navigate('/newWorkoutPage')
+    }
   }
 
   return (
-    <Nav className='f2 bg-dark d-flex justify-content-between fixed-top border '>
-      <NavDropdown  title="Sweat Check" id="nav-dropdown" className='ps-3 d-flex align-items-center justify-content-center'>
-        <NavDropdown.Item >Feed 1</NavDropdown.Item>
-        <NavDropdown.Item >Feed 2</NavDropdown.Item>
-        <NavDropdown.Item >Feed 3</NavDropdown.Item>
-      </NavDropdown>
-      <div className='d-flex pe-1'>
-      {/* <Nav.Item className='p-1'>
-            <FontAwesomeIcon icon={faCheck} style={{color: "#ffffff",}} className='message-icon pe-2'/>
-        </Nav.Item> */}
-        <Nav.Item className='py-2 px-1 clear'>
-          <FontAwesomeIcon onClick={() => saveTheDate()} icon={faDumbbell} style={{color: "#ffffff",}} className={`me-3 ${checkedIn ? 'checked-in' : ''}`}/>
-        </Nav.Item>
-        <Nav.Item className='py-2 px-1 clear'>
-          <Link to={'/conversations'}>
-            <FontAwesomeIcon icon={faMessage} style={{color: "#ffffff",}} className='message-icon'/>
-          </Link>
-        </Nav.Item>
-        <Nav.Item className='p-2'>
-          <Nav.Link >            
-            <FontAwesomeIcon
-              icon={showMenu ? faXmark : faBars}
-              style={{ color: "#ffffff" }}
-              className={`menu-icon logospin ${fadeOut ? 'fade-out' : 'fade-in'}`}
-              onClick={handleMenu}
-              onAnimationEnd={() => setFadeOut(false)}
-            />
-          </Nav.Link>
-        </Nav.Item>             
-      </div>
-    </Nav>
+    <>
+      <Nav className='f2 bg-dark d-flex justify-content-between fixed-top rel'>
+        <div className='d-flex align-items-center'>
+          <Nav.Item className='clear' onClick={() => setShowMenu(false)}>
+            <Link  to={'/'} className='ps-4 clear'>Sweat Check</Link>
+          </Nav.Item>
+        </div>
+        
+        <div className='d-flex pe-1'>
+          <Nav.Item className='py-2 px-1 clear' onClick={() => handleIconPress()}>
+            <FontAwesomeIcon  icon={faDumbbell} style={{color: "#ffffff",}} className={`me-3 ${checkedIn ? 'checked-in' : ''}`}/>
+          </Nav.Item>
+          <Nav.Item className='py-2 px-1 clear'>
+            <Link to={'/conversations'} onClick={() => setShowMenu(false)}>
+              <FontAwesomeIcon icon={faMessage} style={{color: "#ffffff",}} className='message-icon'/>
+            </Link>
+          </Nav.Item>
+          <Nav.Item className='p-2'>
+            <Nav.Link onClick={() => setShowMenu(!showMenu)}>            
+              <FontAwesomeIcon
+                icon={showMenu ? faXmark : faBars}
+                style={{ color: "#ffffff" }}
+                className={`menu-icon`}
+              />
+            </Nav.Link>
+          </Nav.Item>             
+        </div>
+      </Nav>
+      <Homemenu showMenu={showMenu} setShowMenu={setShowMenu}/>
+      {/* {showMenu && <Homemenu showMenu={showMenu}/>} */}
+    </>
   );
 };

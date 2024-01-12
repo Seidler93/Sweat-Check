@@ -6,16 +6,16 @@ export default function Friends() {
     <>
       <h2 className='ms-3'>Friends</h2> 
       <div className='d-flex flex-column'>
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
-        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p>Status</p></button>              
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>              
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>              
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>              
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>              
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>              
+        <button className='friend-btn'><Link to={'/store/friendId'}>First Last</Link><p className='clear'>Status</p></button>              
       </div>
     </>
   );

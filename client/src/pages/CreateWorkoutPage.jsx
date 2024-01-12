@@ -8,15 +8,8 @@ export default function CreateWorkoutPage() {
 
   return (
     <>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu ? (
-        <HomeMenu />
-        ) : (
-          <>
-          {/* this will allow the user to create a workout to complete later */}
-          <h2>create workout</h2>
-        </>
-      )}
+      {/* this will allow the user to create a workout to complete later */}
+      <h2>create workout</h2>
     </>
   );
 };

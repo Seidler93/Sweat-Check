@@ -8,18 +8,11 @@ export default function MyStatsPage() {
   const productId = 1
   return (
     <>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu ? (
-        <HomeMenu />
-        ) : (
-          <>
-          {/* query for all programs and workouts that are available to user and display here */}
-          <p>stat 1</p>
-          <p>stat 2</p>
-          <p>stat 3</p>
-          <p>stat 4</p>
-        </>
-      )}
+      {/* query for all programs and workouts that are available to user and display here */}
+      <p>stat 1</p>
+      <p>stat 2</p>
+      <p>stat 3</p>
+      <p>stat 4</p>
     </>
   );
 };

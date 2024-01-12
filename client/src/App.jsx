@@ -12,6 +12,8 @@ import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import Auth from '../src/utils/auth'
+import SideBar from './SideBar';
+import Header from './components/Header';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -42,7 +44,14 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <UserProvider>
-        {Auth.loggedIn() ? <Outlet/> : <LoginPage/> }
+            {Auth.loggedIn() ? (
+              <>
+                <Header/>
+                <Outlet/> 
+              </> 
+            ) : (
+              <LoginPage/> 
+            )}
       </UserProvider>
     </ApolloProvider>
   );

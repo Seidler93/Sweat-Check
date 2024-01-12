@@ -20,8 +20,8 @@ import ProgramPage from './pages/ProgramPage.jsx';
 import WorkoutPage from './pages/WorkoutPage.jsx'
 import ExercisePage from './pages/ExercisePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import SignupPage from './pages/SignupPage.jsx';
 import NewWorkoutPage from './pages/NewWorkoutPage.jsx';
+import WorkoutsPage from './pages/WorkoutsPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -33,7 +33,8 @@ const router = createBrowserRouter([
       { path: '/conversations', element: <ConversationsPage /> },       
       { path: '/calendar', element: <CalendarPage /> },       
       { path: '/profile/me', element: <MyProfilePage /> },       
-      { path: '/library', element: <LibraryPage /> },       
+      { path: '/myWorkouts', element: <WorkoutsPage /> },       
+      { path: '/myPrograms', element: <LibraryPage /> },       
       { path: '/store', element: <StorePage /> },
       { path: '/createWorkout', element: <CreateWorkoutPage /> },
       { path: '/:programId/:workoutId', element: <ProgramPage /> },
@@ -43,7 +44,6 @@ const router = createBrowserRouter([
       { path: '/settings', element: <SettingsPage /> },
       { path: '/exercise', element: <ExercisePage /> },
       { path: '/login', element: <LoginPage /> },
-      { path: '/signup', element: <SignupPage /> },
       { path: '/newWorkoutPage', element: <NewWorkoutPage /> },
     ]
   },

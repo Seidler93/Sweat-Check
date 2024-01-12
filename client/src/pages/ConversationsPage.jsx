@@ -8,18 +8,11 @@ export default function ConversationsPage() {
   const conversationId = 1
   return (
     <>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu ? (
-        <HomeMenu />
-        ) : (
-          <>
-          {/* query for existing conversations and list them here with option to create a new conversation */}
-          {/* loop through the query result of conversations */}
-          <Link to={`/conversation/${conversationId}`}>Conversation 1</Link>
-          <Link to={`/conversation/${conversationId}`}>Conversation 2</Link>
-          <Link to={`/conversation/${conversationId}`}>Conversation 3</Link>
-        </>
-      )}
+      {/* query for existing conversations and list them here with option to create a new conversation */}
+      {/* loop through the query result of conversations */}
+      <Link to={`/conversation/${conversationId}`}>Conversation 1</Link>
+      <Link to={`/conversation/${conversationId}`}>Conversation 2</Link>
+      <Link to={`/conversation/${conversationId}`}>Conversation 3</Link>
     </>
   );
 }

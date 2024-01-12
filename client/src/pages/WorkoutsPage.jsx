@@ -6,15 +6,6 @@ import HomeMenu from '../components/HomeMenu';
 export default function TEMPLATE() {
   const [showMenu, setShowMenu] = useState(false);
   return (
-    <>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu ? (
-        <HomeMenu />
-        ) : (
-        <>
-          {/* put code for the page here */}
-        </>
-      )}
-    </>
+    <p>show all workouts here</p>
   );
 };

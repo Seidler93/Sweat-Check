@@ -7,16 +7,9 @@ export default function ExercisePage() {
   const [showMenu, setShowMenu] = useState(false);
   return (
     <>
-      <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu ? (
-        <HomeMenu />
-        ) : (
-        <>
-          {/* put code for the page here */}
-          <p>list of exercises</p>
-          <p>create exercise</p>
-        </>
-      )}
+      {/* put code for the page here */}
+      <p>list of exercises</p>
+      <p>create exercise</p>
     </>
   );
 };

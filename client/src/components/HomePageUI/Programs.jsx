@@ -19,7 +19,6 @@ export default function Programs({loading, workouts}) {
       <div className='home-programs d-flex flex-row-reverse'>
         <button className='program-btn'><Link to={'/store/programId'}>Find workouts</Link></button>              
         {loading ? <Icon icon='line-md:loading-loop' width="100" height="100" className='me-1' color="white" /> : workouts.map((workout, index) => <HomeWorkoutCard workout={workout} key={index} />)}
-        {/* {workouts && workouts.map((workout, index) => <HomeWorkoutCard workout={workout} key={index} />)} */}
       </div>
       <h2 className='ms-3 mt-4'>My Programs</h2>
       <div className='home-programs'>

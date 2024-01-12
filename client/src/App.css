@@ -1,11 +1,33 @@
+#homeMenu {
+  position: fixed;
+  right: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 250px;
+  margin-top: 4rem;
+}
+
+.menu-bg {
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 4;
+  /* opacity: .5; */
+  transition: 0.3;
+}
+
 h2 {
   color: white!important;
 }
 
+.sc {
+  /* max-width: 1000px; */
+}
 
-
-#root {
-  max-width: 1000px;
+.fixed-top {
+  max-width: 1000px!important;
 }
 
 .cal-page{
@@ -51,16 +73,14 @@ h2 {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.home-menu {
-  padding: 2rem 1rem 0;
-}
+
 
 .menu-option {
   background-color: #1A1A1A;
   padding: 15px;
   text-align: center;
-  margin: 5px 0;
-  border-radius: 6px;
+  /* margin: 5px 0; */
+  /* border-radius: 6px; */
 }
 
 .fade-out-element {
@@ -143,10 +163,13 @@ button {
 }
 
 .program-btn {
-  margin: 10px;
   height: 18vh;
-  min-width: 60vw;
+  min-height: 150px;
+  max-height: 200px;
+  width: 60vw;
+  min-width: 250px;
   max-width: 300px;
+  margin: 10px;
 }
 
 .current-program-btn {
@@ -161,13 +184,16 @@ button {
 .friend-btn {
   margin: 10px 10px 0;
   height: 5vh;
+  min-height: 60px;
   text-align: start;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .clear {
   padding: 0!important;
+  margin: 0!important;
 }
 
 .nav {
@@ -185,24 +211,13 @@ a {
   text-decoration: none!important;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
 .f2 {
-  font-size: 1.5rem;}
+  font-size: 1.5rem;
+}
 
+.f1 {
+  font-size: 1rem!important;
+}
 .card {
   padding: 2em;
 }
@@ -407,4 +422,10 @@ body {
   border: 2px solid blue;
   border-radius: 4px;
   margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1000px) {  
+  #desktop {
+    display: none!important;
+  }
 }

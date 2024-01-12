@@ -1,18 +1,50 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useLockBodyScroll } from "@uidotdev/usehooks";
 
-export default function Homemenu ({ setShowMenu }) {
+export default function Homemenu ({showMenu, setShowMenu}) {
+  const links = [
+    {to: '/', name: 'Home'},
+    {to: 'myWorkouts', name: 'My Workouts'},
+    {to: 'myPrograms', name: 'My Programs'},
+    {to: '/profile/me', name: 'My Profile'},
+    {to: '/myStats', name: 'Stats'},
+    {to: '/calendar', name: 'Calendar'},
+    {to: '/settings', name: 'Settings'},
+    {to: '/exercise', name: 'Exercises'},
+  ]
+
+  function PreventBg({handleClose}) {
+    useLockBodyScroll();
+
+    return (
+      <motion.div 
+        onClick={handleClose} 
+        className='menu-bg bg-dark'
+        initial={{opacity: 0}}
+        animate={{ opacity: .5 }}
+        transition={{ duration: 0.3 }} 
+      >
+        &zwnj;
+      </motion.div>
+    )
+  }
+
   return (
-    <div className="d-flex flex-column home-menu hp">
-        <Link to={'/'} className="menu-option" onClick={() => setShowMenu(false)}>Home</Link>
-        <Link to={'/library'} className="menu-option">Program Library</Link>
-        <Link to={'/profile/me'} className="menu-option">My Profile</Link>
-        <Link to={'/calendar'} className="menu-option">Calendar</Link>
-        <Link to={'/settings'}className="menu-option">Settings</Link>
-        <Link to={'/myStats'} className="menu-option">Stats</Link>
-        <Link to={'/friends'} className="menu-option">Friends</Link>
-        <Link to={'/exercise'} className="menu-option">Exercises</Link>
-        <Link to={'/exercise'} className="menu-option">Communities/clubs</Link>
-    </div>
+    <>
+        <motion.div 
+          className="d-flex flex-column z5" 
+          id='homeMenu'
+          initial={{x: 150}}
+          animate={{ x: showMenu ? 0 : 350 }}
+          transition={{ duration: 0.3 }} 
+        >
+          {links.map(link => <Link to={link.to} className="menu-option" onClick={() => setShowMenu(false)}>{link.name}</Link>)}
+        </motion.div>  
+      {showMenu && <PreventBg handleClose={() => setShowMenu(false)}/>}
+      {/* {isOpen && <Modal handleClose={() => setIsOpen(false)} />} */}
+    </>
   );
 };
 
