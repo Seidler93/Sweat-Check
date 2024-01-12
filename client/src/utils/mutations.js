@@ -70,3 +70,14 @@ export const UPDATE_WORKOUT = gql`
     }
   }
 `;
+
+export const DELETE_WORKOUT = gql`
+  mutation DeleteWorkout($workoutId: ID, $userId: ID) {
+    deleteWorkout(workoutId: $workoutId, userId: $userId) {
+      _id
+      userId
+    }
+  }
+`;
+
+

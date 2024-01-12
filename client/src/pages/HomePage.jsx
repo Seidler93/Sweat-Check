@@ -1,5 +1,3 @@
-import Header from '../components/Header/index'
-import HomeMenu from '../components/HomeMenu';
 import { useState, useEffect  } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
@@ -14,20 +12,15 @@ import Auth from '../utils/auth';
 import { Icon } from '@iconify/react';
 
 export default function WorkoutPage() {
-  const [showMenu, setShowMenu] = useState(false);
   const [show, setShow] = useState(false);
   const [showWP, setShowWP] = useState(true);
   const [templateWorkouts, setTemplateWorkouts] = useState([])
-
   const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleWP = () => setShowWP(true);
   const hanldeFriends = () => setShowWP(false);
-
-  const profile = Auth.getProfile().data
-  // console.log(profile._id);
 
   const { loading: loadingFirst, data: dataFirst } = useQuery(QUERY_WORKOUTS_BY_USER, {
     variables: { userId: Auth.getProfile().data._id },

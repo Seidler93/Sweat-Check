@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Header from '../components/Header/index';
-import HomeMenu from '../components/HomeMenu';
 import { useQuery } from '@apollo/client';
 import { useUserContext } from "../utils/UserContext";
 import Modal from 'react-bootstrap/Modal';
-import { Link } from 'react-router-dom';
 import HomeExerciseCard from '../components/HomePageUI/HomeExerciseCard';
 import { QUERY_WORKOUTS_BY_USER } from '../utils/queries';
 import Auth from '../utils/auth';
+import BeginWorkoutBtn from '../components/BeginWorkoutBtn';
 
 export default function CalendarPage() {
-  const [showMenu, setShowMenu] = useState(false);
   const [date, setDate] = useState('');
   const [show, setShow] = useState(false);
   const [workoutsOfDate, setWorkoutsOfDate] = useState([])
@@ -183,7 +180,10 @@ export default function CalendarPage() {
           {workoutsOfDate.length > 0 ? (
             workoutsOfDate.map((workout, index) => (
               <div className='border-blue p-3' key={index}>
-                <p>{workout.name}</p>
+                <div className='d-flex justify-content-between'>
+                  <p>{workout.name}</p>
+                  <BeginWorkoutBtn workout={workout}/>
+                </div>
                 {workout.workout.map((lift, liftIndex) => (
                   <HomeExerciseCard key={liftIndex} exercises={lift} />
                 ))}

@@ -136,6 +136,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     createWorkout(workoutInput: WorkoutInput): Workout
     updateWorkout(workoutId: ID, updatedWorkout: WorkoutInput): Workout
+    deleteWorkout(workoutId: ID, userId: ID): Workout
   }
 `;
 

@@ -10,19 +10,6 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username });
     },
-    // thoughts: async (parent, { username }) => {
-    //   const params = username ? { username } : {};
-    //   return Thought.find(params).sort({ createdAt: -1 });
-    // },
-    // thought: async (parent, { thoughtId }) => {
-    //   return Thought.findOne({ _id: thoughtId });
-    // },
-    me: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
-      }
-      throw AuthenticationError;
-    },
     getAllWorkouts: async () => {
       try {
         const workouts = await Workout.find();
@@ -110,22 +97,34 @@ const resolvers = {
         throw new Error('Failed to update workout');
       }
     },
-  //   createWorkout: async (parent, { thoughtText }, context) => {
+    deleteWorkout: async (parent, { workoutId, userId }) => {
+      const workout = await Workout.findOneAndDelete({
+        _id: workoutId,
+        userId: userId,
+      });
+
+      await User.findOneAndUpdate(
+        { _id: userId },
+        { $pull: { workouts: workoutId} }
+      );
+
+      return workout;
+    },
+  //   removeThought: async (parent, { thoughtId }, context) => {
   //     if (context.user) {
-  //       const thought = await Thought.create({
-  //         thoughtText,
+  //       const thought = await Thought.findOneAndDelete({
+  //         _id: thoughtId,
   //         thoughtAuthor: context.user.username,
   //       });
 
   //       await User.findOneAndUpdate(
   //         { _id: context.user._id },
-  //         { $addToSet: { thoughts: thought._id } }
+  //         { $pull: { thoughts: thought._id } }
   //       );
 
   //       return thought;
   //     }
   //     throw AuthenticationError;
-  //     ('You need to be logged in!');
   //   },
   //   addComment: async (parent, { thoughtId, commentText }, context) => {
   //     if (context.user) {
@@ -141,22 +140,6 @@ const resolvers = {
   //           runValidators: true,
   //         }
   //       );
-  //     }
-  //     throw AuthenticationError;
-  //   },
-  //   removeThought: async (parent, { thoughtId }, context) => {
-  //     if (context.user) {
-  //       const thought = await Thought.findOneAndDelete({
-  //         _id: thoughtId,
-  //         thoughtAuthor: context.user.username,
-  //       });
-
-  //       await User.findOneAndUpdate(
-  //         { _id: context.user._id },
-  //         { $pull: { thoughts: thought._id } }
-  //       );
-
-  //       return thought;
   //     }
   //     throw AuthenticationError;
   //   },

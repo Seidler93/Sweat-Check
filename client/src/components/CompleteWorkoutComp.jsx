@@ -38,7 +38,6 @@ export default function CompleteWorkoutComp({show, handleClose}) {
       });
 
       localStorage.removeItem('currentWorkout');
-      handleClose()
       setCheckedIn(false);
       setCurrentWorkout({})
       // Refresh the current page

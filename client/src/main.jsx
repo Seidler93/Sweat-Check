@@ -21,7 +21,7 @@ import WorkoutPage from './pages/WorkoutPage.jsx'
 import ExercisePage from './pages/ExercisePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import NewWorkoutPage from './pages/NewWorkoutPage.jsx';
-import WorkoutsPage from './pages/WorkoutsPage.jsx'
+import MyWorkoutsPage from './pages/MyWorkoutsPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       { path: '/conversations', element: <ConversationsPage /> },       
       { path: '/calendar', element: <CalendarPage /> },       
       { path: '/profile/me', element: <MyProfilePage /> },       
-      { path: '/myWorkouts', element: <WorkoutsPage /> },       
+      { path: '/myWorkouts', element: <MyWorkoutsPage /> },       
       { path: '/myPrograms', element: <LibraryPage /> },       
       { path: '/store', element: <StorePage /> },
       { path: '/createWorkout', element: <CreateWorkoutPage /> },

@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage, faBars, faDumbbell, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { useState, useEffect } from 'react';
@@ -13,7 +12,7 @@ export default function Header () {
   const navigate = useNavigate();
 
   function handleIconPress() {
-    setCheckedIn(!checkedIn)
+    setCheckedIn(true)
     setShowMenu(false)
 
     if (currentWorkout?._id) {
@@ -54,7 +53,6 @@ export default function Header () {
         </div>
       </Nav>
       <Homemenu showMenu={showMenu} setShowMenu={setShowMenu}/>
-      {/* {showMenu && <Homemenu showMenu={showMenu}/>} */}
     </>
   );
 };

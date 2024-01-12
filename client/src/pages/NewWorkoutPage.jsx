@@ -7,6 +7,7 @@ import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { CREATE_WORKOUT } from '../utils/mutations';
 import CompleteWorkoutComp from '../components/CompleteWorkoutComp';
+import CancelWorkoutBtn from '../components/CancelWorkoutBtn';
 
 export default function NewWorkoutPage() {
   const [addExercise, setAddExercise] = useState(true);
@@ -115,12 +116,10 @@ export default function NewWorkoutPage() {
             Add circuit
           </button>
         </div>
-        {currentWorkout.workout.length > 0 && <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button>}
+        {currentWorkout.workout?.length > 0 && <button handleShow={handleShow} className='modal-btn mt-1'>Complete Workout</button>}
+        <CancelWorkoutBtn/>
       </div>
-      {currentWorkout.workout > 0 && <CompleteWorkoutComp show={show} onHide={handleClose}/>}
+      <CompleteWorkoutComp show={show} handleClose={handleClose}/>
     </>
   );
 }
-
-"65a0be5dd36d35bd7a61ab0f"
-"65a0be5dd36d35bd7a61ab0f"
