@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-  query GetUser($id: ID!) {
+  query getUser($id: ID!) {
     getUser(_id: $id) {
       _id
       workouts {
@@ -223,6 +223,20 @@ export const QUERY_WORKOUT_BY_ID = gql`
           }
         }
       }
+    }
+  }
+`;
+
+export const QUERY_FRIENDS_BY_ID = gql`
+  query GetFriendsByUserId($userId: ID!) {
+    getFriendsByUserId(userId: $userId) {
+      user
+      friend {
+        username
+        _id
+      }
+      _id
+      state
     }
   }
 `;

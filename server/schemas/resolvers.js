@@ -1,4 +1,4 @@
-const { User, Workout } = require('../models');
+const { User, Workout, Friend } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 // const stripe = require('stripe')(/* insert dotenv reference here */);
 
@@ -27,6 +27,20 @@ const resolvers = {
           throw new Error('Workout not found');
         }
         return workout;
+      } catch (error) {
+        console.error(error)
+        console.error('Error fetching workout:', error.message);
+        throw new Error('Failed to fetch workout');
+      }
+    },
+    getFriendsByUserId: async (_, { userId }) => {
+      try {
+        const friends = await Friend.find({ userId: userId });
+
+        if (!friends) {
+          throw new Error('Workout not found');
+        }
+        return friends;
       } catch (error) {
         console.error(error)
         console.error('Error fetching workout:', error.message);
@@ -75,6 +89,16 @@ const resolvers = {
       } catch (error) {
         console.error('Error creating workout:', error.message);
         throw new Error('Failed to create workout');
+      }
+    },
+    friendRequest: async (parent, { friendRequest }, context) => {
+      try {
+        const request = await Friend.create(friendRequest);
+
+        return request
+      } catch (error) {
+        console.error('Error creating friend:', error);
+        throw new Error('Failed to create friend');
       }
     },
     updateWorkout: async (parent, { workoutId, updatedWorkout }) => {

@@ -5,6 +5,8 @@ import { faMessage, faBars, faDumbbell, faCheck, faXmark } from "@fortawesome/fr
 import { useState, useEffect } from 'react';
 import { useUserContext } from "../../utils/UserContext";
 import Homemenu from '../HomeMenu';
+import { Icon } from '@iconify/react';
+import MenuBtn from './MenuBtn';
 
 export default function Header () {
   const [showMenu, setShowMenu] = useState(false);
@@ -25,7 +27,7 @@ export default function Header () {
 
   return (
     <>
-      <Nav className='f2 bg-dark d-flex justify-content-between fixed-top rel'>
+      <Nav className='f2 bg-dark d-flex justify-content-between fixed-top'>
         <div className='d-flex align-items-center'>
           <Nav.Item className='clear' onClick={() => setShowMenu(false)}>
             <Link  to={'/'} className='ps-4 clear'>Sweat Check</Link>
@@ -33,23 +35,16 @@ export default function Header () {
         </div>
         
         <div className='d-flex pe-1'>
-          <Nav.Item className='py-2 px-1 clear' onClick={() => handleIconPress()}>
-            <FontAwesomeIcon  icon={faDumbbell} style={{color: "#ffffff",}} className={`me-3 ${checkedIn ? 'checked-in' : ''}`}/>
+          <Nav.Item className='py-2 px-1 clear me-1' onClick={() => handleIconPress()}>
+            <Icon icon='ic:round-search' width="40" height="40" color="white" />
           </Nav.Item>
-          <Nav.Item className='py-2 px-1 clear'>
-            <Link to={'/conversations'} onClick={() => setShowMenu(false)}>
-              <FontAwesomeIcon icon={faMessage} style={{color: "#ffffff",}} className='message-icon'/>
-            </Link>
+          <Nav.Item className='py-2 px-1 clear me-1' onClick={() => handleIconPress()}>
+            <Icon icon='mdi:weight-lifter' width="40" height="40" color={`${checkedIn ? 'blue' : 'white'}`} />
           </Nav.Item>
-          <Nav.Item className='p-2'>
-            <Nav.Link onClick={() => setShowMenu(!showMenu)}>            
-              <FontAwesomeIcon
-                icon={showMenu ? faXmark : faBars}
-                style={{ color: "#ffffff" }}
-                className={`menu-icon`}
-              />
-            </Nav.Link>
-          </Nav.Item>             
+          <Nav.Item className='py-2 px-1 clear me-1' onClick={() => setShowMenu(false)}>
+              <Icon icon='bxs:message' width="40" height="40" color='white' />
+          </Nav.Item>
+          <MenuBtn showMenu={showMenu} setShowMenu={setShowMenu}/>
         </div>
       </Nav>
       <Homemenu showMenu={showMenu} setShowMenu={setShowMenu}/>

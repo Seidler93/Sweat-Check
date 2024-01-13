@@ -22,12 +22,39 @@ h2 {
   color: white!important;
 }
 
-.sc {
-  /* max-width: 1000px; */
-}
-
 .fixed-top {
   max-width: 1000px!important;
+}
+
+.nav-fixed-top {
+  position: absolute!important;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* #root {
+  position: relative;
+  max-width: 400px;
+  border: 2px solid black;
+  border-radius: 20px;
+  overflow: scroll;
+  min-width: 400px;
+  height: 90vh;
+  margin-top: 15px;
+} */
+
+/* body {
+  display: flex;
+  justify-content: center;
+} */
+
+form {
+  max-width: 500px;
+}
+
+#root::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari/Edge */
 }
 
 .cal-page{
@@ -437,4 +464,23 @@ body {
   #desktop {
     display: none!important;
   }
+
+  /* #root {
+    position: relative;
+    max-width: none;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    min-width: none;
+    height: auto;
+    margin-top: 0;
+  }
+
+  body {
+    display: block;
+  }
+
+  .nav-fixed-top {
+    position: fixed!important;
+  } */
 }

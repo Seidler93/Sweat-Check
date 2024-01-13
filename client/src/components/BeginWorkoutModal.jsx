@@ -2,8 +2,11 @@ import Modal from 'react-bootstrap/Modal';
 import HomeExerciseCard from './HomePageUI/HomeExerciseCard';
 import BeginWorkoutBtn from './BeginWorkoutBtn';
 import CancelWorkoutBtn from './CancelWorkoutBtn';
+import ShareWorkoutBtn from './ShareWorkoutBtn';
+import { useState } from 'react';
 
 export default function BeginWorkoutModal({handleClose, workout, show}) {
+  const [showShare, setShowShare] = useState(false)
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -16,6 +19,7 @@ export default function BeginWorkoutModal({handleClose, workout, show}) {
         <div className='d-flex flex-column'>
           <BeginWorkoutBtn workout={workout}/>
           <CancelWorkoutBtn workoutId={workout._id}/>
+          <ShareWorkoutBtn/>
         </div>
       </Modal.Body>
     </Modal>

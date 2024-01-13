@@ -23,8 +23,25 @@ const typeDefs = `
 
   type Friend {
     _id: ID
-    user: ID
-    friend: User
+    userId: ID
+    friend: FriendInfo
+    state: String
+  }
+
+  type FriendInfo {
+    username: String
+    friendId: ID
+  }
+
+  input FriendRequestInput {
+    userId: ID
+    friend: FriendInfoInput
+    state: String
+  }
+
+  input FriendInfoInput {
+    username: String
+    friendId: String
   }
 
   type Workout {
@@ -129,6 +146,7 @@ const typeDefs = `
     getAllWorkouts: [Workout]
     getWorkoutsByUserId(userId: ID!): [Workout]
     getWorkoutById(_id: ID!): Workout
+    getFriendsByUserId(userId: ID!): [Friend]
   }
 
   type Mutation {
@@ -137,6 +155,7 @@ const typeDefs = `
     createWorkout(workoutInput: WorkoutInput): Workout
     updateWorkout(workoutId: ID, updatedWorkout: WorkoutInput): Workout
     deleteWorkout(workoutId: ID, userId: ID): Workout
+    friendRequest(friendRequest: FriendRequestInput): Friend
   }
 `;
 
