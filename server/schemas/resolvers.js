@@ -14,39 +14,18 @@ const resolvers = {
       try {
         const user = await User.findOne({ _id }).populate({
           path: 'workouts',
-          match: { template: true }, // Additional filtering if needed
+          match: { template: true }, // Find workouts where only where template is true
           options: { limit: 10 }, // Limit the number of populated workouts
         })
-        .populate('workouts');
+        .populate('friends');
     
       // Ensure the user exists
       if (!user) {
         // Handle the case where the user is not found
         throw new Error('User not found');
       }
-    
-      // Filter workouts with template set to true
-      const filteredWorkouts = user.workouts.filter(workout => workout.template === true).slice(0, 10);
-    
-      // Limit programs and workouts to return only 10
-      const limitedPrograms = user.programs.slice(0, 10);
-      // const limitedWorkouts = user.workouts.slice(0, 10);
-    
-      // Filter friends with state set to "friends" and limit to 20
-      const filteredFriends = user.friends?.filter(friend => friend.state === "friends").slice(0, 20);
-    
-      // Create a new object with the filtered user data
-      const filteredUser = {
-        userId: user.userId,
-        username: user.username,
-        workouts: filteredWorkouts,
-        programs: limitedPrograms,
-        friends: filteredFriends,
-      }; 
-
-      console.log(user, filteredUser);
       
-      return filteredUser;
+      return user;
     } catch (error) {
         console.error('Error fetching user:', error.message);
         throw new Error('Failed to fetch user');
@@ -83,6 +62,7 @@ const resolvers = {
         if (!friends) {
           throw new Error('Workout not found');
         }
+
         return friends;
       } catch (error) {
         console.error(error)
@@ -134,16 +114,60 @@ const resolvers = {
         throw new Error('Failed to create workout');
       }
     },
+    // friendRequest: async (parent, { friendRequest }, context) => {
+    //   try {
+    //     const request = await Friend.create(friendRequest);
+
+    //     if (friendRequest.userId) {
+    //       await User.findOneAndUpdate(
+    //         { _id: friendRequest.userId },
+    //         { $addToSet: { friends: request } }
+    //       );
+    //     }
+
+    //     return request
+    //   } catch (error) {
+    //     console.error('Error creating friend:', error);
+    //     throw new Error('Failed to create friend');
+    //   }
+    // },
     friendRequest: async (parent, { friendRequest }, context) => {
       try {
-        const request = await Friend.create(friendRequest);
+        const friend = await User.findOne({username: friendRequest.friend.username});
 
-        return request
+        if (friendRequest.userId) {
+          await User.findOneAndUpdate(
+            { _id: friendRequest.userId },
+            { $addToSet: { friends: friend } }
+          );
+        }
+
+        return friend
       } catch (error) {
         console.error('Error creating friend:', error);
         throw new Error('Failed to create friend');
       }
     },
+    setStatus: async (parent, { userId, statusName, checkInTime }, context) => {
+      try {
+        const user = await User.findOneAndUpdate(
+          { _id: userId },
+          {
+            $set: {
+              'status.statusName': statusName,
+              'status.checkInTime': checkInTime,
+            },
+          },
+          { new: true } // To return the updated user document
+        );
+    
+        return user;
+      } catch (error) {
+        console.error('Error changing status:', error);
+        throw new Error('Failed to change status');
+      }
+    },
+    
     updateWorkout: async (parent, { workoutId, updatedWorkout }) => {
       try {
         // Assuming you're using Mongoose for MongoDB
@@ -177,7 +201,7 @@ const resolvers = {
       ); 
 
       return workout;
-      
+
       } catch (error) {
         console.error('Error updating workout:', error.message);
         throw new Error('Failed to update workout');

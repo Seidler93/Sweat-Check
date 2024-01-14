@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 export default function BeginWorkoutModal({handleClose, workout, show}) {
   const [showShare, setShowShare] = useState(false)
-
+// console.log(workout);
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>

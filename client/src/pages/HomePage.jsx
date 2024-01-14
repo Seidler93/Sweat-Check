@@ -7,7 +7,7 @@ import { useUserContext } from "../utils/UserContext";
 import Programs from '../components/HomePageUI/Programs';
 import Friends from '../components/HomePageUI/Friends';
 import { useQuery } from '@apollo/client';
-import { QUERY_WORKOUTS_BY_USER } from '../utils/queries';
+import { QUERY_HOMEPAGE_USER } from '../utils/queries';
 import Auth from '../utils/auth';
 import { Icon } from '@iconify/react';
 
@@ -15,15 +15,15 @@ export default function WorkoutPage() {
   const [show, setShow] = useState(false);
   const [showWP, setShowWP] = useState(true);
   const [templateWorkouts, setTemplateWorkouts] = useState([])
-  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
+  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout, user, setUser} = useUserContext()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleWP = () => setShowWP(true);
   const hanldeFriends = () => setShowWP(false);
 
-  const { loading: loadingFirst, data: dataFirst } = useQuery(QUERY_WORKOUTS_BY_USER, {
-    variables: { userId: Auth.getProfile().data._id },
+  const { loading: loadingUser, data: userData } = useQuery(QUERY_HOMEPAGE_USER, {
+    variables: { id: Auth.getProfile().data._id },
   });
 
   useEffect(() => {
@@ -33,18 +33,15 @@ export default function WorkoutPage() {
       setCheckedIn(true);
       setCurrentWorkout(storedWorkout)
     }
-
-    // Log the dataFirst variable
-    console.log('Data First:', dataFirst);
-
-    // Filter workouts where the key "template" is true
-    if (dataFirst?.getWorkoutsByUserId) {
-      const storedTemplateWorkouts = dataFirst?.getWorkoutsByUserId.filter(workout => workout.template === true) || false;
-      storedTemplateWorkouts && setTemplateWorkouts(storedTemplateWorkouts)
+    
+    if (userData?.homePage) {
+      setUser(userData.homePage)
     }
-    // Refresh the current page
-    //console.log('Template Workouts:', storedTemplateWorkouts);
-  }, [dataFirst, checkedIn])
+    
+    // Log the userData variable
+    console.log('User Data:', user);
+
+  }, [userData, checkedIn])
 
   return (
     <div className='hp d-flex flex-column'>
@@ -55,17 +52,15 @@ export default function WorkoutPage() {
         <button className={`bg-tr none mx-2 p-0 ${!showWP ? 'profile-toggle-active' : ''}`} onClick={hanldeFriends}><h2 className=''>Friends</h2></button>
       </div>
       {showWP ? (
-        <Programs workouts={templateWorkouts} loading={loadingFirst} />
+        <Programs loading={loadingUser} />
       ) : (
-        <Friends/>
+        <Friends loading={loadingUser}/>
       )}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Select Workout</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <h2 className='ms-3 text-dark'>Current Program</h2> */}
-          {/* <button className='current-program-btn'><Link to={'/store/programId'}>Program 1</Link></button> */}
           <div className='d-flex flex-column'>
             <button className='modal-btn'><Link to={'/newWorkoutPage'}><FontAwesomeIcon className='pe-3' icon={faPlus} />New Workout</Link></button>
             {checkedIn && currentWorkout && <button className='modal-btn'><Link to={'/workout/woip'}>Resume Workout</Link></button>}

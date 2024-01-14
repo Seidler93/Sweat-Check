@@ -40,7 +40,6 @@ export default function MyWorkoutsPage() {
 
   return (
     <div className='hp d-flex flex-wrap justify-content-center'>
-      {/* {workouts?.map((workout, index) => <MyWorkoutsCard workout={workout} key={index} />)} */}
       {workouts && <SortedWorkouts/>}
     </div>
   );

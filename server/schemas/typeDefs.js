@@ -6,7 +6,7 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    friends: [Friend]
+    friends: [User]
     status: Status
     workouts: [Workout]    
     programs: [Program]
@@ -26,6 +26,7 @@ const typeDefs = `
     userId: ID
     friend: FriendInfo
     state: String
+    info: User
   }
 
   type FriendInfo {
@@ -156,7 +157,8 @@ const typeDefs = `
     createWorkout(workoutInput: WorkoutInput): Workout
     updateWorkout(workoutId: ID, updatedWorkout: WorkoutInput): Workout
     deleteWorkout(workoutId: ID, userId: ID): Workout
-    friendRequest(friendRequest: FriendRequestInput): Friend
+    friendRequest(friendRequest: FriendRequestInput): User
+    setStatus(userId: ID, statusName: String, checkInTime: String ): User
   }
 `;
 

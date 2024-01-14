@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect  } from 'react';
 import HomeWorkoutCard from './HomeWorkoutCard';
+import { useUserContext } from "../../utils/UserContext";
 import { Icon } from '@iconify/react';
 
-export default function Programs({loading, workouts}) {
+export default function Programs({loading}) {
+  const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout, user, setUser} = useUserContext()
 
   function SortedWorkouts() {
-    const sortedWorkouts = workouts.sort((a, b) => {
+    const sortedWorkouts = user.workouts?.sort((a, b) => {
       const dateA = new Date(a.dateCompleted);
       const dateB = new Date(b.dateCompleted);
   
@@ -14,23 +16,22 @@ export default function Programs({loading, workouts}) {
       return dateB - dateA;
     });
 
-    console.log(sortedWorkouts);
+    // console.log(sortedWorkouts);
   
     return (
       <>
-        {sortedWorkouts.map((workout, index) => (
+        {sortedWorkouts && sortedWorkouts.map((workout, index) => (
           <HomeWorkoutCard workout={workout} key={index} />
         ))}
       </>
     );
   }
   
-
   return (
     <>
       <h2 className='ms-3 mt-1'>My Workouts</h2>
       <div className='home-programs d-flex'>
-        {loading ? <Icon icon='line-md:loading-loop' width="100" height="100" className='me-1' color="white" /> : <SortedWorkouts />}
+        {loading ? <Icon icon='line-md:loading-loop' width="100" height="100" className='me-1' color="white" /> : <SortedWorkouts/>}
         <button className='program-btn'><Link to={'/store/programId'}>Find workouts</Link></button>              
       </div>
       <h2 className='ms-3 mt-4'>My Programs</h2>

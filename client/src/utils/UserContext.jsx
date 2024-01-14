@@ -8,9 +8,10 @@ export const useUserContext = () => useContext(UserContext)
 const UserProvider = (props) => {
   const [checkedIn, setCheckedIn] = useState(false)
   const [currentWorkout, setCurrentWorkout] = useState({})
+  const [user, setUser] = useState({})
   
   return (
-    <UserContext.Provider value={{ checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout }} {...props} />
+    <UserContext.Provider value={{ checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout, user, setUser }} {...props} />
   );
 };
 

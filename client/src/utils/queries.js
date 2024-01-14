@@ -1,32 +1,5 @@
 import { gql } from '@apollo/client';
-
-export const QUERY_USER = gql`
-  query getUser($id: ID!) {
-    getUser(_id: $id) {
-      _id
-      workouts {
-        _id
-        originalId
-      }
-      programs {
-        _id
-        originalId
-      }
-      firstName
-      lastName
-      username
-      email
-      posts {
-        _id
-      }
-      friends {
-        _id
-      }
-    }
-  }
-`;
-
-        
+       
 export const QUERY_POSTS_BY_USER_ID = gql`
   query getAllPostsOfUser($_id: ID!) {
     getAllPostsOfUser(_id: $_id) {
@@ -237,6 +210,65 @@ export const QUERY_FRIENDS_BY_ID = gql`
       }
       _id
       state
+    }
+  }
+`;
+
+export const QUERY_HOMEPAGE_USER = gql`
+  query HomePage($id: ID!) {
+    homePage(_id: $id) {
+      username
+      friends {
+        username
+        status {
+          statusName
+        }
+        _id
+      }
+      status {
+        statusName
+        checkInTime
+      }
+      workouts {
+        _id
+        originalId
+        userId
+        name
+        description
+        dateCompleted
+        template
+        workout {
+          exercises {
+            sets {
+              reps
+              weight
+              completed
+            }
+            exerciseName
+          }
+        }
+      }
+      programs {
+        workouts {
+          workout
+          day
+        }
+        duration
+        description
+        name
+        userId
+        originalId
+        _id
+      }
+      posts {
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+        }
+        username
+      }
     }
   }
 `;

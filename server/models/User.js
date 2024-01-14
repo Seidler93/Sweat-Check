@@ -37,29 +37,23 @@ const userSchema = new Schema({
     type: String,
     minlength: 5,
   },
-  friends: {
+  friends: [{
     type: Schema.Types.ObjectId,
-    ref: 'Friend',
-  },
+    ref: 'User',
+  }],
   status: statusSchema, 
-  workouts: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: 'Workout',
-		}
-	],
-  programs: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: 'Program',
-		}
-	],
-  posts: [
-    {
+  workouts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Workout',
+	}],
+  programs: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Program',
+	}],
+  posts: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Post',
-    } 
-  ],
+  }],
 });
 
 // set up pre-save middleware to create password

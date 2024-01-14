@@ -22,6 +22,10 @@ const friendSchema = new Schema({
   friend: friendInfoSchema,
   state: {
     type: String,
+  },
+  info: {
+    type: Schema.Types.ObjectId,
+		ref: 'User',
   }
 });
 
