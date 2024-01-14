@@ -4,11 +4,12 @@ import Auth from '../utils/auth';
 import { UPDATE_WORKOUT } from '../utils/mutations';
 import Modal from 'react-bootstrap/Modal';
 import removeTypename from '../functions/helperFunctions';
+import { useNavigate } from "react-router-dom";
 
 export default function CompleteWorkoutComp({show, handleClose}) {
   const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
   const [updateWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(UPDATE_WORKOUT);
-
+  const navigate = useNavigate()
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     setCurrentWorkout((prevCurrentWorkout) => ({
@@ -55,6 +56,8 @@ export default function CompleteWorkoutComp({show, handleClose}) {
     
     updateWorkoutInDB(currentWorkout)
   };
+
+  console.log(show);
 
   return (
     <Modal show={show} onHide={handleClose}>

@@ -9,7 +9,7 @@ export default function CancelWorkoutBtn({workoutId}) {
   const [deleteWorkout, { updateWorkoutError, updateWorkoutData }] = useMutation(DELETE_WORKOUT);
   const navigate = useNavigate();
   const {myWorkouts} = useParams()
-  console.log(myWorkouts);
+  // console.log(myWorkouts);
 
   const handleCancelWorkout = async () => {
     console.log({ workoutId: workoutId, userId: Auth.getProfile().data._id });

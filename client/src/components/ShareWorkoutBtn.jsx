@@ -26,7 +26,7 @@ export default function ShareWorkoutBtn() {
         <Modal.Body>
           {loadingFirst ? (
             <p>Loading friends...</p>
-          ) : dataFirst.getFriendsByUserId.friends ? (
+          ) : dataFirst?.getFriendsByUserId.friends ? (
             <ul>
               {dataFirst.getFriendsByUserId.friends?.map((friend) => (
                 <li key={friend.friend._id}>

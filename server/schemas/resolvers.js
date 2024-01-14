@@ -10,6 +10,49 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username });
     },
+    homePage: async (parent, { _id }) => {
+      try {
+        const user = await User.findOne({ _id }).populate({
+          path: 'workouts',
+          match: { template: true }, // Additional filtering if needed
+          options: { limit: 10 }, // Limit the number of populated workouts
+        })
+        .populate('workouts');
+    
+      // Ensure the user exists
+      if (!user) {
+        // Handle the case where the user is not found
+        throw new Error('User not found');
+      }
+    
+      // Filter workouts with template set to true
+      const filteredWorkouts = user.workouts.filter(workout => workout.template === true).slice(0, 10);
+    
+      // Limit programs and workouts to return only 10
+      const limitedPrograms = user.programs.slice(0, 10);
+      // const limitedWorkouts = user.workouts.slice(0, 10);
+    
+      // Filter friends with state set to "friends" and limit to 20
+      const filteredFriends = user.friends?.filter(friend => friend.state === "friends").slice(0, 20);
+    
+      // Create a new object with the filtered user data
+      const filteredUser = {
+        userId: user.userId,
+        username: user.username,
+        workouts: filteredWorkouts,
+        programs: limitedPrograms,
+        friends: filteredFriends,
+      }; 
+
+      console.log(user, filteredUser);
+      
+      return filteredUser;
+    } catch (error) {
+        console.error('Error fetching user:', error.message);
+        throw new Error('Failed to fetch user');
+      }
+    
+    },
     getAllWorkouts: async () => {
       try {
         const workouts = await Workout.find();
@@ -78,7 +121,7 @@ const resolvers = {
       try {
         const createdWorkout = await Workout.create(workoutInput);
 
-        if (workoutInput.userId != "") {
+        if (workoutInput.userId) {
           await User.findOneAndUpdate(
             { _id: workoutInput.userId },
             { $addToSet: { workouts: createdWorkout } }
@@ -122,6 +165,7 @@ const resolvers = {
       }
     },
     deleteWorkout: async (parent, { workoutId, userId }) => {
+      try {
       const workout = await Workout.findOneAndDelete({
         _id: workoutId,
         userId: userId,
@@ -130,9 +174,14 @@ const resolvers = {
       await User.findOneAndUpdate(
         { _id: userId },
         { $pull: { workouts: workoutId} }
-      );
+      ); 
 
       return workout;
+      
+      } catch (error) {
+        console.error('Error updating workout:', error.message);
+        throw new Error('Failed to update workout');
+      }
     },
   //   removeThought: async (parent, { thoughtId }, context) => {
   //     if (context.user) {

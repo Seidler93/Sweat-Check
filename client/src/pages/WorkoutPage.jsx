@@ -88,7 +88,7 @@ export default function WorkoutPage() {
           </button>
         </div>
         {currentWorkout.workout?.length > 0 && <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button>}
-        <CancelWorkoutBtn/>
+        <CancelWorkoutBtn workoutId={currentWorkout._id}/>
       </div>
       <CompleteWorkoutComp show={show} handleClose={handleClose}/>
     </>

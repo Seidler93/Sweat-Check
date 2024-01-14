@@ -17,30 +17,38 @@ export default function NewWorkoutPage() {
   const {checkedIn, setCheckedIn, currentWorkout, setCurrentWorkout} = useUserContext()
 
   useEffect(() => {
-    // Move the setCheckedIn call inside useEffect
+    // Check if user is checked in for workout
     if (!checkedIn) {
       setCheckedIn(true);
     } 
 
     const workout = JSON.parse(localStorage.getItem('currentWorkout')) || false;
     
-    if (workout) {
-      setCurrentWorkout(workout)
+    if (!workout._id) {
+      getNewWorkoutID();
     } else {
-      getNewWorkoutID()
+      setCurrentWorkout(workout);
     }
 
   }, []);
 
   useEffect(() => {
-    !currentWorkout._id && getNewWorkoutID()
+    // !currentWorkout._id && getNewWorkoutID()
 
     console.log('workout:', currentWorkout);
     localStorage.setItem('currentWorkout', JSON.stringify(currentWorkout));
   }, [currentWorkout]);
 
   const getNewWorkoutID = async () => {
-    const workoutInput = currentWorkout
+    const workoutInput = {
+      originalId: null,
+      userId: Auth.getProfile().data._id,
+      name: '', 
+      description: '', 
+      dateCompleted: Auth.getDate(Date.now()),
+      template: false,
+      workout: [],
+    }
 
     try {
       const { data } = await createWorkout({
@@ -81,7 +89,10 @@ export default function NewWorkoutPage() {
   };  
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+    console.log(true);
+}
 
   return (
     <>
@@ -116,8 +127,8 @@ export default function NewWorkoutPage() {
             Add circuit
           </button>
         </div>
-        {currentWorkout.workout?.length > 0 && <button handleShow={handleShow} className='modal-btn mt-1'>Complete Workout</button>}
-        <CancelWorkoutBtn/>
+        {currentWorkout.workout?.length > 0 && <button onClick={handleShow} className='modal-btn mt-1'>Complete Workout</button>}
+        <CancelWorkoutBtn workoutId={currentWorkout._id}/>
       </div>
       <CompleteWorkoutComp show={show} handleClose={handleClose}/>
     </>

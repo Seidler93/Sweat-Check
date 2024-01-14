@@ -34,6 +34,7 @@ export default function MyWorkoutsPage() {
   useEffect(() => {
     const myWorkouts = dataFirst?.getWorkoutsByUserId;
     setWorkouts(myWorkouts);
+    console.log(dataFirst);
     // console.log(myWorkouts);
   }, [dataFirst]);
 

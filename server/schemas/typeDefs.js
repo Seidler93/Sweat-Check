@@ -142,6 +142,7 @@ const typeDefs = `
   type Query {
     users: [User]
     user(username: String!): User
+    homePage(_id: ID!): User
     me: User
     getAllWorkouts: [Workout]
     getWorkoutsByUserId(userId: ID!): [Workout]
