@@ -3,6 +3,10 @@
   line-height: 1.5;
   font-weight: 400;
 
+  --main-blue: #007bff;  /* Main blue color */
+  --light-blue: #4e8af5; /* Lighter shade of blue */
+  --dark-blue: #004080;  /* Darker shade of blue */
+
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -133,3 +137,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+@media screen and (min-width: 768px) {
+  /* Styles specific to desktop screens */
+  .desktop-specific-element {
+    background-color: var(--dark-blue);
+    /* Other desktop-specific styles */
+  }
+}
+
