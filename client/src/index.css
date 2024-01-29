@@ -134,26 +134,3 @@ button:focus-visible {
   }
 }
 
-
-@media screen and (min-width: 768px) {
-  :root {
-    --main-red: #ff0000;    /* Main red color */
-    --light-red: #ff6666;   /* Lighter shade of red */
-    --dark-red: #990000;    /* Darker shade of red */
-  }
-
-  body {
-    background-image: url('/client/public/iron-1920-x-1200-background-jxjs64erc215wfnm.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-    /* Other desktop-specific styles */
-  }
-
-  /* Styles specific to desktop screens */
-  .desktop-specific-element {
-    
-    color: var(--common-white);
-    /* Other desktop-specific styles */
-  }
-}

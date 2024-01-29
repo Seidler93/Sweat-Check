@@ -26,9 +26,9 @@ h2 {
   margin: 10.9886%;
 }
 
-.checked-in {
+/* .checked-in {
   color: blue!important;
-}
+} */
 
 .logo {
   height: 6em;
@@ -315,14 +315,46 @@ a {
   margin-top: 50%;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-image: url('../src/assets/fadedlogo.png');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
+@media screen and (max-width: 800px) {
+  body {
+    background-image: url('../src/assets/fadedlogo.png');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+  }
+  .checked-in {
+    color: blue;
+  }
+
+  /* Add other mobile-specific styles here */
 }
+
+
+@media screen and (min-width: 800px) {
+  body {
+    background-image: url('/client/public/iron-1920-x-1200-background-jxjs64erc215wfnm.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+  }
+
+  /* Add other desktop-specific styles here */
+  :root {
+    --main-red: #ff0000;    /* Main red color */
+    --light-red: #ff6666;   /* Lighter shade of red */
+    --dark-red: #990000;    /* Darker shade of red */
+  }
+
+  /* Styles specific to desktop screens */
+  .desktop-specific-element {
+    color: var(--common-white);
+    /* Other desktop-specific styles */
+  }
+  .checked-in {
+    color: red;
+  }
+}
+
 
 /* .background-img {
   background-image: url('../src/assets/Sweat-Check-Logo.png');
