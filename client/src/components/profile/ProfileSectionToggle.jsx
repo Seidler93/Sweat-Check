@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faToiletPortable, faChartSimple, faUserGroup } from "@fortawesome/free-solid-svg-icons"
+import { faToiletPortable, faChartSimple, faUserGroup, faPlus } from "@fortawesome/free-solid-svg-icons"
 
 export default function ProfileSectionToggle ({ activeSection, setProfileSection, profileSections }) {
   return (
@@ -22,6 +22,12 @@ export default function ProfileSectionToggle ({ activeSection, setProfileSection
         onClick={() => setProfileSection(profileSections[2])}
       >
         <FontAwesomeIcon icon={faUserGroup} />
+      </button>
+      <button
+        className={`profile-toggle-btn ${activeSection === profileSections[3] ? 'profile-toggle-active' : ''}`}
+        onClick={() => setProfileSection(profileSections[3])}
+      >
+        <FontAwesomeIcon icon={faPlus} />
       </button>
     </div>
   );
