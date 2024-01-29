@@ -57,7 +57,7 @@ export default function CompleteWorkoutComp({show, handleClose}) {
     updateWorkoutInDB(currentWorkout)
   };
 
-  console.log(show);
+  // console.log(show);
 
   return (
     <Modal show={show} onHide={handleClose}>
