@@ -123,7 +123,6 @@ export default function NewWorkoutPage() {
                 <FontAwesomeIcon className='text-white' icon={faPlus} />
               </button>
           </form>
-          
         ) : ''}
         <div className='d-flex'>
           <button className='modal-btn me-1' onClick={() => setAddExercise(true)}>

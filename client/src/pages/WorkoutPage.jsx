@@ -63,19 +63,26 @@ export default function WorkoutPage() {
           </div>
         )}
         {addExercise ? (
-          <div className='d-flex align-items-center mb-2 justify-content-between'>
-            <input
-              type="text"
-              onChange={(e) => setExerciseInput(e.target.value)}
-              value={exerciseInput}
-              className="form-control"
-              placeholder="Enter exercise"
-              aria-describedby="basic-addon1"
-            />
-            <button type='submit' onClick={() => handleAddExercise()} className='ms-2 add-exercise-btn'>
-              <FontAwesomeIcon className='text-white' icon={faPlus} />
-            </button>
-          </div>
+           <form
+           onSubmit={(e) => {
+            e.preventDefault();
+            handleAddExercise();
+           }}
+           className='d-flex align-items-center mb-2 justify-content-between mw100'
+          >
+              <input
+                required
+                type="text"
+                onChange={(e) => setExerciseInput(e.target.value)}
+                value={exerciseInput}
+                className="form-control text-black"
+                placeholder="Enter exercise"
+                aria-describedby="basic-addon1"
+              />
+              <button type='submit' className='ms-2 add-exercise-btn'>
+                <FontAwesomeIcon className='text-white' icon={faPlus} />
+              </button>
+          </form>
         ) : ''}
         <div className='d-flex'>
           <button className='modal-btn me-1' onClick={() => setAddExercise(true)}>
