@@ -11,6 +11,7 @@ const typeDefs = `
     workouts: [Workout]    
     programs: [Program]
     posts: [Post]
+    conversations: [Conversation]
   }
 
   input UserInput {
@@ -19,6 +20,16 @@ const typeDefs = `
     username: String
     email: String
     password: String
+  }
+
+  type Message {
+    text: String
+    sender: User
+  }
+
+  type Conversation {
+    _id: ID
+    messages: [Message]
   }
 
   type Friend {
@@ -149,6 +160,9 @@ const typeDefs = `
     getWorkoutsByUserId(userId: ID!): [Workout]
     getWorkoutById(_id: ID!): Workout
     getFriendsByUserId(userId: ID!): [Friend]
+    getConversations: [Conversation]
+    getConversationById(_id: ID): Conversation
+    getMyConversations(_id: ID): User
   }
 
   type Mutation {
@@ -159,6 +173,12 @@ const typeDefs = `
     deleteWorkout(workoutId: ID, userId: ID): Workout
     friendRequest(friendRequest: FriendRequestInput): User
     setStatus(userId: ID, statusName: String, checkInTime: String ): User
+    sendMessage(conversationId: ID!, text: String!, senderId: ID!): Message
+    createConversation(receiverId: ID!, senderId: ID!): Conversation
+  }
+
+  type Subscription {
+    messageSent(conversationId: ID!): Message
   }
 `;
 

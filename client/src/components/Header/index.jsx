@@ -25,6 +25,10 @@ export default function Header () {
     }
   }
 
+  function handleMessagePress() {
+    navigate('/conversations')
+  }
+
   return (
     <>
       <Nav className='f2 bg-dark d-flex justify-content-between fixed-top'>
@@ -41,8 +45,8 @@ export default function Header () {
           <Nav.Item className='py-2 px-1 clear me-1' onClick={() => handleIconPress()}>
             <Icon icon='mdi:weight-lifter' width="40" height="40" color={`${checkedIn ? 'blue' : 'white'}`} />
           </Nav.Item>
-          <Nav.Item className='py-2 px-1 clear me-1' onClick={() => setShowMenu(false)}>
-              <Icon icon='bxs:message' width="40" height="40" color='white' />
+          <Nav.Item className='py-2 px-1 clear me-1' onClick={() => handleMessagePress()}>
+            <Icon icon='bxs:message' width="40" height="40" color='white' />
           </Nav.Item>
           <MenuBtn showMenu={showMenu} setShowMenu={setShowMenu}/>
         </div>

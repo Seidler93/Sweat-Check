@@ -54,6 +54,10 @@ const userSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Post',
   }],
+  conversations: [{
+    type: Schema.Types.ObjectId,
+		ref: 'Conversation',
+  }]
 });
 
 // set up pre-save middleware to create password

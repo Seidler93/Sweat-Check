@@ -269,6 +269,45 @@ export const QUERY_HOMEPAGE_USER = gql`
         }
         username
       }
+      conversations {
+        _id
+        senderId
+        receiverId
+      }
     }
   }
 `;
+
+export const GET_CONVERSATION_QUERY = gql`
+  query GetConversationById($id: ID) {
+    getConversationById(_id: $id) {
+      _id
+      messages {
+        text
+        sender {
+          _id
+          username
+        }
+      }
+    }
+  }
+`;
+
+export const GET_MY_CONVERSATIONS_QUERY = gql`
+  query GetMyConversations($id: ID) {
+    getMyConversations(_id: $id) {
+      conversations {
+        _id
+        messages {
+          sender {
+            username
+            _id
+          }
+          text
+        }
+      }
+    }
+  }
+`;
+
+

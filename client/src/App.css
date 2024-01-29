@@ -1,3 +1,7 @@
+* {
+  color: white!important;
+}
+
 #homeMenu {
   position: fixed;
   right: 0;
@@ -99,8 +103,6 @@ form {
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
-
-
 
 .menu-option {
   background-color: #1A1A1A;
@@ -225,6 +227,15 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
 
 .clear {

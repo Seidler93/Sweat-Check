@@ -23,6 +23,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import NewWorkoutPage from './pages/NewWorkoutPage.jsx';
 import MyWorkoutsPage from './pages/MyWorkoutsPage.jsx'
 import FriendProfilePage from './pages/FriendProfilePage.jsx';
+import Conversation from './pages/Conversation.jsx';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> }, 
       { path: '/conversations', element: <ConversationsPage /> },       
+      { path: '/conversation/:conversationId', element: <Conversation /> },       
       { path: '/calendar', element: <CalendarPage /> },       
       { path: '/profile/me', element: <MyProfilePage /> },       
       { path: '/profile/:friendId', element: <FriendProfilePage /> },       

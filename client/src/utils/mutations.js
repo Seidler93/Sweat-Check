@@ -80,4 +80,14 @@ export const DELETE_WORKOUT = gql`
   }
 `;
 
-
+export const SEND_MESSAGE_MUTATION = gql`
+  mutation Mutation($senderId: ID!, $text: String!, $conversationId: ID!) {
+    sendMessage(senderId: $senderId, text: $text, conversationId: $conversationId) {
+      text
+      sender {
+        username
+        _id
+      }
+    }
+  }
+`;

@@ -1,18 +1,34 @@
-import { useState, useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header/index'
-import HomeMenu from '../components/HomeMenu';
+import { useUserContext } from "../utils/UserContext";
+import { useQuery } from '@apollo/client';
+import { GET_MY_CONVERSATIONS_QUERY } from '../utils/queries';
+import Auth from '../utils/auth';
 
 export default function ConversationsPage() { 
-  const [showMenu, setShowMenu] = useState(false);
-  const conversationId = 1
+  const _id = Auth.getProfile().data._id
+  console.log(_id);
+  const { data: conversationsData, loading: conversationsLoading } = useQuery(GET_MY_CONVERSATIONS_QUERY, {
+    variables: { _id },
+  });  
+
+  useEffect(() => {
+    console.log(conversationsData);
+    // You can perform any additional logic when new messages are fetched
+    // For example, scroll to the bottom of the chat window
+  }, [conversationsData])
+
   return (
-    <>
+    <div className='hp d-flex flex-column'>
       {/* query for existing conversations and list them here with option to create a new conversation */}
       {/* loop through the query result of conversations */}
-      <Link to={`/conversation/${conversationId}`}>Conversation 1</Link>
-      <Link to={`/conversation/${conversationId}`}>Conversation 2</Link>
-      <Link to={`/conversation/${conversationId}`}>Conversation 3</Link>
-    </>
+      {conversationsData && !conversationsLoading && conversationsData.getMyConversations.conversations.length > 0 && (
+        conversationsData.getMyConversations.conversations.map((conversation, index) => (
+          <Link key={index} className='mt-3 btn btn-primary' to={`/conversation/${conversation._id}`}>
+            {conversation._id}
+          </Link>
+        ))
+      )}
+    </div>
   );
 }

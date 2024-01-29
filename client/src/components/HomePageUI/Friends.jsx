@@ -12,7 +12,7 @@ export default function Friends({loading}) {
     return (
       <>
         {friends && friends.map((friend, index) => (
-          <button key={index} className='friend-btn'><Link to={`profile/${friend._id}`}>{friend.username}</Link><p className='clear'>{friend.status.statusName}</p></button>
+          <Link className='friend-btn' to={`profile/${friend._id}`}>{friend.username}<span>{friend.status.statusName}</span></Link>
         ))}
       </>
     );

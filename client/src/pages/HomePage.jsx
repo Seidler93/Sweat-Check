@@ -39,7 +39,7 @@ export default function WorkoutPage() {
     }
     
     // Log the userData variable
-    console.log('User Data:', user);
+    console.log('User Data:', userData);
 
   }, [userData, checkedIn])
 
