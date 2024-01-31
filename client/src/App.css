@@ -1,334 +1,420 @@
-h2 {
-  color: white!important;
-}
-
-.cal-page{
-  padding-top: 3.4rem;
-}
-
-.cal{
-  margin: 10%;
-}
-
-.custom-calendar {
-  max-width: 900px; 
-  margin: 0 auto;
-  height: 350px;
-}
-
-/* calendar.css */
-
-.react-calendar *{
-  color:white;
-}
-
-.streaks{
-  margin: 10.9886%;
-}
-
-/* .checked-in {
-  color: blue!important;
-} */
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-.home-menu {
-  padding: 2rem 1rem 0;
-}
-
-.menu-option {
-  background-color: #1A1A1A;
-  padding: 15px;
-  text-align: center;
-  margin: 5px 0;
-  border-radius: 6px;
-}
-
-.fade-out-element {
-  opacity: 1;
-  transition: opacity 1s ease; /* You can adjust the duration and easing function */
-}
-
-.fade-out {
-  transform: rotate(360deg);;
-}
-
-.fade-in {
-  transform: rotate(360deg);;
-}
-
-.mx-10px {
-  margin: 0 10px;
-}
-
-input,
-button {
-  min-height: 5vh;
-}
-
-.add-exercise-btn {
-  background-color: blue;
-}
-
-.form-control {
-  border-radius: 6px!important;
-}
-
-.home-programs {
-  width: 100%;
-  overflow-x: auto;
-  white-space: nowrap; 
-  scrollbar-width: thin; /* Adjust the width as needed */
-  scrollbar-color: #c4c4c4 #f1f1f1;
-}
-
-/* For WebKit browsers (e.g., Chrome, Safari) */
-.home-programs::-webkit-scrollbar {
-  width: 8px; /* Adjust the width as needed */
-  height: 4px;
-}
-
-.home-programs::-webkit-scrollbar-thumb {
-  background-color: #c4c4c4; /* Adjust the color as needed */
-  border-radius: 4px; /* Adjust the border-radius as needed */
-}
-
-.home-programs::-webkit-scrollbar-track {
-  background-color: transparent; /* Adjust the color as needed */
-}
-
-.hp {
-  padding-top: 3.4rem;
-}
-
-.workout-btn {
-  margin: 10px;
-  padding: 15px;
-  height: 20vh;
-  background-color: blue;
-}
-
-.see-all-btn {
-  margin: 10px;
-  height: 5vh;
-  background-color: blue;
-}
-
-.modal-btn {
-  margin: 0 0 5px;
-  min-height: 5vh;
-  background-color: blue;
-  flex: 1;
-  text-align: center;
-  padding: 10px;
-}
-
-.program-btn {
-  margin: 10px;
-  height: 18vh;
-  width: 60vw;
-}
-
-.current-program-btn {
-  display: flex;
-  width: 100%;
-  height: 20vh;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.friend-btn {
-  margin: 10px 10px 0;
-  height: 5vh;
-  text-align: start;
-  display: flex;
-  justify-content: space-between;
-}
-
-.clear {
-  padding: 0!important;
-}
-
-.nav {
-  --bs-nav-link-padding-y: 0!important;
-}
-
-.friends-container {
-  max-height: 50vh;
-  overflow-y: auto;
-  white-space: nowrap; 
-}
-
-a {
-  color: white!important;
-  text-decoration: none!important;
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.f2 {
-  font-size: 1.5rem;}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.profile-portrait {
-  width: 75px;
-  height: 75px;
-  object-fit: cover;
-  margin-top: 10px;
-  border-radius: 6px;
-}
-
-.profile-container {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  /* padding-top: 1.5rem; */
-}
-
-.toggle-container {
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  margin-top: 1.5rem;
-  /* position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #333; 
-  padding: 15px;
-  transition: transform 0.3s;  */
-}
-
-.profile-toggle-btn {
-  border: none;
-  background-color: transparent;
-  font-size: 26px;
-  padding-bottom: 5px;
-  border-radius: 0;
-}
-
-.profile-toggle-active {
-  border-bottom: 2px solid white!important;
-}
-
-.post-card {
-  width: 50%;
-  max-width: 500px;
-}
-
-.my-progress-card {
-  margin: 0 10px 15px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 30px;
-}
-
-.progress-container {
-  padding: 15px 0 100px;
-}
-
-.iphone {
-  width: 350px;
-  height: 758px;
-  border: 5px black solid;
-  margin: 50px;
-  position: relative;
-  border-radius: 40px;
-  overflow: hidden;
-}
-
-.iphone-content {
-  max-height: calc(758px - 10px); /* Subtract the border width from the height */
-  overflow-y: auto;
-  /* position: relative; */
-  /* Hide the scrollbar for WebKit browsers (e.g., Chrome, Safari) */
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: transparent transparent; /* For Firefox */
-
-  /* Hide the scrollbar for WebKit browsers (e.g., Chrome, Safari) */
-  &::-webkit-scrollbar {
-    width: 5px; /* Adjust the width as needed */
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: transparent;
-  }
-}
-
-.my-nav-fixed {
-  position: absolute;
-}
-
-.logo-login {
-  position: absolute;
-  top: 50%;
-  max-width: 100%;
-  opacity: .65;
-}
-
-.rel {
-  position: relative;
-}
-
-.z5 {
-  z-index: 5;
-}
-
-.wh100 {
-  width: 100%;
-  height: 100%;
-}
-
-.mt50 {
-  margin-top: 50%;
-}
-
 @media screen and (max-width: 800px) {
+
   body {
     background-image: url('../src/assets/fadedlogo.png');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
   }
+
   .checked-in {
     color: blue;
   }
 
-  /* Add other mobile-specific styles here */
-}
+  h2 {
+    color: white !important;
+  }
 
+  .cal-page {
+    padding-top: 3.4rem;
+  }
+
+  .cal {
+    margin: 10%;
+  }
+
+  .custom-calendar {
+    max-width: 900px;
+    margin: 0 auto;
+    height: 350px;
+  }
+
+  /* calendar.css */
+
+  .react-calendar * {
+    color: white;
+  }
+
+  .streaks {
+    margin: 10.9886%;
+  }
+
+  .checked-in {
+    color: blue !important;
+  }
+
+  .logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+
+  .logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
+  }
+
+  .home-menu {
+    padding: 2rem 1rem 0;
+  }
+
+  .menu-option {
+    background-color: #1A1A1A;
+    padding: 15px;
+    text-align: center;
+    margin: 5px 0;
+    border-radius: 6px;
+  }
+
+  .fade-out-element {
+    opacity: 1;
+    transition: opacity 1s ease;
+    /* You can adjust the duration and easing function */
+  }
+
+  .fade-out {
+    transform: rotate(360deg);
+    ;
+  }
+
+  .fade-in {
+    transform: rotate(360deg);
+    ;
+  }
+
+  .mx-10px {
+    margin: 0 10px;
+  }
+
+  input,
+  button {
+    min-height: 5vh;
+  }
+
+  .add-exercise-btn {
+    background-color: blue;
+  }
+
+  .form-control {
+    border-radius: 6px !important;
+  }
+
+  .home-programs {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    /* Adjust the width as needed */
+    scrollbar-color: #c4c4c4 #f1f1f1;
+  }
+
+  /* For WebKit browsers (e.g., Chrome, Safari) */
+  .home-programs::-webkit-scrollbar {
+    width: 8px;
+    /* Adjust the width as needed */
+    height: 4px;
+  }
+
+  .home-programs::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    /* Adjust the color as needed */
+    border-radius: 4px;
+    /* Adjust the border-radius as needed */
+  }
+
+  .home-programs::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* Adjust the color as needed */
+  }
+
+  .hp {
+    padding-top: 3.4rem;
+  }
+
+  .workout-btn {
+    margin: 10px;
+    padding: 15px;
+    height: 20vh;
+    background-color: blue;
+  }
+
+  .see-all-btn {
+    margin: 10px;
+    height: 5vh;
+    background-color: blue;
+  }
+
+  .modal-btn {
+    margin: 0 0 5px;
+    min-height: 5vh;
+    background-color: blue;
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .program-btn {
+    margin: 10px;
+    height: 18vh;
+    width: 60vw;
+  }
+
+  .current-program-btn {
+    display: flex;
+    width: 100%;
+    height: 20vh;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .friend-btn {
+    margin: 10px 10px 0;
+    height: 5vh;
+    text-align: start;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .clear {
+    padding: 0 !important;
+  }
+
+  .nav {
+    --bs-nav-link-padding-y: 0 !important;
+  }
+
+  .friends-container {
+    max-height: 50vh;
+    overflow-y: auto;
+    white-space: nowrap;
+  }
+
+  a {
+    color: white !important;
+    text-decoration: none !important;
+  }
+
+  @keyframes logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+      animation: logo-spin infinite 20s linear;
+    }
+  }
+
+  .f2 {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    padding: 2em;
+  }
+
+  .read-the-docs {
+    color: #888;
+  }
+
+  .profile-portrait {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 6px;
+  }
+
+  .profile-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    /* padding-top: 1.5rem; */
+  }
+
+  .toggle-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 1.5rem;
+    /* position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333; 
+    padding: 15px;
+    transition: transform 0.3s;  */
+  }
+
+  .profile-toggle-btn {
+    border: none;
+    background-color: transparent;
+    font-size: 26px;
+    padding-bottom: 5px;
+    border-radius: 0;
+  }
+
+  .profile-toggle-active {
+    border-bottom: 2px solid white !important;
+  }
+
+  .post-card {
+    width: 50%;
+    max-width: 500px;
+  }
+
+  .my-progress-card {
+    margin: 0 10px 15px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 30px;
+  }
+
+  .progress-container {
+    padding: 15px 0 100px;
+  }
+
+  .iphone {
+    width: 350px;
+    height: 758px;
+    border: 5px black solid;
+    margin: 50px;
+    position: relative;
+    border-radius: 40px;
+    overflow: hidden;
+  }
+
+  .iphone-content {
+    max-height: calc(758px - 10px);
+    /* Subtract the border width from the height */
+    overflow-y: auto;
+    /* position: relative; */
+    /* Hide the scrollbar for WebKit browsers (e.g., Chrome, Safari) */
+    scrollbar-width: thin;
+    /* For Firefox */
+    scrollbar-color: transparent transparent;
+    /* For Firefox */
+
+    /* Hide the scrollbar for WebKit browsers (e.g., Chrome, Safari) */
+    &::-webkit-scrollbar {
+      width: 5px;
+      /* Adjust the width as needed */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+  }
+
+  .my-nav-fixed {
+    position: absolute;
+  }
+
+  .logo-login {
+    position: absolute;
+    top: 50%;
+    max-width: 100%;
+    opacity: .65;
+  }
+
+  .rel {
+    position: relative;
+  }
+
+  .z5 {
+    z-index: 5;
+  }
+
+  .wh100 {
+    width: 100%;
+    height: 100%;
+  }
+
+  .mt50 {
+    margin-top: 50%;
+  }
+
+  /* .background-img {
+  background-image: url('../src/assets/Sweat-Check-Logo.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+} */
+
+  .login-input {
+    background-color: rgba(70, 90, 126, 0.708) !important;
+  }
+
+  .my-friend-card {
+    margin: 15px 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 20px 15px;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .my-post-card {
+    background-color: grey;
+    width: 50%;
+    height: 50vw
+  }
+
+  .post-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
+
+  .post-cont-img {
+    width: 50vw;
+    height: 50vw;
+    object-fit: cover;
+  }
+
+  .bg-tr {
+    background-color: transparent;
+  }
+
+  .post-img {
+    width: 100%;
+  }
+
+  .w100 {
+    width: 100%;
+  }
+
+  .close-btn {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: -65px;
+    right: 0;
+    margin-top: 10px;
+  }
+
+  .none {
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+  }
+
+  .border-blue {
+    border: 2px solid blue;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+}
 
 @media screen and (min-width: 800px) {
   body {
@@ -340,9 +426,12 @@ a {
 
   /* Add other desktop-specific styles here */
   :root {
-    --main-red: #ff0000;    /* Main red color */
-    --light-red: #ff6666;   /* Lighter shade of red */
-    --dark-red: #990000;    /* Darker shade of red */
+    --main-red: #ff0000;
+    /* Main red color */
+    --light-red: #ff6666;
+    /* Lighter shade of red */
+    --dark-red: #990000;
+    /* Darker shade of red */
   }
 
   /* Styles specific to desktop screens */
@@ -350,86 +439,8 @@ a {
     color: var(--common-white);
     /* Other desktop-specific styles */
   }
+
   .checked-in {
     color: red;
   }
-}
-
-
-/* .background-img {
-  background-image: url('../src/assets/Sweat-Check-Logo.png');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-} */
-
-.login-input {
-  background-color: rgba(70, 90, 126, 0.708)!important;
-}
-
-.my-friend-card {
-  margin: 15px 10px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 20px 15px;
-  text-decoration: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.my-post-card {
-  background-color: grey;
-  width: 50%;
-  height: 50vw
-}
-
-.post-container {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 15px;
-}
-
-.post-cont-img {
-  width: 50vw;
-  height: 50vw;
-  object-fit: cover;
-}
-
-.bg-tr {
-  background-color: transparent;
-}
-
-.post-img {
-  width: 100%;
-}
-
-.w100 {
-  width: 100%;
-}
-
-.close-btn {
-  position: absolute;
-  height: 50px;
-  width: 50px;
-  top: -65px;
-  right: 0;
-  margin-top: 10px;
-}
-
-.none {
-  border: none;
-  background-color: transparent;
-  border-radius: 0;
-}
-
-.border-red {
-  border: 2px solid red;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-.border-blue {
-  border: 2px solid blue;
-  border-radius: 4px;
-  margin-bottom: 10px;
 }
